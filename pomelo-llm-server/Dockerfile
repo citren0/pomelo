@@ -10,8 +10,6 @@ RUN apt -y install python3 python3-pip
 
 RUN useradd -ms /bin/bash server
 
-RUN mkdir /home/server
-
 RUN chown server:server /home/server
 
 USER server
