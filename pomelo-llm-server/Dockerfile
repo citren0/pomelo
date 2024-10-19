@@ -20,4 +20,4 @@ COPY . .
 
 WORKDIR /home/server
 
-CMD [ "python3", "./src/server.py" ]
+CMD [ "python3", "./server.py" ]
