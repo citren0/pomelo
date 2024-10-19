@@ -9,6 +9,7 @@ app = Flask("Llama server")
 model = None
 tokenizer = None
 
+
 @app.route('/llama', methods=['POST'])
 def generate_response():
     global model, tokenizer
@@ -55,5 +56,17 @@ def generate_response():
     except Exception as e:
         return jsonify({"Error": str(e)}), 500 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+
+@app.errorhandler(404) 
+def not_found(e): 
+  return Response("Page not found.")
+
+
+if __name__ == "__main__":
+    if os.environ.get("DEV") == "true":
+        app.run(host="0.0.0.0", port=3000, debug=True)
+    else:
+        from waitress import serve
+        serve(app, host="0.0.0.0", port=3000)
+    
+    print("Server started.")
