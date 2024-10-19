@@ -46,7 +46,7 @@ class Llama3:
 
 
 app = Flask("Llama server")
-llama = Llama3("/home/server/app/cache/Llama-3.1-8B-Instruct")
+llama = Llama3("/home/server/.cache/Llama-3.1-8B-Instruct")
 
 @app.route('/llama', methods=['POST'])
 def generate_response():
