@@ -1,12 +1,14 @@
 FROM nvidia/cuda:12.6.2-cudnn-devel-ubuntu22.04
 
+SHELL ["/bin/bash", "-c"]
+
 WORKDIR /home/server
 
 COPY requirements.txt .
 
 RUN apt -y update
 RUN apt -y upgrade
-RUN apt -y install python3 python3-pip python3-venv
+RUN apt -y install python3 python3-pip python3-venv bash
 
 RUN useradd -ms /bin/bash server
 
