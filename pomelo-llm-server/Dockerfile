@@ -6,17 +6,13 @@ RUN useradd -ms /bin/bash server
 
 RUN apt -y update
 RUN apt -y upgrade
-RUN apt -y install python3 python3-pip python3-venv bash
+RUN apt -y install python3 python3-pip python3-venv
 
 WORKDIR /home/server
 
 USER server
 
 COPY requirements.txt .
-
-RUN python3 -m venv env
-
-RUN source env/bin/activate
 
 RUN pip install --no-cache-dir -r requirements.txt
 
