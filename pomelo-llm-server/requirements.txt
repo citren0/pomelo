@@ -1,5 +1,5 @@
 transformers
-Flask
+flask
 accelerate
 bitsandbytes
 
