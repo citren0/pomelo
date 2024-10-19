@@ -1,0 +1,66 @@
+version: '3.9'
+services:
+  db:
+    image: postgres
+    user: postgres
+    env_file: .env
+    expose:
+      - '5432'
+    networks:
+      - default
+    volumes:
+      - db:/var/lib/postgresql/data
+      - ./db/init_data:/docker-entrypoint-initdb.d
+    command: postgres -p 5432
+
+  server:
+    image: node:lts
+    user: 'node'
+    working_dir: /home/node/app/client
+    env_file: .env
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - db
+    expose:
+      - '3000'
+    networks:
+      - default
+    volumes:
+      - ./:/home/node/app
+    command: 'npm start'
+
+  webserver:
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+      - "3443:3443"
+      - "3080:3080"
+    volumes:
+      - web-root:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - ./certs:/etc/letsencrypt/live/CHANGEMECHANGEME
+      - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - server
+    networks:
+      - default 
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certs:/etc/letsencrypt/live/CHANGEMECHANGEME
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - webserver
+    command: renew --webroot --webroot-path=/var/www/html --email cameron.davis1944@gmail.com --agree-tos --no-eff-email --staging
+
+networks:
+  default:
+
+volumes:
+  db:
+  certbot-etc:
+  certbot-var:
+  web-root:

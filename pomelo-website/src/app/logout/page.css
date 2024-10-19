@@ -1,0 +1,14 @@
+
+.logout-container
+{
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
+    padding-top: 4rem;
+}
+
+.logout-title
+{
+    font-size: 48px;
+    font-weight: 600;
+}

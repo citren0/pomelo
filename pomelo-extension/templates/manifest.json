@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "name": "Pomelo",
+    "version": "0.1.0",
+
+    "description": "Pomelo CHANGE ME",
+    "homepage_url": "https://example.com",
+    "icons": {
+        "32": "favicon.png"
+    },
+
+    "background": {
+        "scripts": ["background-script.js"],
+        "type": "module"
+    },
+
+    "permissions": [
+        "tabs",
+        "storage"
+    ],
+
+    "action": {
+        "default_icon": "favicon.png",
+        "default_title": "Pomelo",
+        "default_popup": "index.html"
+    }
+
+}

@@ -1,0 +1,64 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
+var express = require('express');
+var dotenv = require('dotenv');
+var router = express.Router();
+exports.router = router;
+var jwt = require('jsonwebtoken');
+var bcrypt = require('bcrypt');
+var database_1 = require("../database");
+// Environment setup.
+dotenv.config();
+router.put('/api/register', function (req, res, next) {
+    if (!req.body.hasOwnProperty("username") || !req.body.hasOwnProperty("password") || !req.body.hasOwnProperty("email")) {
+        return res.status(400).send({ status: "Failed to register user. Provide all fields when submitting." });
+    }
+    // Generate a salt then hash the password.
+    bcrypt.hash(req.body.password, 14)
+        .then(function (hash) {
+        database_1.db.any('insert into users (username, email, hash, registration) values (lower($1), lower($2), $3, $4) returning id;', [req.body.username, req.body.email, hash, Date.now()])
+            .then(function (user) {
+            return res.status(200).send({ status: "Successfully registered." });
+        })
+            .catch(function (error) {
+            console.log(error);
+            return res.status(400).send({ status: "Failed to register user. Username or email already registered." });
+        });
+    })
+        .catch(function (error) {
+        return res.status(500).send({ status: "Failed to register user. Try again later." });
+    });
+});
+router.post('/api/login', function (req, res, next) {
+    if (!req.body.hasOwnProperty("username") || !req.body.hasOwnProperty("password")) {
+        return res.status(400).send({ status: "Failed to log in. Provide all fields when submitting." });
+    }
+    database_1.db.any('select id, email, hash, registration from users where lower(username) = lower($1);', [req.body.username])
+        .then(function (user) {
+        if (user.length != 1) {
+            return res.status(400).send({ status: "Failed to log in. Username or password invalid." });
+        }
+        bcrypt.compare(req.body.password, user[0].hash, function (error, result) {
+            if (!!error) {
+                return res.status(500).send({ status: "Failed to log in. Try again later." });
+            }
+            if (result == true) {
+                var auth_payload = {
+                    username: req.body.username,
+                    email: user[0].email,
+                    id: user[0].id,
+                    registration: user[0].registration,
+                };
+                var auth_token = jwt.sign(auth_payload, process.env.AUTH_SECRET, { expiresIn: process.env.AUTH_JWT_EXPIRE_AGE, });
+                return res.status(200).send({ status: "Successfully logged in.", token: auth_token, });
+            }
+            else {
+                return res.status(401).send({ status: "Failed to log in. Username or password invalid." });
+            }
+        });
+    })
+        .catch(function (_) {
+        return res.status(500).send({ status: "Failed to log in. Try again later." });
+    });
+});

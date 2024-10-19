@@ -1,0 +1,51 @@
+@font-face
+{
+    font-family: 'Overpass';
+    src: url('https://dm8ycatpatapg.cloudfront.net/Overpass-VariableFont_wght.ttf');
+}
+
+*
+{
+    font-family: "Overpass", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    color: #050505;
+}
+
+.content-container
+{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.img-border
+{
+    border-radius: 0.5rem;
+}
+
+.hr-100
+{
+    width: 100%;
+}
+
+.not-found-container
+{
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
+    padding-top: 4rem;
+}
+
+.not-found-title
+{
+    font-size: 48px;
+    font-weight: 600;
+}
+
+.not-found-subtitle
+{
+    font-size: 24px;
+    font-weight: 400;
+}

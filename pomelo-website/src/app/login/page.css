@@ -1,0 +1,8 @@
+
+.login-image-and-form
+{
+    display: flex;
+    flex-flow: row;
+    padding: 4rem;
+    gap: 4rem;
+}

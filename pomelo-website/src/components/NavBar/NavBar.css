@@ -1,0 +1,50 @@
+
+.nav-wrapper
+{
+    background-color: #f5f5fa;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    align-items: center;
+    border-radius: 0.5rem;
+    height: 3.25rem;
+}
+
+.nav-logo
+{
+    padding: 0 1rem 0 1rem;
+}
+
+.nav-title
+{
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.nav-page-title
+{
+    font-size: 24px;
+}
+
+.nav-buttons
+{
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.nav-link
+{
+    width: fit-content;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f3;
+    padding: 1rem;
+    text-decoration: none;
+}
+.nav-link:hover
+{
+    background-color: #e0e0ff;
+}
