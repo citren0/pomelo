@@ -1,77 +1,118 @@
-from flask import Flask, request, jsonify
+from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+from flask import Flask, Response, request
+import os
+import jwt
+import requests
+import re
+import sys
 
+app = Flask(__name__)
 
-class Llama3:
-    def __init__(self, model_path):
-        self.model_id = model_path
-        self.pipeline = transformers.pipeline(
-            "text-generation",
-            model=self.model_id,
-            model_kwargs={
-                "torch_dtype": torch.float16,
-                "quantization_config": {"load_in_4bit": True},
-                "low_cpu_mem_usage": True,
-            },
-        )
-        self.terminators = [
-            self.pipeline.tokenizer.eos_token_id,
-            self.pipeline.tokenizer.convert_tokens_to_ids(""),
-        ]
-  
-  
-    def get_response(self, query, message_history=[], max_tokens=4096, temperature=0.6, top_p=0.9):
-        user_prompt = message_history + [{"role": "user", "content": query}]
-        prompt = self.pipeline.tokenizer.apply_chat_template(
-            user_prompt, tokenize=False, add_generation_prompt=True
-        )
-        outputs = self.pipeline(
-            prompt,
-            max_new_tokens=max_tokens,
-            eos_token_id=self.terminators,
-            do_sample=True,
-            temperature=temperature,
-            top_p=top_p,
-        )
-        response = outputs[0]["generated_text"][len(prompt):]
-        return response, user_prompt + [{"role": "assistant", "content": response}]
-    
+model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
 
-    def chatbot(self, user_input, system_instructions=""):
-        conversation = [{"role": "system", "content": system_instructions}]
-        response, conversation = self.get_response(user_input, conversation)
-        return respose
+guard_tokenizer = AutoTokenizer.from_pretrained("ProtectAI/deberta-v3-base-prompt-injection-v2")
+guard_model = AutoModelForSequenceClassification.from_pretrained("ProtectAI/deberta-v3-base-prompt-injection-v2")
+
+classifier = pipeline(
+  "text-classification",
+  model=guard_model,
+  tokenizer=guard_tokenizer,
+  truncation=True,
+  max_length=512,
+  device="cuda",
+  token=os.environ.get("HUGGING_FACE_TOKEN")
+)
+
+pipe = pipeline(
+    "text-generation",
+    model=model_id,
+    model_kwargs=
+    {
+        "torch_dtype": torch.float16
+    },
+    token=os.environ.get("HUGGING_FACE_TOKEN")
+)
 
 
 
-app = Flask("Llama server")
-llama = Llama3("/home/server/.cache/Llama-3.1-8B-Instruct")
+def generate(text):
+    messages = [
+        {"role": "system", "content": "You are a friendly chatbot."},
+        {"role": "user", "content": text},
+    ]
 
-@app.route('/llama', methods=['POST'])
-def generate_response():
-    try:
-        data = request.get_json()
+    terminators = [
+        pipe.tokenizer.eos_token_id,
+        pipe.tokenizer.convert_tokens_to_ids("<|eot_id|>")
+    ]
 
-        # Check if the required fields are present in the JSON data
-        if 'prompt' in data and 'max_length' in data:
-            prompt = data['prompt']
-            max_length = int(data['max_length'])
+    outputs = pipe(
+        messages,
+        max_new_tokens=256,
+        eos_token_id=terminators,
+        do_sample=True,
+        temperature=0.6,
+        top_p=0.9,
+    )
 
-            response = llama.chatbot(prompt, "You are a helpful chatbot.")
+    summary = outputs[0]["generated_text"][-1]["content"]
+    return summary
 
-            return jsonify({ "response": response })
 
+def filter_special_chars(text):
+    return re.sub('[^A-Za-z0-9 .,?!\\/]+', '', text)
+
+
+def check_text(text):
+    classification = classifier(text)
+
+    highest_prob = max(classification, key = lambda x: x["score"])
+
+    if highest_prob["label"] == "SAFE":
+        return True
+    else:
+        return False
+
+
+@app.route("/llm", methods=["POST"])
+def llm():
+    # try:
+        # header = request.headers["Authorization"].split(" ")
+
+        # if header[0] != "Bearer":
+        #     return Response("Unauthorized.", status=401, mimetype="text/plain")
+
+        # token = header[1]
+
+        # payload = jwt.decode(token, os.environ.get("JWT_SECRET"), algorithms=["HS256"])
+
+        # if "server" not in payload or payload["server"] != True:
+        #     return Response("Unauthorized.", status=401, mimetype="text/plain")
+
+    # except Exception:
+    #     return Response("Unauthorized.", status=401, mimetype="text/plain")
+
+
+    content_type = request.headers.get("Content-Type")
+    if (content_type == "application/json"):
+        json = request.json
+        if "text" not in json:
+            return Response("Content type not supported.", status=400, mimetype="text/plain")
         else:
-            return jsonify({ "error": "Missing required parameters" }), 400
+            no_special_chars = filter_special_chars(json["text"])
 
-    except Exception as e:
-        return jsonify({ "Error": str(e) }), 500 
+            if check_reviews(no_special_chars) == False:
+                return Response("Prompt injection detected.", status=422, mimetype="text/plain")
+            
+            return Response(generate(no_special_chars), status=200, mimetype="text/plain")
+    else:
+        return Response("Content type not supported.", status=400, mimetype="text/plain")
 
 
 @app.errorhandler(404) 
 def not_found(e): 
-    return Response("Page not found.")
+  return Response("Page not found.")
 
 
 if __name__ == "__main__":
@@ -82,10 +123,3 @@ if __name__ == "__main__":
         serve(app, host="0.0.0.0", port=3000)
     
     print("Server started.")
-
-
-
-  
-
-if __name__ == "__main__":
-    bot.chatbot()
