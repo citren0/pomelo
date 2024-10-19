@@ -6,7 +6,7 @@ COPY requirements.txt .
 
 RUN apt -y update
 RUN apt -y upgrade
-RUN apt -y install python3 python3-pip
+RUN apt -y install python3 python3-pip python3-venv
 
 RUN useradd -ms /bin/bash server
 
