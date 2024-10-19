@@ -18,4 +18,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+WORKDIR /home/server
+
 CMD [ "python3", "./src/server.py" ]
