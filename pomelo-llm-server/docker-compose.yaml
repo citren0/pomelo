@@ -10,7 +10,7 @@ services:
     networks:
       - default
     volumes:
-      - ./:/home/server/app
+      - ./:/home/server
       - ./cache:/home/server/.cache
     deploy:
       resources:
