@@ -1,6 +1,4 @@
-FROM nvidia/cuda:12.6.2-cudnn-devel-ubuntu22.04
-
-SHELL ["/bin/bash", "-c"]
+FROM nvidia/cuda:12.6.2-devel-ubuntu22.04
 
 RUN useradd -ms /bin/bash server
 
@@ -14,7 +12,7 @@ USER server
 
 COPY requirements.txt .
 
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
