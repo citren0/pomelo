@@ -20,7 +20,6 @@ classifier = pipeline(
   tokenizer=guard_tokenizer,
   truncation=True,
   max_length=512,
-  device="cuda",
   token=os.environ.get("HUGGING_FACE_TOKEN")
 )
 
