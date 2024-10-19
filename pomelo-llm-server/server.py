@@ -2,64 +2,76 @@ from flask import Flask, request, jsonify
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 
-# Create a Flask object
+
+class Llama3:
+    def __init__(self, model_path):
+        self.model_id = model_path
+        self.pipeline = transformers.pipeline(
+            "text-generation",
+            model=self.model_id,
+            model_kwargs={
+                "torch_dtype": torch.float16,
+                "quantization_config": {"load_in_4bit": True},
+                "low_cpu_mem_usage": True,
+            },
+        )
+        self.terminators = [
+            self.pipeline.tokenizer.eos_token_id,
+            self.pipeline.tokenizer.convert_tokens_to_ids(""),
+        ]
+  
+  
+    def get_response(self, query, message_history=[], max_tokens=4096, temperature=0.6, top_p=0.9):
+        user_prompt = message_history + [{"role": "user", "content": query}]
+        prompt = self.pipeline.tokenizer.apply_chat_template(
+            user_prompt, tokenize=False, add_generation_prompt=True
+        )
+        outputs = self.pipeline(
+            prompt,
+            max_new_tokens=max_tokens,
+            eos_token_id=self.terminators,
+            do_sample=True,
+            temperature=temperature,
+            top_p=top_p,
+        )
+        response = outputs[0]["generated_text"][len(prompt):]
+        return response, user_prompt + [{"role": "assistant", "content": response}]
+    
+
+    def chatbot(self, user_input, system_instructions=""):
+        conversation = [{"role": "system", "content": system_instructions}]
+        response, conversation = self.get_response(user_input, conversation)
+        return respose
+
+
+
 app = Flask("Llama server")
-
-# Initialize the model and tokenizer variables
-model = None
-tokenizer = None
-
+llama = Llama3("/home/server/app/cache/Llama-3.1-8B-Instruct")
 
 @app.route('/llama', methods=['POST'])
 def generate_response():
-    global model, tokenizer
     try:
         data = request.get_json()
-        
-        # Create the model and tokenizer if they were not previously created
-        if model is None or tokenizer is None:
-            # Put the location of to the LLAMA 7B model directory that you've downloaded from HuggingFace here
-            model_dir = "/Path-to-your-model-dir/Llama-2-7b-hf"
-                
-            # Create the model and tokenizer
-            tokenizer = AutoTokenizer.from_pretrained(model_dir)
-            model = AutoModelForCausalLM.from_pretrained(model_dir)
 
         # Check if the required fields are present in the JSON data
         if 'prompt' in data and 'max_length' in data:
             prompt = data['prompt']
             max_length = int(data['max_length'])
-            
-            # Create the pipeline
-            text_gen = pipeline(
-                "text-generation",
-                model=model,
-                tokenizer=tokenizer,
-                torch_dtype=torch.float16,
-                device_map="auto",)
-            
-            # Run the model
-            sequences = text_gen(
-                prompt,
-                do_sample=True,
-                top_k=10,
-                num_return_sequences=1,
-                eos_token_id=tokenizer.eos_token_id,
-                max_length=max_length,
-            )
 
-            return jsonify([seq['generated_text'] for seq in sequences])
+            response = llama.chatbot(prompt, "You are a helpful chatbot.")
+
+            return jsonify({ "response": response })
 
         else:
-            return jsonify({"error": "Missing required parameters"}), 400
+            return jsonify({ "error": "Missing required parameters" }), 400
 
     except Exception as e:
-        return jsonify({"Error": str(e)}), 500 
+        return jsonify({ "Error": str(e) }), 500 
 
 
 @app.errorhandler(404) 
 def not_found(e): 
-  return Response("Page not found.")
+    return Response("Page not found.")
 
 
 if __name__ == "__main__":
@@ -70,3 +82,10 @@ if __name__ == "__main__":
         serve(app, host="0.0.0.0", port=3000)
     
     print("Server started.")
+
+
+
+  
+
+if __name__ == "__main__":
+    bot.chatbot()

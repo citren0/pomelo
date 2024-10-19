@@ -14,7 +14,7 @@ RUN chown -R server:server /usr/src/app
 
 USER server
 
-RUN pip install --break-system-packages --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 

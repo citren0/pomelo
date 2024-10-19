@@ -10,8 +10,7 @@ services:
     networks:
       - default
     volumes:
-      - ./:/home/node/app
-      - ./cache:/root/.cache
+      - ./:/home/server/app
     deploy:
       resources:
         reservations:
