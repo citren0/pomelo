@@ -11,13 +11,13 @@ services:
       - default
     volumes:
       - ./cache:/home/server/.cache
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
 
   webserver_pomelo_llm:
     image: nginx:latest

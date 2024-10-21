@@ -6,6 +6,7 @@ import jwt
 import requests
 import re
 import sys
+import time
 
 app = Flask(__name__)
 
@@ -15,12 +16,13 @@ guard_tokenizer = AutoTokenizer.from_pretrained("ProtectAI/deberta-v3-base-promp
 guard_model = AutoModelForSequenceClassification.from_pretrained("ProtectAI/deberta-v3-base-prompt-injection-v2")
 
 classifier = pipeline(
-  "text-classification",
-  model=guard_model,
-  tokenizer=guard_tokenizer,
-  truncation=True,
-  max_length=512,
-  token=os.environ.get("HUGGING_FACE_TOKEN")
+    "text-classification",
+    model=guard_model,
+    tokenizer=guard_tokenizer,
+    truncation=True,
+    max_length=512,
+    token=os.environ.get("HUGGING_FACE_TOKEN"),
+    device="cpu"
 )
 
 pipe = pipeline(
@@ -28,9 +30,12 @@ pipe = pipeline(
     model=model_id,
     model_kwargs=
     {
-        "torch_dtype": torch.float16
+        "torch_dtype": torch.float16,
+        "quantization_config": { "load_in_4bit": True },
+        "low_cpu_mem_usage": True,
     },
-    token=os.environ.get("HUGGING_FACE_TOKEN")
+    token=os.environ.get("HUGGING_FACE_TOKEN"),
+    device="cpu",
 )
 
 
@@ -97,11 +102,11 @@ def llm():
     if (content_type == "application/json"):
         json = request.json
         if "text" not in json:
-            return Response("Content type not supported.", status=400, mimetype="text/plain")
+            return Response("Required field missing.", status=400, mimetype="text/plain")
         else:
             no_special_chars = filter_special_chars(json["text"])
 
-            if check_reviews(no_special_chars) == False:
+            if check_text(no_special_chars) == False:
                 return Response("Prompt injection detected.", status=422, mimetype="text/plain")
             
             return Response(generate(no_special_chars), status=200, mimetype="text/plain")
@@ -114,11 +119,15 @@ def not_found(e):
   return Response("Page not found.")
 
 
+
 if __name__ == "__main__":
     if os.environ.get("DEV") == "true":
         app.run(host="0.0.0.0", port=3000, debug=True)
-    else:
-        from waitress import serve
-        serve(app, host="0.0.0.0", port=3000)
+    # else:
+    #     from waitress import serve
+    #     serve(app, host="0.0.0.0", port=3000)
     
     print("Server started.")
+
+    # while True:
+    #     time.sleep(1)

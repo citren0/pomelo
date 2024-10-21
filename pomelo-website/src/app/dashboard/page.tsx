@@ -3,6 +3,7 @@ import React from "react";
 import "./page.css";
 import { NavBar } from "../../components";
 import Reports from "./Reports/Reports";
+import Insights from "./Insights/Insights";
 
 const Dashboard = () =>
 {
@@ -12,6 +13,7 @@ const Dashboard = () =>
 			
 			<div className="content-container">
 				<Reports />
+				<Insights />
 			</div>
 		</>
 	);
