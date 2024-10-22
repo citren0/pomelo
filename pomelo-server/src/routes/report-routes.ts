@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const fetch = require("node-fetch");
 const router = express.Router();
 
 import { db } from '../database';
@@ -34,7 +35,7 @@ router.post('/api/report', auth, (req, res, next) =>
 router.get('/api/report', auth, (req, res, next) =>
 {
     // User verified, add report to db.
-    db.any("SELECT userid, time_stamp, domain, faviconUrl from web_activity WHERE userid = $1;",
+    db.any("SELECT time_stamp, domain, faviconUrl from web_activity WHERE userid = $1;",
             [ req.user.id, ])
     .then((reports) =>
     {
@@ -42,9 +43,65 @@ router.get('/api/report', auth, (req, res, next) =>
     })
     .catch((error) =>
     {
-        return res.status(500).send({ status: "Failed to put report. Try again later." });
+        return res.status(500).send({ status: "Failed to get reports. Try again later." });
     });
 
+});
+
+
+router.get('/api/insights', auth, (req, res, next) =>
+{
+    // User verified, add report to db.
+    db.any("SELECT time_stamp, domain, faviconUrl from web_activity WHERE userid = $1;",
+        [ req.user.id, ])
+    .then((reports) =>
+    {
+        const minIndex = Math.max(0, reports.length - parseInt(process.env.LLM_SERVER_MAX_REPORTS));
+        const maxIndex = reports.length;
+
+        const body =
+        {
+            text: reports
+                    .slice(minIndex, maxIndex)
+                    .map((report) =>
+                        {
+                            const date = new Date(parseInt(report.time_stamp));
+
+                            return {
+                                domain: report.domain,
+                                timestamp: (date.toDateString() + " " + date.toLocaleTimeString()),
+                            };
+                        }),
+        };
+
+        console.log(body);
+
+        fetch(process.env.LLM_SERVER_ENDPOINT,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers:
+                {
+                    "Content-Type": "application/json",
+                },
+            }
+        )
+        .then(async (response) =>
+        {
+            const insights = await response.text();
+            return res.status(200).send({ status: "Successfully generated insights.", insights: insights, });
+        })
+        .catch((error) =>
+        {
+            console.log(error);
+            return res.status(500).send({ status: "Failed to get insights. Try again later." });
+        });
+    })
+    .catch((error) =>
+    {
+        console.log(error);
+        return res.status(500).send({ status: "Failed to get insights. Try again later." });
+    });
 });
 
 export { router };

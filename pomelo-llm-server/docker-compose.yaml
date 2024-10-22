@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   pomelo_llm:
     hostname: pomelo_llm

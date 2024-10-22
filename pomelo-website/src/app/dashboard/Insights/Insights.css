@@ -1,0 +1,27 @@
+
+.insights-wrapper
+{
+    display: flex;
+    flex-flow: column;
+    border-radius: 0.5rem;
+    background-color: #fafaff;
+    box-shadow: 5px 5px 5px 0px #cccccc;
+    padding: 2rem;
+    margin: 2rem;
+}
+
+.insights-content-wrapper
+{
+    display: flex;
+    flex-flow: row;
+    gap: 0rem;
+    padding: 1rem 0 1rem 0;
+    align-items: center;
+    max-width: 90vw;
+}
+
+.insights-title
+{
+    font-size: 28px;
+    font-weight: 500;
+}

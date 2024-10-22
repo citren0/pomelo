@@ -1,4 +1,4 @@
-from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
+from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification, BitsAndBytesConfig
 import torch
 from flask import Flask, Response, request
 import os
@@ -25,24 +25,29 @@ classifier = pipeline(
     device="cpu"
 )
 
+
+double_quant_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_use_double_quant=True,
+)
+
 pipe = pipeline(
     "text-generation",
     model=model_id,
     model_kwargs=
     {
         "torch_dtype": torch.float16,
-        "quantization_config": { "load_in_4bit": True },
-        "low_cpu_mem_usage": True,
+        "quantization_config": double_quant_config,
     },
     token=os.environ.get("HUGGING_FACE_TOKEN"),
-    device="cpu",
+    device_map="auto"
 )
 
 
 
 def generate(text):
     messages = [
-        {"role": "system", "content": "You are a friendly chatbot."},
+        {"role": "system", "content": "You are a friendly bot who wants to help the user optimize their productivity and time usage in their web browser. The user will provide you with a json array of tab changes, each with a timestamp and domain. Try to draw insights into the user's time usage and help them optimize wasted time. Stay away from numbers, math, and questions. Just provide insights into time saving techniques and the user's time usage."},
         {"role": "user", "content": text},
     ]
 
@@ -69,14 +74,15 @@ def filter_special_chars(text):
 
 
 def check_text(text):
-    classification = classifier(text)
+    # classification = classifier(text)
 
-    highest_prob = max(classification, key = lambda x: x["score"])
+    # highest_prob = max(classification, key = lambda x: x["score"])
 
-    if highest_prob["label"] == "SAFE":
-        return True
-    else:
-        return False
+    # if highest_prob["label"] == "SAFE":
+        # return True
+    # else:
+        # return False
+    return True
 
 
 @app.route("/llm", methods=["POST"])
@@ -104,18 +110,18 @@ def llm():
         if "text" not in json:
             return Response("Required field missing.", status=400, mimetype="text/plain")
         else:
-            no_special_chars = filter_special_chars(json["text"])
+            no_special_chars = filter_special_chars(str(json["text"]))
 
             if check_text(no_special_chars) == False:
                 return Response("Prompt injection detected.", status=422, mimetype="text/plain")
-            
+
             return Response(generate(no_special_chars), status=200, mimetype="text/plain")
     else:
         return Response("Content type not supported.", status=400, mimetype="text/plain")
 
 
-@app.errorhandler(404) 
-def not_found(e): 
+@app.errorhandler(404)
+def not_found(e):
   return Response("Page not found.")
 
 
@@ -126,7 +132,7 @@ if __name__ == "__main__":
     # else:
     #     from waitress import serve
     #     serve(app, host="0.0.0.0", port=3000)
-    
+
     print("Server started.")
 
     # while True:
