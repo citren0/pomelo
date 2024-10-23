@@ -51,6 +51,11 @@ const Reports = () =>
                 
             }
 
+        })
+        .catch((_) =>
+        {
+            setIsError(true);
+            setErrorMessage("Error encountered. Try again later.");
         });
 
     };
@@ -63,7 +68,7 @@ const Reports = () =>
     return (
         <>
             <div className="reports-title-wrapper">
-                <span className="reports-title">Reports</span>
+                <span className="reports-title">Last 24 Hours</span>
                 <hr className="hr-100" />
 
                 { isError && <>
@@ -90,7 +95,6 @@ const Reports = () =>
                                         <span className="reports-report-timestamp report-rotate">{(new Date(parseInt(report.time_stamp))).toLocaleTimeString()}</span>
                                     </div>
                                     { (idx != reports.length - 1) && <>
-                                        {console.log()}
                                         <hr
                                             className="reports-line"
                                             style={{ width: String(Math.log2(parseInt(reports[idx + 1].time_stamp) - parseInt(report.time_stamp))) + "px" }}

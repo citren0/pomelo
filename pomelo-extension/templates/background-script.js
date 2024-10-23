@@ -1,9 +1,12 @@
 
-const getAndSetCurrentUrl = async () =>
+var previousURL = "";
+
+
+const getAndSetCurrentUrl = () =>
 {
     var tabs;
 
-    await new Promise(async (resolve, reject) =>
+    new Promise(async (resolve, reject) =>
     {
         if (typeof chrome !== "undefined")
         {
@@ -21,29 +24,37 @@ const getAndSetCurrentUrl = async () =>
             
         }
 
-    });
-
-    const favicon = await tabs[0].favIconUrl;
-    const currentFullURL = await tabs[0].url ?? "";
-    const currentFullURLNoWWW = await currentFullURL.replace("www.", "");
-    const currentFullURLNoPort = await currentFullURLNoWWW.replace(/:[0-9]+/, "");
-    const isURL = await currentFullURLNoPort.includes(".") &&
-                        (currentFullURLNoPort.indexOf(".") != (currentFullURLNoPort.length - 1)) &&
-                        (currentFullURLNoPort.indexOf(".") != 0);
-
-    try
+    })
+    .then((_) =>
     {
-        if (isURL)
+        const favicon = tabs[0].favIconUrl;
+        const currentFullURL = tabs[0].url ?? "";
+        const currentFullURLNoWWW = currentFullURL.replace("www.", "");
+        const currentFullURLNoPort = currentFullURLNoWWW.replace(/:[0-9]+/, "");
+        const isURL = currentFullURLNoPort.includes(".") &&
+                     (currentFullURLNoPort.indexOf(".") != (currentFullURLNoPort.length - 1)) &&
+                     (currentFullURLNoPort.indexOf(".") != 0);
+    
+        try
         {
-            const domain = (new URL(currentFullURLNoPort)).host.toLocaleLowerCase();
-            postReport(domain, favicon);
+            if (isURL && (typeof favicon !== "undefined"))
+            {
+                const domain = (new URL(currentFullURLNoPort)).host.toLocaleLowerCase();
+    
+                if (domain != previousURL)
+                {
+                    previousURL = domain;
+                    postReport(domain, favicon);
+                }
+            }
+    
+        }
+        catch (e)
+        {
+            return;
         }
 
-    }
-    catch (e)
-    {
-        return;
-    }
+    });
 
 }
 
@@ -115,10 +126,12 @@ if (typeof chrome !== "undefined")
     if (typeof browser !== "undefined")
     {
         // Firefox
+        browser.tabs.onUpdated.addListener(getAndSetCurrentUrl);
         browser.tabs.onActivated.addListener(getAndSetCurrentUrl);
     }
     else
     {
+        chrome.tabs.onUpdated.addListener(getAndSetCurrentUrl);
         chrome.tabs.onActivated.addListener(getAndSetCurrentUrl);
     }
     

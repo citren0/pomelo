@@ -17,7 +17,6 @@ router.post('/api/report', auth, (req, res, next) =>
         return res.status(400).send({ status: "Include all fields before submitting.", });
     }
 
-    // User verified, add report to db.
     db.any("INSERT INTO web_activity (userid, time_stamp, domain, faviconUrl) values ($1, $2, $3, $4);",
             [req.user.id, Date.now(), req.body.domain, req.body.favicon, ])
     .then((_) =>
@@ -34,9 +33,10 @@ router.post('/api/report', auth, (req, res, next) =>
 
 router.get('/api/report', auth, (req, res, next) =>
 {
-    // User verified, add report to db.
-    db.any("SELECT time_stamp, domain, faviconUrl from web_activity WHERE userid = $1;",
-            [ req.user.id, ])
+    const oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
+
+    db.any("SELECT time_stamp, domain, faviconUrl from web_activity WHERE userid = $1 AND time_stamp > $2;",
+            [ req.user.id, oneDayAgo, ])
     .then((reports) =>
     {
         return res.status(200).send({ status: "Successfully got reports.", reports: reports, });
@@ -51,7 +51,6 @@ router.get('/api/report', auth, (req, res, next) =>
 
 router.get('/api/insights', auth, (req, res, next) =>
 {
-    // User verified, add report to db.
     db.any("SELECT time_stamp, domain, faviconUrl from web_activity WHERE userid = $1;",
         [ req.user.id, ])
     .then((reports) =>

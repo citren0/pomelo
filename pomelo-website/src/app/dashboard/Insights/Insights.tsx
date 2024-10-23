@@ -7,6 +7,7 @@ import { checkStatusCode } from "@/services/checkStatusCode";
 import config from "@/constants/config";
 import { Message } from "@/components";
 import MessageTypes from "@/constants/messageTypes";
+import Image from "next/image";
 
 
 const Insights = () =>
@@ -44,11 +45,16 @@ const Insights = () =>
                 }
                 else
                 {
-                    setInsights(getInsightsResponseJson.insights);
+                    setInsights(getInsightsResponseJson.insights.replace("*", "\n*"));
                 }
                 
             }
 
+        })
+        .catch((_) =>
+        {
+            setIsError(true);
+            setErrorMessage("Error encountered. Try again later.");
         });
 
     };
@@ -61,7 +67,10 @@ const Insights = () =>
     return (
         <>
             <div className="insights-wrapper">
-                <span className="insights-title">Insights</span>
+                <div className="insights-title-and-image">
+                    <span className="insights-title">Insights</span>
+                    <Image src="/assets/sparks.svg" height={24} width={24} alt="Sparkle Icon" />
+                </div>
                 <hr className="hr-100" />
 
                 { isError && <>
@@ -69,7 +78,7 @@ const Insights = () =>
                 </> }
                 
                 <div className="insights-content-wrapper">
-                    {insights}
+                    <span className="insights-text">{insights}</span>
                 </div>
             </div>
         </>
