@@ -1,0 +1,28 @@
+
+.simple-text-area
+{
+    font-size: 22px;
+    padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    outline: none;
+    border: 2px #f0f0ff solid;
+    resize: none;
+}
+.simple-text-area:focus
+{
+    outline: 2px #a0a0f0 solid;
+}
+
+.simple-text-area-wrapper
+{
+    display: flex;
+    flex-flow: column;
+    gap: 0rem;
+    flex-grow: 1;
+}
+
+.simple-text-area-label
+{
+    font-size: 15px;
+    font-weight: 500;
+}

@@ -8,7 +8,6 @@ const Login = () =>
 
     return (
         <>
-            LOGIN PAGE
             <LoginForm />
         </>
     );

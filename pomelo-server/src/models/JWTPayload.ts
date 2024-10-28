@@ -1,3 +1,4 @@
+import Roles from "./Roles";
 
 export interface JWTPayload
 {
@@ -5,4 +6,5 @@ export interface JWTPayload
     email: string;
     id: number;
     registration: string;
+    roles: Roles[];
 };

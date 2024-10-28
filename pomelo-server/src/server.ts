@@ -9,6 +9,7 @@ import { connectToDatabase } from "./database";
 import { router as authRouter } from "./routes/auth-routes";
 import { router as userRouter } from "./routes/user-routes";
 import { router as reportRouter } from "./routes/report-routes";
+import { router as emailRouter } from "./routes/email-routes";
 
 // Server setup.
 connectToDatabase();
@@ -21,6 +22,7 @@ app.use(cors({ origin: true, credentials: true, }));
 app.use("/", authRouter);
 app.use("/", userRouter);
 app.use("/", reportRouter);
+app.use("/", emailRouter);
 
 app.listen(3000, () => {
     console.log("Server started.")

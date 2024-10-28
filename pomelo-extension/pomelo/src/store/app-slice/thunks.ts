@@ -18,7 +18,7 @@ const setUpApplication = (): AppThunk => async (dispatch, getState) =>
         else
         {
             // Not logged in.
-            dispatch(navigateTo(Pages.Login));
+            dispatch(navigateTo(Pages.Welcome));
         }
     };
     

@@ -66,8 +66,16 @@ const LoginForm = () =>
                 const token = loginResponseJson.token;
 
                 window.localStorage.setItem('token', token);
+
+                if (loginResponseJson.isVerified == true)
+                {
+                    window.location.href = "/profile";
+                }
+                else
+                {
+                    window.location.href = "/verifyemail";
+                }
                 
-                window.location.href = "/profile";
             }
 
         });
@@ -77,11 +85,14 @@ const LoginForm = () =>
     return (
         <>
             <form
-                className="login-form"
+                className="form-popout"
+                style={{ height: "25rem" }}
                 onSubmit={login}
             >
-                <span className="login-form-title">Login</span>
-                <hr className="hr-100"/>
+                <div>
+                    <span className="form-title">Pomelo Login</span>
+                    <hr className="hr-100"/>
+                </div>
 
                 { isError && <>
                     <Message type={MessageTypes.Error} message={errorMessage} />
@@ -105,8 +116,8 @@ const LoginForm = () =>
                     placeholder="••••••••"
                     onChange={(e) => setPassword(e.currentTarget.value)}
                 />
-                <button type="submit">Login</button>
-                <a href="/register">Register</a>
+                <button type="submit" className="form-primary-button">Login</button>
+                <a href="/register" className="form-secondary-button">Register</a>
             </form>
         </>
     );

@@ -5,10 +5,11 @@
     padding: 0.5rem 0.75rem 0.5rem 0.75rem;
     border-radius: 0.5rem;
     outline: none;
+    border: 2px #f0f0ff solid;
 }
 .simple-input:focus
 {
-    outline: 2px #6060e0 solid;
+    outline: 2px #a0a0f0 solid;
 }
 
 .simple-input-wrapper
@@ -16,10 +17,11 @@
     display: flex;
     flex-flow: column;
     gap: 0rem;
+    flex-grow: 1;
 }
 
 .simple-input-label
 {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
 }

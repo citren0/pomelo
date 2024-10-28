@@ -31,8 +31,11 @@ const LoginForm = () =>
                 className="login-form"
                 onSubmit={loginSubmit}
             >
-                <span className="login-form-title">Login</span>
-                <hr className="hr-100"/>
+                <div>
+                    <span className="login-form-title">Login or Register</span>
+                    <hr className="hr-100"/>
+                    <span className="form-subtext">Before you can use the Pomelo extension, sign in with your account credentials or register.</span>
+                </div>
 
                 { loginThunkStatus.thunkStatus == AsyncThunkStatus.Error && <>
                     <Message type={MessageTypes.Error} message={loginThunkStatus.message ?? "Login failed."} />
@@ -52,8 +55,9 @@ const LoginForm = () =>
                     placeholder="••••••••"
                     onChange={(e) => dispatch(setPassword(e.currentTarget.value))}
                 />
-                <button type="submit">Login</button>
-                <span>Register on the Pomelo website.</span>
+
+                <button type="submit" className="form-primary-button">Login</button>
+                <a href="https://pomeloprod.com/register" target="_blank" className="form-secondary-button">Register</a>
             </form>
         </>
     );

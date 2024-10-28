@@ -14,6 +14,13 @@
 {
     display: flex;
     flex-flow: row;
+    min-width: 40vw;
+}
+
+.reports-list
+{
+    display: flex;
+    flex-flow: row;
     gap: 0rem;
     padding: 1rem 0 1rem 0;
     align-items: center;
@@ -33,9 +40,17 @@
     flex-flow: column;
     gap: 1rem;
     border-radius: 0.5rem;
-    border: 1px #707070 solid;
+    border: 1px #505050 solid;
     padding: 1rem;
     flex-shrink: 0;
+    box-shadow: 2px 2px 2px 0px #eeeeee;
+}
+
+.reports-report-date-time-group
+{
+    display: flex;
+    flex-flow: column;
+    gap: 0.25rem;
 }
 
 .reports-report-domain
@@ -62,6 +77,7 @@
 .reports-line
 {
     height: 0.5rem;
-    background-color: black;
+    background-color: #505050;
     flex-shrink: 0;
+    border: none;
 }

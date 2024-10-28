@@ -21,28 +21,34 @@ const NavBar = () =>
     return (
         <>
             <div className="nav-wrapper">
-                <Image
-                    src="/assets/pomelo.svg"
-                    alt="Pomelo Logo"
-                    width={48}
-                    height={48}
-                    className="nav-logo"
-                />
-                <span className="nav-title">Pomelo Productivity</span>
+                <a href="/" className="a-no-dec">
+                    <div className="nav-logo-wrapper">
+                        <Image
+                            src="/assets/pomelo.svg"
+                            alt="Pomelo Logo"
+                            width={48}
+                            height={48}
+                            className="nav-logo"
+                        />
+                        <span className="nav-title">Pomelo Productivity</span>
+                    </div>
+                </a>
 
                 <div className="nav-buttons">
-                    <a
-                        className="nav-link"
-                        href="/"
-                    >Home</a>
-                    <a
-                        className="nav-link"
-                        href="/login"
-                    >Login</a>
-                    <a
-                        className="nav-link"
-                        href="/register"
-                    >Register</a>
+
+                    { !isLoggedIn && <>
+                        <div className="nav-notsignedin-buttons">
+                            <a
+                                className="nav-link-prominent"
+                                href="/register"
+                            >Register</a>
+                            <a
+                                className="nav-link-prominent-secondary"
+                                href="/login"
+                            >Login</a>
+                        </div>
+                    </> }
+                    
                     { isLoggedIn && <>
                         <a
                             className="nav-link"

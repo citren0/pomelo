@@ -6,3 +6,9 @@
     padding: 4rem;
     gap: 4rem;
 }
+
+.login-img
+{
+    height: 28rem;
+    flex-grow: 1;
+}

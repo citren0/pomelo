@@ -8,9 +8,104 @@
     font-style: normal;
 }
 
+.content-layout
+{
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
 body
 {
     width: 30rem;
     height: 25rem;
 }
 
+.hr-100
+{
+    width: 100%;
+}
+
+.form-primary-button
+{
+    background-color: #7171f1;
+    color: white;
+    border-radius: 0.5rem;
+    outline: none;
+    border: none;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 0.5rem;
+    text-align: center;
+
+}
+.form-primary-button:hover
+{
+    background-color: #5858f0;
+}
+
+.form-secondary-button
+{
+    background-color: #e0e0e9;
+    color: black;
+    border-radius: 0.5rem;
+    outline: none;
+    border: none;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 0.5rem;
+    text-decoration: none;
+    text-align: center;
+}
+.form-secondary-button:hover
+{
+    background-color: #c0c0d0;
+}
+
+.nav-button-red
+{
+    width: fit-content;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    font-size: 20px;
+    font-weight: 700;
+    border: 2px solid #a61313;
+    color: #a61313;
+    background-color: white;
+    border-radius: 0.5rem;
+}
+.nav-button-red:hover
+{
+    background-color: #a61313;
+    color: white;
+}
+
+.nav-button-big-continue
+{
+    width: fit-content;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 1.2rem 0.4rem 1.2rem;
+    font-size: 24px;
+    font-weight: 700;
+    border: 2px solid #7171f1;
+    color: #15152d;
+    background-color: white;
+    border-radius: 0.5rem;
+}
+.nav-button-big-continue:hover
+{
+    background-color: #7171f1;
+    color: white;
+}
+
+.m-top-2
+{
+    margin-top: 2rem;
+}

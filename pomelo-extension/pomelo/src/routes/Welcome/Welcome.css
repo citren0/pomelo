@@ -1,1 +1,48 @@
 
+.welcome-wrapper
+{
+    display: flex;
+    flex-flow: column;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+.pomelo-logo-text
+{
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.pomelo-logo-wrapper
+{
+    display: flex;
+    flex-flow: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.welcome-text
+{
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.welcome-text-second
+{
+    font-size: 17px;
+}
+
+.welcome-text-example
+{
+    color: #303030;
+    font-size: 17px;
+}
+
+.welcome-text-second-em
+{
+    font-size: 18px;
+    font-weight: 700;
+}

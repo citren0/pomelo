@@ -6,6 +6,4 @@ enum Pages
     Welcome = "Welcome",
 };
 
-export const nestedPages = [ Pages.Login, ];
-
 export default Pages;

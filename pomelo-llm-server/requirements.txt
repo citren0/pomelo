@@ -1,9 +1,0 @@
-transformers
-flask
-accelerate
-bitsandbytes
-regex
-requests
-pyjwt
-torch
-waitress

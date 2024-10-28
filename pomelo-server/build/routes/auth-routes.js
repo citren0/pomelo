@@ -8,6 +8,9 @@ exports.router = router;
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 var database_1 = require("../database");
+var Roles_1 = require("../models/Roles");
+var token_1 = require("../services/token");
+var emailVerificationToken_1 = require("../services/emailVerificationToken");
 // Environment setup.
 dotenv.config();
 router.put('/api/register', function (req, res, next) {
@@ -19,10 +22,16 @@ router.put('/api/register', function (req, res, next) {
         .then(function (hash) {
         database_1.db.any('insert into users (username, email, hash, registration) values (lower($1), lower($2), $3, $4) returning id;', [req.body.username, req.body.email, hash, Date.now()])
             .then(function (user) {
-            return res.status(200).send({ status: "Successfully registered." });
+            // Send verification email.
+            (0, emailVerificationToken_1.default)(user[0].id, req.body.email)
+                .then(function (_) {
+                return res.status(200).send({ status: "Successfully registered. You can log in now." });
+            })
+                .catch(function (error) {
+                return res.status(500).send({ status: "Failed to register user. Try again later." });
+            });
         })
             .catch(function (error) {
-            console.log(error);
             return res.status(400).send({ status: "Failed to register user. Username or email already registered." });
         });
     })
@@ -44,14 +53,27 @@ router.post('/api/login', function (req, res, next) {
                 return res.status(500).send({ status: "Failed to log in. Try again later." });
             }
             if (result == true) {
-                var auth_payload = {
-                    username: req.body.username,
-                    email: user[0].email,
-                    id: user[0].id,
-                    registration: user[0].registration,
-                };
-                var auth_token = jwt.sign(auth_payload, process.env.AUTH_SECRET, { expiresIn: process.env.AUTH_JWT_EXPIRE_AGE, });
-                return res.status(200).send({ status: "Successfully logged in.", token: auth_token, });
+                // Password is valid. Get user's roles.
+                database_1.db.any("select roles.name from user_to_role inner join roles on user_to_role.role_id = roles.id where user_id = $1;", [user[0].id])
+                    .then(function (user_roles) {
+                    var mapped_roles = user_roles.map(function (user_role) { return user_role.name; });
+                    var auth_payload = {
+                        username: req.body.username,
+                        email: user[0].email,
+                        id: user[0].id,
+                        registration: user[0].registration,
+                        roles: mapped_roles,
+                    };
+                    var auth_token = jwt.sign(auth_payload, process.env.AUTH_SECRET, { expiresIn: process.env.AUTH_JWT_EXPIRE_AGE, });
+                    return res.status(200).send({
+                        status: "Successfully logged in.",
+                        token: auth_token,
+                        isVerified: mapped_roles.includes(Roles_1.default.Verified),
+                    });
+                })
+                    .catch(function (_) {
+                    return res.status(500).send({ status: "Failed to log in. Try again later." });
+                });
             }
             else {
                 return res.status(401).send({ status: "Failed to log in. Username or password invalid." });
@@ -60,5 +82,33 @@ router.post('/api/login', function (req, res, next) {
     })
         .catch(function (_) {
         return res.status(500).send({ status: "Failed to log in. Try again later." });
+    });
+});
+router.get("/api/newtoken", token_1.default, function (req, res, next) {
+    database_1.db.any('select id, email, hash, registration from users where lower(username) = lower($1);', [req.user.username])
+        .then(function (user) {
+        if (user.length != 1) {
+            return res.status(400).send({ status: "Failed to issue token. Username or password invalid." });
+        }
+        // Get user's roles.
+        database_1.db.any("select roles.name from user_to_role inner join roles on user_to_role.role_id = roles.id where user_id = $1;", [user[0].id])
+            .then(function (user_roles) {
+            var mapped_roles = user_roles.map(function (user_role) { return user_role.name; });
+            var auth_payload = {
+                username: user[0].username,
+                email: user[0].email,
+                id: user[0].id,
+                registration: user[0].registration,
+                roles: mapped_roles,
+            };
+            var auth_token = jwt.sign(auth_payload, process.env.AUTH_SECRET, { expiresIn: process.env.AUTH_JWT_EXPIRE_AGE, });
+            return res.status(200).send({ status: "Successfully issued token.", token: auth_token, });
+        })
+            .catch(function (_) {
+            return res.status(500).send({ status: "Failed to issue token. Try again later." });
+        });
+    })
+        .catch(function (_) {
+        return res.status(500).send({ status: "Failed to issue token. Try again later." });
     });
 });

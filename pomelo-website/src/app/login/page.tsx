@@ -18,7 +18,7 @@ const Login = () =>
 						alt="Image of laptop with person typing."
 						height={400}
 						width={300}
-						className="img-border"
+						className="login-img img-border"
 					/>
 					<LoginForm />
 				</div>

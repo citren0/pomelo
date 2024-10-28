@@ -120,6 +120,7 @@ const logout = (): AppThunk => async (dispatch, getState) =>
 {
     dispatch(clearJWTFromStore());
     dispatch(clearJWTFromLocalStorage());
+    dispatch(navigateTo(Pages.Login));
 }
 
 

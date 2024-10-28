@@ -2,15 +2,18 @@ const express = require('express');
 const dotenv = require('dotenv');
 const fetch = require("node-fetch");
 const router = express.Router();
+const OpenAI = require("openai");
 
 import { db } from '../database';
+import Roles from '../models/Roles';
+import mustHaveRole from '../services/mustHaveRole';
 import auth from '../services/token';
 
 // Environment setup.
 dotenv.config();
 
-
-router.post('/api/report', auth, (req, res, next) =>
+  
+router.post('/api/report', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
 {
     if (!req.body.hasOwnProperty("domain") || !req.body.hasOwnProperty("favicon"))
     {
@@ -31,7 +34,7 @@ router.post('/api/report', auth, (req, res, next) =>
 });
 
 
-router.get('/api/report', auth, (req, res, next) =>
+router.get('/api/report', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
 {
     const oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
 
@@ -39,6 +42,8 @@ router.get('/api/report', auth, (req, res, next) =>
             [ req.user.id, oneDayAgo, ])
     .then((reports) =>
     {
+        reports.sort((a, b) => a.time_stamp < b.time_stamp);
+
         return res.status(200).send({ status: "Successfully got reports.", reports: reports, });
     })
     .catch((error) =>
@@ -49,18 +54,29 @@ router.get('/api/report', auth, (req, res, next) =>
 });
 
 
-router.get('/api/insights', auth, (req, res, next) =>
+router.post('/api/insights', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
 {
-    db.any("SELECT time_stamp, domain, faviconUrl from web_activity WHERE userid = $1;",
-        [ req.user.id, ])
+    if (!req.body.hasOwnProperty("messages"))
+    {
+        return res.status(400).send({ status: "Failed to get insights. Include all fields before submitting." });
+    }
+
+    const oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
+
+    db.any("SELECT time_stamp, domain, faviconUrl from web_activity WHERE userid = $1  AND time_stamp > $2;",
+        [ req.user.id, oneDayAgo, ])
     .then((reports) =>
     {
+        if (reports.length < parseInt(process.env.LLM_MIN_REVIEWS))
+        {
+            return res.status(200).send({ status: "Successfully generated insights.", insights: "Too few datapoints. Try again when you've used Pomelo for longer.", });
+        }
+
         const minIndex = Math.max(0, reports.length - parseInt(process.env.LLM_SERVER_MAX_REPORTS));
         const maxIndex = reports.length;
 
-        const body =
-        {
-            text: reports
+        const body = {
+            reports: reports
                     .slice(minIndex, maxIndex)
                     .map((report) =>
                         {
@@ -70,35 +86,58 @@ router.get('/api/insights', auth, (req, res, next) =>
                                 domain: report.domain,
                                 timestamp: (date.toDateString() + " " + date.toLocaleTimeString()),
                             };
-                        }),
+                        }
+                    ),
+            conversation: req.body.messages.map((message) =>
+                            {
+                                return {
+                                    user: message.me,
+                                    text: message.message,
+                                };
+                            }),
         };
 
-        console.log(body);
-
-        fetch(process.env.LLM_SERVER_ENDPOINT,
-            {
-                method: "POST",
-                body: JSON.stringify(body),
-                headers:
+        const client = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+        });
+        
+        const params = {
+            messages:
+            [
                 {
-                    "Content-Type": "application/json",
+                    role: "system",
+                    content: process.env.OPENAI_SYSTEM_PROMPT
                 },
-            }
-        )
-        .then(async (response) =>
+                {
+                    role: "user",
+                    content: JSON.stringify(body),
+                }
+            ],
+            model: 'gpt-4o-mini',
+        };
+
+        client.chat.completions.create(params)
+        .then((chatCompletion) =>
         {
-            const insights = await response.text();
-            return res.status(200).send({ status: "Successfully generated insights.", insights: insights, });
+            if (chatCompletion.choices.length > 0 &&
+                !chatCompletion.choices[0].message.refusal)
+            {
+                return res.status(200).send({ status: "Successfully generated insights.", insights: chatCompletion.choices[0].message.content, });
+            }
+            else
+            {
+                return res.status(500).send({ status: "Failed to get insights. Try again later." });
+            }
+
         })
         .catch((error) =>
         {
-            console.log(error);
             return res.status(500).send({ status: "Failed to get insights. Try again later." });
         });
+
     })
     .catch((error) =>
     {
-        console.log(error);
         return res.status(500).send({ status: "Failed to get insights. Try again later." });
     });
 });

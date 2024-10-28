@@ -31,27 +31,22 @@ const getAndSetCurrentUrl = () =>
         const currentFullURL = tabs[0].url ?? "";
         const currentFullURLNoWWW = currentFullURL.replace("www.", "");
         const currentFullURLNoPort = currentFullURLNoWWW.replace(/:[0-9]+/, "");
-        const isURL = currentFullURLNoPort.includes(".") &&
-                     (currentFullURLNoPort.indexOf(".") != (currentFullURLNoPort.length - 1)) &&
-                     (currentFullURLNoPort.indexOf(".") != 0);
-    
-        try
+        const isURL = (currentFullURLNoPort.includes(".")) &&
+                      (currentFullURLNoPort.indexOf(".") != (currentFullURLNoPort.length - 1)) &&
+                      (currentFullURLNoPort.indexOf(".") != 0);    
+
+        if ((isURL == true) &&
+            (typeof favicon !== "undefined"))
         {
-            if (isURL && (typeof favicon !== "undefined"))
+            const domain = (new URL(currentFullURLNoPort)).host.toLocaleLowerCase();
+
+            if (domain != previousURL)
             {
-                const domain = (new URL(currentFullURLNoPort)).host.toLocaleLowerCase();
-    
-                if (domain != previousURL)
-                {
-                    previousURL = domain;
-                    postReport(domain, favicon);
-                }
+                previousURL = domain;
+
+                postReport(domain, favicon);
             }
-    
-        }
-        catch (e)
-        {
-            return;
+            
         }
 
     });

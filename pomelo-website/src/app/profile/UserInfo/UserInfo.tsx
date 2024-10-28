@@ -7,6 +7,7 @@ import config from "../../../constants/config";
 import { checkStatusCode } from "../../../services/checkStatusCode";
 import { Message } from "../../../components";
 import MessageTypes from "../../../constants/messageTypes";
+import Image from "next/image";
 
 
 const UserInfo = () =>
@@ -66,16 +67,39 @@ const UserInfo = () =>
     return (
         <>
             <div className="user-info-wrapper">
-                <span className="user-info-title">User Details</span>
-                <hr className="hr-100" />
+                <div>
+                    <span className="user-info-title">User Details</span>
+                    <hr className="hr-100" />
+                </div>
 
                 { isError && <>
                     <Message message={errorMessage} type={MessageTypes.Error} />
                 </> }
 
-                <span className="user-info-username">{username}</span>
-                <span className="user-info-email">{email}</span>
-                <span className="user-info-registration">{(new Date(parseInt(registered))).toLocaleString()}</span>
+                <div>
+                    <span className="text-with-image-label">Username</span>
+                    <div className="text-with-image">
+                        <Image src={"/assets/profile.svg"} height={32} width={32} alt={"User profile icon"} />
+                        <span className="user-info-username">{username}</span>
+                    </div>
+                </div>
+
+                <div>
+                    <span className="text-with-image-label">User Email</span>
+                    <div className="text-with-image">
+                        <Image src={"/assets/mail.svg"} height={32} width={32} alt={"Mail envelope icon"} />
+                        <span className="user-info-email">{email}</span>
+                    </div>
+                </div>
+
+                <div>
+                    <span className="text-with-image-label">Time of Registration</span>
+                    <div className="text-with-image">
+                        <Image src={"/assets/clock.svg"} height={32} width={32} alt={"Clock icon"} />
+                        <span className="user-info-registration">{(new Date(parseInt(registered))).toLocaleString()}</span>
+                    </div>
+                </div>
+
             </div>
         </>
     );

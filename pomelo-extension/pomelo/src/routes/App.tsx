@@ -23,9 +23,7 @@ const App = () =>
 
     return (
         <>
-            <div className='content-layout'>
-                <hr className='w-100'/>
-                
+            <div className='content-layout'>                
                 { currentPage == Pages.Login && <Login /> }
                 { currentPage == Pages.Home && <Home /> }
                 { currentPage == Pages.Welcome && <Welcome /> }

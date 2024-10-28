@@ -1,0 +1,8 @@
+
+.verifyemail-form-wrapper
+{
+    display: flex;
+    flex-flow: row;
+    padding: 4rem;
+    gap: 4rem;
+}

@@ -59,11 +59,13 @@ const RegisterForm = () =>
     return (
         <>
             <form
-                className="register-form"
+                className="form-popout"
                 onSubmit={register}
             >
-                <span className="register-form-title">Register</span>
-                <hr className="hr-100"/>
+                <div>
+                    <span className="form-title">Register</span>
+                    <hr className="hr-100"/>
+                </div>
 
                 { isError && <>
                     <Message type={MessageTypes.Error} message={errorMessage} />
@@ -90,8 +92,8 @@ const RegisterForm = () =>
                     placeholder="••••••••"
                     onChange={(e) => setPassword(e.currentTarget.value)}
                 />
-                <button type="submit">Register</button>
-                <a href="/login">Login</a>
+                <button type="submit" className="form-primary-button">Register</button>
+                <a href="/login" className="form-secondary-button">Login</a>
             </form>
         </>
     );

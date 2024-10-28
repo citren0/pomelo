@@ -49,3 +49,128 @@
     font-size: 24px;
     font-weight: 400;
 }
+
+.loading-text
+{
+    width: 100%;
+    font-size: 32px;
+    font-weight: 500;
+    animation: fake-text-flash 2s infinite linear;
+}
+
+.no-data-found-text
+{
+    font-size: 24px;
+    font-weight: 500;
+}
+
+@keyframes fake-text-flash
+{
+    0%
+    {
+        color: black;
+    }
+    50%
+    {
+        color: #808080;
+    }
+    100%
+    {
+        color: black;
+    }
+}
+
+.a-no-dec
+{
+    text-decoration: none;
+}
+
+.form-primary-button
+{
+    background-color: #7171f1;
+    color: white;
+    border-radius: 0.5rem;
+    outline: none;
+    border: none;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 0.5rem;
+    text-align: center;
+
+}
+.form-primary-button:hover
+{
+    background-color: #5858f0;
+}
+
+.form-secondary-button
+{
+    background-color: #e0e0e9;
+    color: black;
+    border-radius: 0.5rem;
+    outline: none;
+    border: none;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 0.5rem;
+    text-decoration: none;
+    text-align: center;
+}
+.form-secondary-button:hover
+{
+    background-color: #c0c0d0;
+}
+
+.form-popout
+{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border: 1px #e9e9e9 solid;
+    border-radius: 0.5rem;
+    background-color: #f9f9f9;
+    box-shadow: 5px 5px 5px 0px #dfdfdf;
+    width: 25rem;
+}
+
+.form-title
+{
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.form-subtext
+{
+    font-size: 20px;
+    font-weight: 450;
+}
+
+.form-top-wrapper
+{
+    display: flex;
+    flex-flow: column;
+}
+
+.form-buttons
+{
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
+}
+
+.text-with-image
+{
+    display: flex;
+    flex-flow: row;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.text-with-image-label
+{
+    padding: 0.25rem 0 0.1rem 0;
+    font-weight: 600;
+    font-size: 14px;
+}

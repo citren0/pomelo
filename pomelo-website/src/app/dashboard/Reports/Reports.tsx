@@ -15,11 +15,13 @@ const Reports = () =>
 {
     const [ reports, setReports ] = useState<Report[]>([]);
     const [ isError, setIsError ] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState("");
 
     const getReports = () =>
-    {        
+    {
         setIsError(false);
+        setIsLoading(true);
 
         fetch(config.getReportsURL, {
             method: "GET",
@@ -47,15 +49,19 @@ const Reports = () =>
                 else
                 {
                     setReports(getReportsResponseJson.reports);
+
+                    console.log(getReportsResponseJson.reports.map((report: any) => { return {domain: report.domain, timestamp: report.time_stamp} }));
                 }
                 
             }
 
+            setIsLoading(false);
         })
         .catch((_) =>
         {
             setIsError(true);
             setErrorMessage("Error encountered. Try again later.");
+            setIsLoading(false);
         });
 
     };
@@ -76,34 +82,46 @@ const Reports = () =>
                 </> }
 
                 <div className="reports-wrapper">
-                    {
-                        reports.map((report, idx) =>
+                    <div className="reports-list">
                         {
-                            return (
-                                <>
-                                    <div className="reports-report-wrapper">
-                                        <div className="reports-title-and-image-wrapper">
-                                            <img
-                                                src={report.faviconurl}
-                                                height={40}
-                                                width={40}
-                                                alt={report.domain + " favicon url"}
-                                            />
-                                            <span className="reports-report-domain report-rotate">{report.domain}</span>
+                            reports.map((report, idx) =>
+                            {
+                                return (
+                                    <>
+                                        <div className="reports-report-wrapper">
+                                            <div className="reports-title-and-image-wrapper">
+                                                <img
+                                                    src={report.faviconurl}
+                                                    height={48}
+                                                    width={48}
+                                                    alt={report.domain + " favicon url"}
+                                                />
+                                                <span className="reports-report-domain">{report.domain}</span>
+                                            </div>
+                                            <div className="reports-report-date-time-group">
+                                                <span className="reports-report-timestamp">{(new Date(parseInt(report.time_stamp))).toLocaleDateString()}</span>
+                                                <span className="reports-report-timestamp">{(new Date(parseInt(report.time_stamp))).toLocaleTimeString()}</span>
+                                            </div>
                                         </div>
-                                        <span className="reports-report-timestamp report-rotate">{(new Date(parseInt(report.time_stamp))).toLocaleDateString()}</span>
-                                        <span className="reports-report-timestamp report-rotate">{(new Date(parseInt(report.time_stamp))).toLocaleTimeString()}</span>
-                                    </div>
-                                    { (idx != reports.length - 1) && <>
-                                        <hr
-                                            className="reports-line"
-                                            style={{ width: String(Math.log2(parseInt(reports[idx + 1].time_stamp) - parseInt(report.time_stamp))) + "px" }}
-                                        />
-                                    </> }
-                                </>
-                            )
-                        })
-                    }
+                                        { (idx != reports.length - 1) && <>
+                                            <hr
+                                                className="reports-line"
+                                                style={{ width: String(Math.log2(parseInt(reports[idx + 1].time_stamp) - parseInt(report.time_stamp))) + "px" }}
+                                            />
+                                        </> }
+                                    </>
+                                )
+                            })
+                        }
+                    </div>
+
+                    { isLoading && <>
+                        <div className="loading-text">Loading...</div>
+                    </> }
+
+                    { reports.length == 0 && !isLoading && !isError && <>
+                        <span className="no-data-found-text">No data found.</span>
+                    </> }
                 </div>
             </div>
         </>
