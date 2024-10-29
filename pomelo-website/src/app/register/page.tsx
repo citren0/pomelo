@@ -4,14 +4,14 @@ import "./page.css";
 import { NavBar } from "../../components";
 import RegisterForm from "./RegisterForm/RegisterForm";
 
-const Login = () =>
+const Register = () =>
 {
 	return (
 		<>
 			<NavBar />
 			
 			<div className="content-container">
-				<div className="login-image-and-form">
+				<div className="register-form-spacer">
 					<RegisterForm />
 				</div>
 			</div>
@@ -19,4 +19,4 @@ const Login = () =>
 	);
 };
 
-export default Login;
+export default Register;

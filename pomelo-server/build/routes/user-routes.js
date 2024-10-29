@@ -12,7 +12,8 @@ var cookieParser = require("cookie-parser");
 dotenv.config();
 router.use(cookieParser());
 router.get('/api/userdetails', function (req, res, next) {
-    var authHeader = String(req.header('Authorization'));
+    var _a;
+    var authHeader = String((_a = req.header('Authorization')) !== null && _a !== void 0 ? _a : "");
     var splitAuthHeader = authHeader.split(' ');
     if ((authHeader == undefined) || (splitAuthHeader.length != 2)) {
         return res.status(401).send({ status: "Are you sure you're logged in?", isLoggedIn: false, });

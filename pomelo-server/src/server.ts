@@ -10,6 +10,7 @@ import { router as authRouter } from "./routes/auth-routes";
 import { router as userRouter } from "./routes/user-routes";
 import { router as reportRouter } from "./routes/report-routes";
 import { router as emailRouter } from "./routes/email-routes";
+import { router as passwordRouter } from "./routes/password-routes";
 
 // Server setup.
 connectToDatabase();
@@ -23,6 +24,7 @@ app.use("/", authRouter);
 app.use("/", userRouter);
 app.use("/", reportRouter);
 app.use("/", emailRouter);
+app.use("/", passwordRouter);
 
 app.listen(3000, () => {
     console.log("Server started.")

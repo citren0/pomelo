@@ -49,8 +49,6 @@ const Reports = () =>
                 else
                 {
                     setReports(getReportsResponseJson.reports);
-
-                    console.log(getReportsResponseJson.reports.map((report: any) => { return {domain: report.domain, timestamp: report.time_stamp} }));
                 }
                 
             }

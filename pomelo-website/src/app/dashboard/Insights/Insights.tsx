@@ -18,12 +18,11 @@ interface Message
 const Insights = () =>
 {
     const [ messages, setMessages ] = useState<Message[]>([]);
-    const [ isError, setIsError ] = useState(false);
-    const [ isLoading, setIsLoading ] = useState(false);
-    const [ errorMessage, setErrorMessage ] = useState("");
+    const [ isError, setIsError ] = useState<boolean>(false);
+    const [ isLoading, setIsLoading ] = useState<boolean>(false);
+    const [ errorMessage, setErrorMessage ] = useState<string>("");
     const [ currMessage, setCurrMessage ] = useState<string>("");
     const [ doSend, setDoSend ] = useState<boolean>(false);
-    // Text area component is set to clear whenever this state changes.
     const [ clearChat, setClearChat ] = useState<boolean>(false);
 
     const getInsights = () =>
@@ -35,9 +34,8 @@ const Insights = () =>
             headers:
             {
                 "Authorization": "Bearer " + window.localStorage.getItem("token") ?? "",
-                "Content-Type": "application/json",
             },
-            body: JSON.stringify({ messages: messages }),
+            body: "",
         })
         .then(async (getInsightsResponse) =>
         {
@@ -162,7 +160,16 @@ const Insights = () =>
                     </> }
                 </div>
 
-                <div className="insights-chat-wrapper">
+                <form
+                    className="insights-chat-wrapper"
+                    onSubmit={
+                            (e: React.FormEvent<HTMLFormElement>) => 
+                            {
+                                e.preventDefault();
+                                setDoSend(true);
+                            }
+                        }
+                >
                     <SimpleTextArea
                         label=""
                         id=""
@@ -173,7 +180,7 @@ const Insights = () =>
 
                     <button
                         className="insights-chat-send-button"
-                        onClick={() => setDoSend(true)}
+                        type="submit"
                         disabled={(isLoading || isError)}
                     >
                         { (isLoading || isError) && <>
@@ -192,7 +199,7 @@ const Insights = () =>
                             />
                         </> }
                     </button>
-                </div>
+                </form>
             </div>
         </>
     );

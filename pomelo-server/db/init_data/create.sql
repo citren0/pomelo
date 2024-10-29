@@ -40,6 +40,32 @@ CREATE TABLE email_verification
     CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE forgot_password
+(
+    user_id INT,
+    token text,
+    time_stamp BIGINT,
+    PRIMARY KEY (user_id, token),
+    CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE forgot_password_attempts
+(
+    user_id INT,
+    time_stamp BIGINT,
+    success BOOLEAN,
+    PRIMARY KEY (user_id, time_stamp),
+    CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE login_attempts
+(
+    user_id INT,
+    time_stamp BIGINT,
+    success BOOLEAN,
+    CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 insert into roles (name) values
     ('Verified'),
     ('Admin');

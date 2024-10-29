@@ -102,6 +102,10 @@
 {
     background-color: #5858f0;
 }
+.form-primary-button:disabled
+{
+    background-color: #b1b1ef;
+}
 
 .form-secondary-button
 {
@@ -119,6 +123,23 @@
 .form-secondary-button:hover
 {
     background-color: #c0c0d0;
+}
+
+.form-subtle-button
+{
+    color: rgb(56, 54, 202);
+    border-radius: 0.5rem;
+    outline: none;
+    border: none;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 0.5rem;
+    text-decoration: none;
+    text-align: center;
+}
+.form-subtle-button:hover
+{
+    background-color: #e9e9f1;
 }
 
 .form-popout

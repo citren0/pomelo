@@ -30,9 +30,19 @@ const sendMail = (recipient: string, subject: string, body: string): Promise<voi
             subject: subject,
             text: body,
             html: body,
+        }, (err: any, info: any) =>
+        {
+            if (err)
+            {
+                reject();
+            }
+            else
+            {
+                resolve();
+            }
+
         });
 
-        resolve();
     });
 
 }

@@ -21,6 +21,11 @@ router.post('/api/verifyemail', auth, (req, res, next) =>
         return res.status(400).send({ status: "Failed to verify email. Provide all fields when submitting." });
     }
 
+    if (typeof req.body.code != "string")
+    {
+        return res.status(400).send({ status: "Failed to verify email. Provide all fields when submitting." });
+    }
+
     db.any('DELETE FROM email_verification WHERE user_id = $1 AND token = $2 RETURNING token;',
             [req.user.id, req.body.code])
     .then((token) =>

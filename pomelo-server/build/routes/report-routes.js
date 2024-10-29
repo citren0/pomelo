@@ -17,6 +17,9 @@ router.post('/api/report', token_1.default, (0, mustHaveRole_1.default)(Roles_1.
     if (!req.body.hasOwnProperty("domain") || !req.body.hasOwnProperty("favicon")) {
         return res.status(400).send({ status: "Include all fields before submitting.", });
     }
+    if (typeof req.body.domain != "string" || typeof req.body.favicon != "string") {
+        return res.status(400).send({ status: "Include all fields before submitting.", });
+    }
     database_1.db.any("INSERT INTO web_activity (userid, time_stamp, domain, faviconUrl) values ($1, $2, $3, $4);", [req.user.id, Date.now(), req.body.domain, req.body.favicon,])
         .then(function (_) {
         return res.status(200).send({ status: "Successfully added report." });
@@ -37,9 +40,6 @@ router.get('/api/report', token_1.default, (0, mustHaveRole_1.default)(Roles_1.d
     });
 });
 router.post('/api/insights', token_1.default, (0, mustHaveRole_1.default)(Roles_1.default.Verified), function (req, res, next) {
-    if (!req.body.hasOwnProperty("messages")) {
-        return res.status(400).send({ status: "Failed to get insights. Include all fields before submitting." });
-    }
     var oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
     database_1.db.any("SELECT time_stamp, domain, faviconUrl from web_activity WHERE userid = $1  AND time_stamp > $2;", [req.user.id, oneDayAgo,])
         .then(function (reports) {
@@ -79,7 +79,7 @@ router.post('/api/insights', token_1.default, (0, mustHaveRole_1.default)(Roles_
                     content: JSON.stringify(body),
                 }
             ],
-            model: 'gpt-4o-mini',
+            model: process.env.OPENAI_MODEL,
         };
         client.chat.completions.create(params)
             .then(function (chatCompletion) {

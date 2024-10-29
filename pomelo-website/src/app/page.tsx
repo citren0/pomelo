@@ -1,7 +1,7 @@
 
 import React from "react";
 import "./page.css";
-import { NavBar } from "../components";
+import { Landing, NavBar } from "../components";
 
 const Home = () =>
 {
@@ -10,7 +10,7 @@ const Home = () =>
 			<NavBar />
 
 			<div className="content-container">
-
+				<Landing />
 			</div>
 		</>
 	);

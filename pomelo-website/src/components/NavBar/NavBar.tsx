@@ -30,7 +30,7 @@ const NavBar = () =>
                             height={48}
                             className="nav-logo"
                         />
-                        <span className="nav-title">Pomelo Productivity</span>
+                        <span className="nav-title">Pomelo</span>
                     </div>
                 </a>
 

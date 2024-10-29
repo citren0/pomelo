@@ -69,7 +69,7 @@ const LoginForm = () =>
 
                 if (loginResponseJson.isVerified == true)
                 {
-                    window.location.href = "/profile";
+                    window.location.href = "/dashboard";
                 }
                 else
                 {
@@ -86,7 +86,6 @@ const LoginForm = () =>
         <>
             <form
                 className="form-popout"
-                style={{ height: "25rem" }}
                 onSubmit={login}
             >
                 <div>
@@ -118,6 +117,7 @@ const LoginForm = () =>
                 />
                 <button type="submit" className="form-primary-button">Login</button>
                 <a href="/register" className="form-secondary-button">Register</a>
+                <a href="/forgotpassword" className="form-subtle-button">Forgot Password?</a>
             </form>
         </>
     );

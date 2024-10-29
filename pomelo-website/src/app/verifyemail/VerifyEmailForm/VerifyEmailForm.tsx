@@ -29,7 +29,7 @@ const VerifyEmailForm = () =>
             code: code,
         };
 
-        fetch(config.postVerifyEmail, {
+        fetch(config.postVerifyEmailURL, {
             method: "POST",
             headers: {
                 "Authorization": "Bearer " + window.localStorage.getItem("token") ?? "",
@@ -74,7 +74,7 @@ const VerifyEmailForm = () =>
     {
         setIsError(false);
 
-        fetch(config.postResendEmail, {
+        fetch(config.postResendEmailURL, {
             method: "POST",
             headers: {
                 "Authorization": "Bearer " + window.localStorage.getItem("token") ?? "",

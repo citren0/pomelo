@@ -1,0 +1,20 @@
+
+.input-error-wrapper
+{
+    padding: 0.3rem 1rem 0.3rem 1rem;
+    background-color: #ffc0c0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    align-self: center;
+    width: fit-content;
+    border-radius: 0.5rem;
+}
+
+.input-error-text
+{
+    font-size: 18px;
+    font-weight: 500;
+}

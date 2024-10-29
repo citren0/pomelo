@@ -16,7 +16,7 @@ router.use(cookieParser());
 
 router.get('/api/userdetails', (req, res, next) =>
 {
-    const authHeader = String(req.header('Authorization'));
+    const authHeader = String(req.header('Authorization') ?? "");
     const splitAuthHeader = authHeader.split(' ');
     
     if ((authHeader == undefined) || (splitAuthHeader.length != 2))

@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Message, SimpleInput } from "../../../components";
+import { InputError, Message, SimpleInput } from "../../../components";
 import "./RegisterForm.css";
 import config from "../../../constants/config";
 import { checkStatusCode } from "../../../services/checkStatusCode";
@@ -17,6 +17,10 @@ const RegisterForm = () =>
 
     const [ isError, setIsError ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState("");
+
+    const [ usernameValid, setUsernameValid ] = useState<boolean>(true);
+    const [ emailValid, setEmailValid ] = useState<boolean>(true);
+    const [ passwordValid, setPasswordValid ] = useState<boolean>(true);
 
     const register = (e: React.FormEvent<HTMLFormElement>) =>
     {
@@ -55,6 +59,65 @@ const RegisterForm = () =>
         });
 
     };
+
+    const usernameChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
+    {
+        const newValue = e.currentTarget.value;
+
+        const minLength = 4;
+        const maxLength = 16;
+
+        if (newValue.length >= minLength && newValue.length <= maxLength)
+        {
+            setUsernameValid(true);
+        }
+        else
+        {
+            setUsernameValid(false);
+        }
+
+        setUsername(newValue);
+    };
+
+    const emailChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
+    {
+        const newEmail = e.currentTarget.value;
+
+        if (newEmail.includes("@") && newEmail.includes("."))
+        {
+            setEmailValid(true);
+        }
+        else
+        {
+            setEmailValid(false);
+        }
+
+        setEmail(newEmail);
+    };
+
+    const passwordChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
+    {
+        const newPassword = e.currentTarget.value;
+
+        const lowercase = /[a-z]/;
+        const uppercase = /[A-Z]/;
+        const number = /[0-9]/;
+        const minLength = 8;
+
+        if (lowercase.test(newPassword) &&
+            uppercase.test(newPassword) &&
+            number.test(newPassword) &&
+            newPassword.length >= minLength)
+        {
+            setPasswordValid(true);
+        }
+        else
+        {
+            setPasswordValid(false);
+        }
+
+        setPassword(newPassword);
+    };
     
     return (
         <>
@@ -65,6 +128,7 @@ const RegisterForm = () =>
                 <div>
                     <span className="form-title">Register</span>
                     <hr className="hr-100"/>
+                    <span className="form-subtext">Create an account to use the Pomelo website and extension.</span>
                 </div>
 
                 { isError && <>
@@ -76,23 +140,51 @@ const RegisterForm = () =>
                     label={"Username"}
                     id="username"
                     placeholder="JohnDoe"
-                    onChange={(e) => setUsername(e.currentTarget.value)}
+                    onChange={usernameChanged}
                 />
+
+                { !usernameValid && <>
+                    <InputError text="Usernames must be between 4 and 16 characters long." />
+                </> }
+
                 <SimpleInput
                     type="text"
                     label={"Email"}
                     id="email"
                     placeholder="johndoe@email.com"
-                    onChange={(e) => setEmail(e.currentTarget.value)}
+                    onChange={emailChanged}
                 />
+
+                { !emailValid && <>
+                    <InputError text="Provide a valid email." />
+                </> }
+
                 <SimpleInput
                     type="password"
                     label={"Password"}
                     id="password"
                     placeholder="••••••••"
-                    onChange={(e) => setPassword(e.currentTarget.value)}
+                    onChange={passwordChanged}
                 />
-                <button type="submit" className="form-primary-button">Register</button>
+                
+                { !passwordValid && <>
+                    <InputError text="Passwords must contain at least 1 uppercase, lowercase, and number and be 8 characters or longer." />
+                </> }
+
+                <button
+                    type="submit"
+                    className="form-primary-button"
+                    disabled={
+                        (!usernameValid ||
+                        !emailValid ||
+                        !passwordValid ||
+                        username.length == 0 ||
+                        email.length == 0 ||
+                        password.length == 0)
+                    }
+                >
+                    Register
+                </button>
                 <a href="/login" className="form-secondary-button">Login</a>
             </form>
         </>
