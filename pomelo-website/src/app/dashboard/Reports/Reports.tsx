@@ -80,6 +80,9 @@ const Reports = () =>
                 </> }
 
                 <div className="reports-wrapper">
+                    { (reports.length == 0 && !isLoading && !isError) && <>
+                        <Message message={"Download the Pomelo Extension to get started! CHANGEME"} type={MessageTypes.Info} />
+                    </> }
                     <div className="reports-list">
                         {
                             reports.map((report, idx) =>

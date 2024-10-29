@@ -13,8 +13,9 @@
 .reports-wrapper
 {
     display: flex;
-    flex-flow: row;
+    flex-flow: column;
     min-width: 40vw;
+    max-width: 80vw;
 }
 
 .reports-list

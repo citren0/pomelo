@@ -61,6 +61,11 @@ router.get('/api/report', auth, mustHaveRole(Roles.Verified), (req, res, next) =
 
 router.post('/api/insights', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
 {
+    if (!req.body.hasOwnProperty("messages"))
+    {
+        return res.status(400).send({ status: "Failed to get insights. Include all fields before submitting." });
+    }
+    
     const oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
 
     db.any("SELECT time_stamp, domain, faviconUrl from web_activity WHERE userid = $1  AND time_stamp > $2;",
@@ -88,6 +93,7 @@ router.post('/api/insights', auth, mustHaveRole(Roles.Verified), (req, res, next
                             };
                         }
                     ),
+            strategy: "",
             conversation: req.body.messages.map((message) =>
                             {
                                 return {
@@ -132,12 +138,14 @@ router.post('/api/insights', auth, mustHaveRole(Roles.Verified), (req, res, next
         })
         .catch((error) =>
         {
+            console.log(error);
             return res.status(500).send({ status: "Failed to get insights. Try again later." });
         });
 
     })
     .catch((error) =>
     {
+        console.log(error);
         return res.status(500).send({ status: "Failed to get insights. Try again later." });
     });
     

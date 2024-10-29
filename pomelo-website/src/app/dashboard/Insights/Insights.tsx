@@ -34,8 +34,9 @@ const Insights = () =>
             headers:
             {
                 "Authorization": "Bearer " + window.localStorage.getItem("token") ?? "",
+                "Content-Type": "application/json",
             },
-            body: "",
+            body: JSON.stringify({ messages: messages }),
         })
         .then(async (getInsightsResponse) =>
         {

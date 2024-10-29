@@ -12,9 +12,11 @@ interface Props
     placeholder?: string;
     onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
     clear?: boolean;
+    rows?: number;
+    cols?: number;
 };
 
-const SimpleTextArea = ({ label, id, placeholder, onChange, clear }: Props) =>
+const SimpleTextArea = ({ label, id, placeholder, onChange, clear, rows, cols }: Props) =>
 {
     const [ value, setValue ] = useState<string>("");
 
@@ -44,8 +46,8 @@ const SimpleTextArea = ({ label, id, placeholder, onChange, clear }: Props) =>
                     id={id}
                     placeholder={placeholder}
                     onChange={localChange}
-                    rows={2}
-                    cols={50}
+                    rows={rows ?? 2}
+                    cols={cols ?? 50}
                     value={value}
                 >
                 </textarea>

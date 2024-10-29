@@ -10,6 +10,7 @@ const config = {
     getNewTokenURL: "http://localhost:3080/api/newtoken",
     forgotPasswordURL: "http://localhost:3080/api/forgotpassword",
     resetPasswordURL: "http://localhost:3080/api/resetpassword",
+    updateStrategyURL: "http://localhost:3080/api/strategy",
 };
 
 export default config;

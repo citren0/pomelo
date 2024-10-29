@@ -74,7 +74,7 @@ const ForgotPasswordForm = () =>
                     onChange={(e) => setUsername(e.currentTarget.value)}
                 />
 
-                <button type="submit" className="form-primary-button">Send Forgot Password Email</button>
+                <button type="submit" className="form-primary-button" disabled={(username == "")}>Send Forgot Password Email</button>
                 <a href="/resetpassword" className="form-subtle-button">Already Have a Code?</a>
             </form>
         </>

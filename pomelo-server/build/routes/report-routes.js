@@ -40,6 +40,9 @@ router.get('/api/report', token_1.default, (0, mustHaveRole_1.default)(Roles_1.d
     });
 });
 router.post('/api/insights', token_1.default, (0, mustHaveRole_1.default)(Roles_1.default.Verified), function (req, res, next) {
+    if (!req.body.hasOwnProperty("messages")) {
+        return res.status(400).send({ status: "Failed to get insights. Include all fields before submitting." });
+    }
     var oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
     database_1.db.any("SELECT time_stamp, domain, faviconUrl from web_activity WHERE userid = $1  AND time_stamp > $2;", [req.user.id, oneDayAgo,])
         .then(function (reports) {
@@ -92,10 +95,12 @@ router.post('/api/insights', token_1.default, (0, mustHaveRole_1.default)(Roles_
             }
         })
             .catch(function (error) {
+            console.log(error);
             return res.status(500).send({ status: "Failed to get insights. Try again later." });
         });
     })
         .catch(function (error) {
+        console.log(error);
         return res.status(500).send({ status: "Failed to get insights. Try again later." });
     });
 });

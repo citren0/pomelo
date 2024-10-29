@@ -134,7 +134,13 @@ const ResetPasswordForm = () =>
                     <InputError text="Passwords must contain at least 1 uppercase, lowercase, and number and be 8 characters or longer." />
                 </> }
 
-                <button type="submit" className="form-primary-button" disabled={(!passwordValid)}>Reset Password</button>
+                <button
+                    type="submit"
+                    className="form-primary-button"
+                    disabled={(!passwordValid || username == "" || token == "" || password == "")}
+                >
+                    Reset Password
+                </button>
                 <a href="/forgotpassword" className="form-subtle-button">Need a Code?</a>
             </form>
         </>
