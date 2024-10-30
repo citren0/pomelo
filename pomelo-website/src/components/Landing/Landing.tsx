@@ -33,6 +33,17 @@ const Landing = () =>
                     </div>
                 </div>
                 <a className="landing-conversion-button" href="/register">Get Started</a>
+                
+                <span className="landing-card-flex-title">
+                    Pricing
+                </span>
+                <div className="landing-card-flex">
+                    <div className="landing-card-secondary">
+                        <span className="landing-card-title">$10</span>
+                        <hr className="hr-100" />
+                        <span className="landing-card-text">Includes all features: Productivity assistant, browser extension, and strategies.</span>
+                    </div>
+                </div>
             </div>
         </>
     )

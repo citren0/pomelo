@@ -23,6 +23,24 @@
         "default_icon": "favicon.png",
         "default_title": "Pomelo",
         "default_popup": "index.html"
-    }
+    },
+
+    "web_accessible_resources": [
+        {
+            "resources": [ "warning.html" ],
+            "matches": [ "https://*/*" ]
+        },
+        {
+            "resources": [ "favicon.png" ],
+            "matches": [ "https://*/*" ]
+        }
+    ],
+
+    "content_scripts": [
+        {
+            "matches": ["https://*/*"],
+            "js": ["content-script.js"]
+        }
+    ]
 
 }

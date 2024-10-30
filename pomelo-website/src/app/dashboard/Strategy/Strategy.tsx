@@ -3,22 +3,29 @@
 
 import { Message, SimpleTextArea } from "@/components";
 import "./Strategy.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MessageTypes from "@/constants/messageTypes";
 import config from "@/constants/config";
 import { checkStatusCode } from "@/services/checkStatusCode";
 
 
-const Strategy = () =>
+interface Props
+{
+    doNewStrategy: boolean;
+    newStrategy: string;
+    resetDoNewStrategy: () => void;
+};
+
+const Strategy = ({doNewStrategy, newStrategy, resetDoNewStrategy}: Props) =>
 {
     const [ strategy, setStrategy ] = useState<string>("");
 
     const [ isError, setIsError ] = useState<boolean>();
     const [ errorMessage, setErrorMessage ] = useState<string>("");
 
-    const updateStrategy = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+    const updateStrategy = (e?: React.ChangeEvent<HTMLTextAreaElement>, newStrategy?: string) =>
     {
-        setStrategy(e.currentTarget.value);
+        setStrategy(e?.currentTarget?.value ?? newStrategy ?? "");
 
         fetch(config.updateStrategyURL, {
             method: "POST",
@@ -52,10 +59,57 @@ const Strategy = () =>
 
     };
 
+    const getStrategy = () =>
+    {
+        fetch(config.getStrategyURL, {
+            method: "GET",
+            headers:
+            {
+                "Authorization": "Bearer " + window.localStorage.getItem("token") ?? "",
+            }
+        })
+        .then(async (getStrategyResponse) =>
+        {
+            const getStrategyResponseJson = await getStrategyResponse.json();
+
+            if (!checkStatusCode(getStrategyResponse.status))
+            {
+                setIsError(true);
+                setErrorMessage(getStrategyResponseJson.status);
+            }
+            else
+            {
+                setIsError(false);
+                setStrategy(getStrategyResponseJson.strategy);
+            }
+
+        })
+        .catch((_) =>
+        {
+            setIsError(true);
+            setErrorMessage("Error encountered. Try again later.");
+        });
+
+    };
+
+    useEffect(() =>
+    {
+        getStrategy();
+    }, []);
+
+    useEffect(() =>
+    {
+        if (doNewStrategy)
+        {
+            updateStrategy(undefined, newStrategy);
+            resetDoNewStrategy();
+        }
+    }, [doNewStrategy, newStrategy]);
+
     return (
         <>
             <div className="strategy-title-wrapper">
-                <span className="strategy-title">Your Productivity Strategy</span>
+                <span className="strategy-title">My Productivity Strategy</span>
                 <hr className="hr-100" />
 
                 { isError && <>
@@ -67,8 +121,10 @@ const Strategy = () =>
                     onChange={updateStrategy}
                     placeholder="Begin typing to create a productivity plan."
                     id="strategy-text-area"
-                    rows={10}
+                    rows={5}
                     cols={75}
+                    presetValue={strategy}
+                    resizeable={true}
                 />
             </div>
         </>

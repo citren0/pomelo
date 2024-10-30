@@ -49,53 +49,59 @@ router.post('/api/insights', token_1.default, (0, mustHaveRole_1.default)(Roles_
         if (reports.length < parseInt(process.env.LLM_MIN_REVIEWS)) {
             return res.status(200).send({ status: "Successfully generated insights.", insights: "Too few datapoints. Try again when you've used Pomelo for longer.", });
         }
-        var minIndex = Math.max(0, reports.length - parseInt(process.env.LLM_SERVER_MAX_REPORTS));
-        var maxIndex = reports.length;
-        var body = {
-            reports: reports
-                .slice(minIndex, maxIndex)
-                .map(function (report) {
-                var date = new Date(parseInt(report.time_stamp));
-                return {
-                    domain: report.domain,
-                    timestamp: (date.toDateString() + " " + date.toLocaleTimeString()),
-                };
-            }),
-            conversation: req.body.messages.map(function (message) {
-                return {
-                    user: message.me,
-                    text: message.message,
-                };
-            }),
-        };
-        var client = new OpenAI({
-            apiKey: process.env.OPENAI_API_KEY,
-        });
-        var params = {
-            messages: [
-                {
-                    role: "system",
-                    content: process.env.OPENAI_SYSTEM_PROMPT
-                },
-                {
-                    role: "user",
-                    content: JSON.stringify(body),
+        database_1.db.any("SELECT strategy FROM productivity_strategy WHERE user_id = $1;", [req.user.id])
+            .then(function (strategy) {
+            var minIndex = Math.max(0, reports.length - parseInt(process.env.LLM_SERVER_MAX_REPORTS));
+            var maxIndex = reports.length;
+            var body = {
+                reports: reports
+                    .slice(minIndex, maxIndex)
+                    .map(function (report) {
+                    var date = new Date(parseInt(report.time_stamp));
+                    return {
+                        domain: report.domain,
+                        timestamp: (date.toDateString() + " " + date.toLocaleTimeString()),
+                    };
+                }),
+                strategy: strategy[0].strategy,
+                conversation: req.body.messages.map(function (message) {
+                    return {
+                        user: message.me,
+                        text: message.message,
+                    };
+                }),
+            };
+            var client = new OpenAI({
+                apiKey: process.env.OPENAI_API_KEY,
+            });
+            var params = {
+                messages: [
+                    {
+                        role: "system",
+                        content: process.env.OPENAI_SYSTEM_PROMPT
+                    },
+                    {
+                        role: "user",
+                        content: JSON.stringify(body),
+                    }
+                ],
+                model: process.env.OPENAI_MODEL,
+            };
+            client.chat.completions.create(params)
+                .then(function (chatCompletion) {
+                if (chatCompletion.choices.length > 0 &&
+                    !chatCompletion.choices[0].message.refusal) {
+                    return res.status(200).send({ status: "Successfully generated insights.", insights: chatCompletion.choices[0].message.content, });
                 }
-            ],
-            model: process.env.OPENAI_MODEL,
-        };
-        client.chat.completions.create(params)
-            .then(function (chatCompletion) {
-            if (chatCompletion.choices.length > 0 &&
-                !chatCompletion.choices[0].message.refusal) {
-                return res.status(200).send({ status: "Successfully generated insights.", insights: chatCompletion.choices[0].message.content, });
-            }
-            else {
+                else {
+                    return res.status(500).send({ status: "Failed to get insights. Try again later." });
+                }
+            })
+                .catch(function (error) {
                 return res.status(500).send({ status: "Failed to get insights. Try again later." });
-            }
+            });
         })
             .catch(function (error) {
-            console.log(error);
             return res.status(500).send({ status: "Failed to get insights. Try again later." });
         });
     })

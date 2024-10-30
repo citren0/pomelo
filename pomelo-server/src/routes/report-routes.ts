@@ -77,68 +77,77 @@ router.post('/api/insights', auth, mustHaveRole(Roles.Verified), (req, res, next
             return res.status(200).send({ status: "Successfully generated insights.", insights: "Too few datapoints. Try again when you've used Pomelo for longer.", });
         }
 
-        const minIndex = Math.max(0, reports.length - parseInt(process.env.LLM_SERVER_MAX_REPORTS));
-        const maxIndex = reports.length;
-
-        const body = {
-            reports: reports
-                    .slice(minIndex, maxIndex)
-                    .map((report) =>
-                        {
-                            const date = new Date(parseInt(report.time_stamp));
-
-                            return {
-                                domain: report.domain,
-                                timestamp: (date.toDateString() + " " + date.toLocaleTimeString()),
-                            };
-                        }
-                    ),
-            strategy: "",
-            conversation: req.body.messages.map((message) =>
-                            {
-                                return {
-                                    user: message.me,
-                                    text: message.message,
-                                };
-                            }),
-        };
-
-        const client = new OpenAI({
-            apiKey: process.env.OPENAI_API_KEY,
-        });
-        
-        const params = {
-            messages:
-            [
-                {
-                    role: "system",
-                    content: process.env.OPENAI_SYSTEM_PROMPT
-                },
-                {
-                    role: "user",
-                    content: JSON.stringify(body),
-                }
-            ],
-            model: process.env.OPENAI_MODEL,
-        };
-
-        client.chat.completions.create(params)
-        .then((chatCompletion) =>
+        db.any("SELECT strategy FROM productivity_strategy WHERE user_id = $1;",
+                [req.user.id])
+        .then((strategy) =>
         {
-            if (chatCompletion.choices.length > 0 &&
-                !chatCompletion.choices[0].message.refusal)
+            const minIndex = Math.max(0, reports.length - parseInt(process.env.LLM_SERVER_MAX_REPORTS));
+            const maxIndex = reports.length;
+
+            const body = {
+                reports: reports
+                        .slice(minIndex, maxIndex)
+                        .map((report) =>
+                            {
+                                const date = new Date(parseInt(report.time_stamp));
+
+                                return {
+                                    domain: report.domain,
+                                    timestamp: (date.toDateString() + " " + date.toLocaleTimeString()),
+                                };
+                            }
+                        ),
+                strategy: strategy[0].strategy,
+                conversation: req.body.messages.map((message) =>
+                                {
+                                    return {
+                                        user: message.me,
+                                        text: message.message,
+                                    };
+                                }),
+            };
+
+            const client = new OpenAI({
+                apiKey: process.env.OPENAI_API_KEY,
+            });
+            
+            const params = {
+                messages:
+                [
+                    {
+                        role: "system",
+                        content: process.env.OPENAI_SYSTEM_PROMPT
+                    },
+                    {
+                        role: "user",
+                        content: JSON.stringify(body),
+                    }
+                ],
+                model: process.env.OPENAI_MODEL,
+            };
+
+            client.chat.completions.create(params)
+            .then((chatCompletion) =>
             {
-                return res.status(200).send({ status: "Successfully generated insights.", insights: chatCompletion.choices[0].message.content, });
-            }
-            else
+                if (chatCompletion.choices.length > 0 &&
+                    !chatCompletion.choices[0].message.refusal)
+                {
+                    return res.status(200).send({ status: "Successfully generated insights.", insights: chatCompletion.choices[0].message.content, });
+                }
+                else
+                {
+                    return res.status(500).send({ status: "Failed to get insights. Try again later." });
+                }
+
+            })
+            .catch((error) =>
             {
                 return res.status(500).send({ status: "Failed to get insights. Try again later." });
-            }
+            });
 
         })
         .catch((error) =>
         {
-            console.log(error);
             return res.status(500).send({ status: "Failed to get insights. Try again later." });
         });
 

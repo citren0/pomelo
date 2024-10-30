@@ -68,4 +68,20 @@ router.post('/api/strategy', auth, (req, res, next) =>
 });
 
 
+router.get("/api/strategy", auth, (req, res, next) =>
+{
+    db.any("SELECT strategy FROM productivity_strategy WHERE user_id = $1;",
+            [req.user.id])
+    .then((strategy) =>
+    {
+        return res.status(200).send({ status: "Successfully got strategy.", strategy: strategy[0].strategy, });
+    })
+    .catch((error) =>
+    {
+        return res.status(500).send({ status: "Failed to get strategy. Try again later", });
+    });
+    
+});
+
+
 export { router };

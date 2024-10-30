@@ -104,3 +104,27 @@
     font-weight: 400;
     text-align: center;
 }
+
+.landing-card-secondary
+{
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
+    border-radius: 0.5rem;
+    border: 1px #dfdfdf solid;
+    padding: 1rem;
+    flex-shrink: 0;
+    box-shadow: 2px 2px 2px 0px #eeeeee;
+    background: linear-gradient(135deg, rgb(253, 252, 255) 0%, rgb(252, 255, 255) 33%, rgb(251, 249, 255) 66%, rgb(246, 254, 255) 100%);
+    background-size: 300% auto;
+    height: 12rem;
+    width: 15rem;
+    max-width: 100%;
+    align-items: center;
+    justify-content: start;
+    transition: 1s;
+}
+.landing-card-secondary:hover
+{
+    background-position: right center;
+}

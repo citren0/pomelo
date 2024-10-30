@@ -15,7 +15,12 @@ interface Message
     message: string;
 };
 
-const Insights = () =>
+interface Props
+{
+    onStrategyChange: (strategy: string) => void;
+};
+
+const Insights = ({ onStrategyChange }: Props) =>
 {
     const [ messages, setMessages ] = useState<Message[]>([]);
     const [ isError, setIsError ] = useState<boolean>(false);
@@ -103,6 +108,14 @@ const Insights = () =>
 
     };
 
+    const removeSuggestions = () =>
+    {
+        setMessages(messages.map((message) =>
+        {
+            return { ...message, message: message.message.split("CHANGE STRATEGY")[0]};
+        }));
+    };
+
     useEffect(() =>
     {
         getInsights();
@@ -145,13 +158,56 @@ const Insights = () =>
                             }
                             else
                             {
-                                return (
-                                    <>
-                                        <div className="insights-bot-wrapper">
-                                            <span className="insights-text">{message.message}</span>
-                                        </div>
-                                    </>
-                                );
+                                if (message.message.includes("CHANGE STRATEGY"))
+                                {
+                                    // Strategy change.
+                                    const messageSplit = message.message.split("CHANGE STRATEGY");
+                                    return (
+                                        <>
+                                            <div className="insights-bot-wrapper">
+                                                <span className="insights-text">{messageSplit[0].trim()}</span>
+                                            </div>
+                                            <div className="insights-bot-strategy-proposal">
+                                                <span className="insights-bot-strategy-proposal-title">Accept Strategy Change?</span>
+                                                <hr className="hr-100" />
+
+                                                <span className="insights-text">{messageSplit[1].trim()}</span>
+
+                                                <div className="insights-bot-strategy-proposal-buttons">
+                                                    <button
+                                                        className="form-primary-button"
+                                                        onClick={
+                                                            () => 
+                                                            {
+                                                                onStrategyChange(messageSplit[1].trim());
+                                                                removeSuggestions();
+                                                            }
+                                                        }
+                                                    >
+                                                        Accept Change
+                                                    </button>
+                                                    <button
+                                                        className="form-secondary-button"
+                                                        onClick={removeSuggestions}
+                                                    >
+                                                        Decline Change
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </>
+                                    );
+                                }
+                                else
+                                {
+                                    // Same strategy
+                                    return (
+                                        <>
+                                            <div className="insights-bot-wrapper">
+                                                <span className="insights-text">{message.message}</span>
+                                            </div>
+                                        </>
+                                    );
+                                }
                             }
                         }
                     )}

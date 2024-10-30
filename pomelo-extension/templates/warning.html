@@ -1,0 +1,66 @@
+<div id="pomelo-insert">
+    <style>
+        .warning-wrapper
+        {
+            font-family: sans-serif;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            padding: 1.5rem 3rem 1.5rem 3rem;
+            background-color: white;
+            color: black;
+            border-radius: 0.5rem;
+            z-index: 1000000;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .warning-flex-row-wrapper
+        {
+            display: flex;
+            flex-flow: column;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .warning-button-wrapper
+        {
+            display: flex;
+            flex-flow: row;
+            gap: 1.5rem;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        
+        .warning-title
+        {
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .hr-100
+        {
+            width: 100%;
+        }
+
+        .warning-text
+        {
+            font-size: 26px;
+            font-weight: 50;
+        }
+    </style>
+
+    <div class="warning-wrapper">
+        <div class="warning-flex-row-wrapper">
+            <img id="warning-pomelo-image" height="72" src="" alt="Pomelo Logo" />
+            <span class="warning-title">You are breaking this productivity rule!</span>
+        </div>
+        <hr class="hr-100" />
+        <span class="warning-text" id="warning-pomelo-text"></span>
+    </div>
+</div>

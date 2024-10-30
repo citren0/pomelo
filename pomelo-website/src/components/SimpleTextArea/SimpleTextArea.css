@@ -6,7 +6,6 @@
     border-radius: 0.5rem;
     outline: none;
     border: 2px #f0f0ff solid;
-    resize: none;
 }
 .simple-text-area:focus
 {

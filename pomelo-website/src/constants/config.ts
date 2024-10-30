@@ -11,6 +11,7 @@ const config = {
     forgotPasswordURL: "http://localhost:3080/api/forgotpassword",
     resetPasswordURL: "http://localhost:3080/api/resetpassword",
     updateStrategyURL: "http://localhost:3080/api/strategy",
+    getStrategyURL: "http://localhost:3080/api/strategy",
 };
 
 export default config;

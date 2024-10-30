@@ -93,6 +93,34 @@
     margin-left: 0.5rem;
 }
 
+.insights-bot-strategy-proposal
+{
+    width: fit-content;
+    max-width: 80%;
+    border-radius: 1rem;
+    background-color: #eaeaea;
+    align-self: flex-start;
+    padding: 1rem 1.2rem 1rem 1.2rem;
+    margin-left: 0.5rem;
+    display: flex;
+    flex-flow: column;
+    gap: 0.5rem;
+}
+
+.insights-bot-strategy-proposal-title
+{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.insights-bot-strategy-proposal-buttons
+{
+    display: flex;
+    flex-flow: row;
+    gap: 1rem;
+}
+
+
 .insights-me-wrapper
 {
     width: fit-content;

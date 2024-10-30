@@ -26,6 +26,16 @@ CREATE TABLE productivity_strategy
     CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE rules
+(
+    user_id INT,
+    domain text,
+    starttime INT,
+    stoptime INT,
+    PRIMARY KEY (user_id, domain, starttime, stoptime),
+    CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 CREATE TABLE roles
 (
     id SERIAL PRIMARY KEY,

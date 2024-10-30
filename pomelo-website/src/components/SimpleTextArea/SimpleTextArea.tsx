@@ -14,9 +14,11 @@ interface Props
     clear?: boolean;
     rows?: number;
     cols?: number;
+    presetValue?: string;
+    resizeable?: boolean;
 };
 
-const SimpleTextArea = ({ label, id, placeholder, onChange, clear, rows, cols }: Props) =>
+const SimpleTextArea = ({ label, id, placeholder, onChange, clear, rows, cols, presetValue, resizeable }: Props) =>
 {
     const [ value, setValue ] = useState<string>("");
 
@@ -31,6 +33,11 @@ const SimpleTextArea = ({ label, id, placeholder, onChange, clear, rows, cols }:
     {
         setValue("");
     }, [clear]);
+
+    useEffect(() =>
+    {
+        setValue(presetValue ?? "");
+    }, [presetValue]);
 
     return (
         <>
@@ -49,6 +56,7 @@ const SimpleTextArea = ({ label, id, placeholder, onChange, clear, rows, cols }:
                     rows={rows ?? 2}
                     cols={cols ?? 50}
                     value={value}
+                    style={(resizeable == true) ? {} : {resize: "none"}}
                 >
                 </textarea>
             </div>
