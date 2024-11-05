@@ -26,7 +26,7 @@ const ForgotPasswordForm = () =>
             username: username,
         };
 
-        fetch(config.forgotPasswordURL, {
+        fetch(config.baseURL + config.forgotPassword, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

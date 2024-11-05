@@ -1,5 +1,5 @@
 
-.simple-input
+.simple-dropdown-select
 {
     font-size: 22px;
     padding: 0.5rem 0.75rem 0.5rem 0.75rem;
@@ -7,21 +7,11 @@
     outline: none;
     border: 2px #f0f0ff solid;
 }
-.simple-input:focus
-{
-    outline: 2px #a0a0f0 solid;
-}
 
-.simple-input-wrapper
+.simple-dropdown-wrapper
 {
     display: flex;
     flex-flow: column;
-    gap: 0;
+    gap: 0rem;
     flex-grow: 1;
-}
-
-.simple-input-label
-{
-    font-size: 15px;
-    font-weight: 500;
 }

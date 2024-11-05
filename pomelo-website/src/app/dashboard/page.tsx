@@ -1,18 +1,61 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./page.css";
 import { NavBar } from "../../components";
 import Reports from "./Reports/Reports";
 import Insights from "./Insights/Insights";
-import Strategy from "./Strategy/Strategy";
+import Rules from "./Rules/Rules";
+import { Rule } from "@/interfaces/Rule";
+import config from "@/constants/config";
+import { checkStatusCode } from "@/services/checkStatusCode";
+
 
 
 const Dashboard = () =>
 {
-	const [ doNewStrategy, setDoNewStrategy ] = useState<boolean>(false);
-	const [ newStrategy, setNewStrategy ] = useState<string>("");
+	const [ rules, setRules ] = useState<Rule[]>([]);
+
+	const getRules = (): Promise<void | string> =>
+	{
+		return new Promise<void | string>((resolve, reject) =>
+		{
+			fetch(config.baseURL + config.getRules, {
+				method: "GET",
+				headers:
+				{
+					"Authorization": "Bearer " + window.localStorage.getItem("token") ?? "",
+				}
+			})
+			.then(async (getRulesResponse) =>
+			{
+				const getRulesResponseJson = await getRulesResponse.json();
+
+				if (!checkStatusCode(getRulesResponse.status))
+				{
+					reject(getRulesResponseJson.status);
+				}
+				else
+				{
+					setRules(getRulesResponseJson.rules);
+					resolve();
+				}
+
+			})
+			.catch((_) =>
+			{
+				reject("Error encountered. Try again later.");
+			});
+
+		});
+
+	};
+
+	useEffect(() =>
+	{
+		getRules()
+	}, []);
 
 	return (
 		<>
@@ -20,16 +63,8 @@ const Dashboard = () =>
 			
 			<div className="content-container">
 				<Reports />
-				<Strategy newStrategy={newStrategy} doNewStrategy={doNewStrategy} resetDoNewStrategy={() => setDoNewStrategy(false)} />
-				<Insights
-					onStrategyChange={
-						(strategy: string) =>
-						{
-							setNewStrategy(strategy);
-							setDoNewStrategy(true);
-						}
-					}
-				/>
+				<Insights getRules={getRules} />
+				<Rules rules={rules} getRules={getRules} />
 			</div>
 		</>
 	);

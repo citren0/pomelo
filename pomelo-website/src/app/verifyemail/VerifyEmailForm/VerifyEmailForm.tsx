@@ -29,10 +29,10 @@ const VerifyEmailForm = () =>
             code: code,
         };
 
-        fetch(config.postVerifyEmailURL, {
+        fetch(config.baseURL + config.postVerifyEmail, {
             method: "POST",
             headers: {
-                "Authorization": "Bearer " + window.localStorage.getItem("token") ?? "",
+                "Authorization": "Bearer " + window.localStorage.getItem("token"),
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(postVerifyEmailBody)
@@ -52,7 +52,7 @@ const VerifyEmailForm = () =>
                 getNewToken()
                 .then((_) =>
                 {
-                    window.location.href = "/profile";
+                    window.location.href = "/createorder";
                 })
                 .catch((_) =>
                 {
@@ -74,10 +74,10 @@ const VerifyEmailForm = () =>
     {
         setIsError(false);
 
-        fetch(config.postResendEmailURL, {
+        fetch(config.baseURL + config.postResendEmail, {
             method: "POST",
             headers: {
-                "Authorization": "Bearer " + window.localStorage.getItem("token") ?? "",
+                "Authorization": "Bearer " + window.localStorage.getItem("token"),
             },
             body: ""
         })

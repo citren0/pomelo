@@ -23,7 +23,7 @@ const UserInfo = () =>
     {        
         setIsError(false);
 
-        fetch(config.userInfoURL, {
+        fetch(config.baseURL + config.userInfo, {
             method: "GET",
             headers:
             {

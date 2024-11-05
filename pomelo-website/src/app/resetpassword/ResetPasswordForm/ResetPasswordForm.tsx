@@ -61,7 +61,7 @@ const ResetPasswordForm = () =>
             password: password,
         };
 
-        fetch(config.resetPasswordURL, {
+        fetch(config.baseURL + config.resetPassword, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -23,7 +23,7 @@ const Reports = () =>
         setIsError(false);
         setIsLoading(true);
 
-        fetch(config.getReportsURL, {
+        fetch(config.baseURL + config.getReports, {
             method: "GET",
             headers:
             {

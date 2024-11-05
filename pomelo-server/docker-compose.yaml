@@ -39,7 +39,7 @@ services:
     volumes:
       - web-root:/var/www/html
       - ./nginx-conf:/etc/nginx/conf.d
-      - ./certs:/etc/letsencrypt/live/CHANGEMECHANGEME
+      - ./certs:/etc/letsencrypt/live/api.pomeloprod.com
       - certbot-var:/var/lib/letsencrypt
     depends_on:
       - server
@@ -49,7 +49,7 @@ services:
   certbot:
     image: certbot/certbot
     volumes:
-      - ./certs:/etc/letsencrypt/live/CHANGEMECHANGEME
+      - ./certs:/etc/letsencrypt/live/api.pomeloprod.com
       - certbot-var:/var/lib/letsencrypt
       - web-root:/var/www/html
     depends_on:

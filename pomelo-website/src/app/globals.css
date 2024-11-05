@@ -195,3 +195,45 @@
     font-weight: 600;
     font-size: 14px;
 }
+
+.btn-image
+{
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    height: fit-content;
+    display: flex;
+    padding: 0.3rem;
+    border-radius: 0.5rem;
+    align-items: center;
+}
+.btn-image:hover
+{
+    background-color: #f0f0fa;
+}
+
+.vertical-line
+{
+    border: 1px black solid;
+    width: 0;
+}
+
+.btn-primary-with-image
+{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 22px;
+    font-weight: 500;
+    background-color: #7171f1;
+    color: white;
+    padding: 0.5rem 1rem;
+    outline: none;
+    border-radius: 0.5rem;
+    border: none;
+}
+.btn-primary-with-image:hover
+{
+    background-color: #5858f0;
+}

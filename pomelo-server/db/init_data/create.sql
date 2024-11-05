@@ -15,15 +15,7 @@ CREATE TABLE web_activity
     domain text,
     faviconUrl text,
     PRIMARY KEY (userid, time_stamp),
-    CONSTRAINT userid_fk FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE,
-);
-
-CREATE TABLE productivity_strategy
-(
-    user_id INT,
-    strategy text,
-    PRIMARY KEY (user_id),
-    CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    CONSTRAINT userid_fk FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE rules
@@ -87,4 +79,5 @@ CREATE TABLE login_attempts
 
 insert into roles (name) values
     ('Verified'),
-    ('Admin');
+    ('Admin'),
+    ('Paid');

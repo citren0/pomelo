@@ -7,10 +7,10 @@ const getNewToken = () =>
 {
     return new Promise<void>((resolve, reject) =>
     {
-        fetch(config.getNewTokenURL, {
+        fetch(config.baseURL + config.getNewToken, {
             method: "GET",
             headers: {
-                "Authorization": "Bearer " + window.localStorage.getItem("token") ?? "",
+                "Authorization": "Bearer " + window.localStorage.getItem("token"),
             },
         })
         .then(async (getNewTokenResponse) =>

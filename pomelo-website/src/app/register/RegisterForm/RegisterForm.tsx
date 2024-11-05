@@ -35,7 +35,7 @@ const RegisterForm = () =>
             password: password,
         };
 
-        fetch(config.registerURL, {
+        fetch(config.baseURL + config.register, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

@@ -8,6 +8,8 @@ import config from "@/constants/config";
 import { Message, SimpleTextArea } from "@/components";
 import Image from "next/image";
 import MessageTypes from "@/constants/messageTypes";
+import putRule from "@/services/putRule";
+import humanReadableTimeToFormat from "@/services/humanReadableTimeToFormat";
 
 interface Message
 {
@@ -17,10 +19,10 @@ interface Message
 
 interface Props
 {
-    onStrategyChange: (strategy: string) => void;
+    getRules: () => Promise<void | string>;
 };
 
-const Insights = ({ onStrategyChange }: Props) =>
+const Insights = ({getRules}: Props) =>
 {
     const [ messages, setMessages ] = useState<Message[]>([]);
     const [ isError, setIsError ] = useState<boolean>(false);
@@ -34,7 +36,7 @@ const Insights = ({ onStrategyChange }: Props) =>
     {
         setIsLoading(true);
 
-        fetch(config.getInsightsURL, {
+        fetch(config.baseURL + config.getInsights, {
             method: "POST",
             headers:
             {
@@ -108,11 +110,39 @@ const Insights = ({ onStrategyChange }: Props) =>
 
     };
 
-    const removeSuggestions = () =>
+    const acceptSuggestions = (idx: number) =>
     {
-        setMessages(messages.map((message) =>
+        const messageSplit = messages[idx].message.split("NEW RULE");
+        const parts = messageSplit[1]?.trim().split(" ") ?? ["Invalid Rule.", "N/A", "N/A"];
+
+        const start = humanReadableTimeToFormat(parts[1]);
+        const stop = humanReadableTimeToFormat(parts[2]);
+
+        setIsLoading(true);
+        setIsError(false);
+        
+        putRule(parts[0], start, stop)
+        .then((_) =>
         {
-            return { ...message, message: message.message.split("CHANGE STRATEGY")[0]};
+            setIsLoading(false);
+            getRules();
+            removeSuggestions(idx);
+        })
+        .catch((error) =>
+        {
+            setIsError(true);
+            setErrorMessage(error);
+            setIsLoading(false);
+        });
+
+    };
+
+    const removeSuggestions = (idx: number) =>
+    {
+        setMessages(messages.map((message, inIdx) =>
+        {
+            // Remove NEW RULE and text after if inIdx == idx.
+            return { ...message, message: (inIdx == idx) ? message.message.split("NEW RULE")[0].trim() : message.message };
         }));
     };
 
@@ -144,7 +174,7 @@ const Insights = ({ onStrategyChange }: Props) =>
                 </> }
                 
                 <div className="insights-content-wrapper" id="insights-content-wrapper">
-                    { messages.map((message) =>
+                    { messages.map((message, idx) =>
                         {
                             if (message.me == true)
                             {
@@ -158,37 +188,34 @@ const Insights = ({ onStrategyChange }: Props) =>
                             }
                             else
                             {
-                                if (message.message.includes("CHANGE STRATEGY"))
+                                if (message.message.includes("NEW RULE"))
                                 {
                                     // Strategy change.
-                                    const messageSplit = message.message.split("CHANGE STRATEGY");
+                                    const messageSplit = message.message.split("NEW RULE");
+
+                                    const parts = messageSplit[1]?.trim().split(" ") ?? ["Invalid Rule.", "N/A", "N/A"];
+
                                     return (
                                         <>
                                             <div className="insights-bot-wrapper">
                                                 <span className="insights-text">{messageSplit[0].trim()}</span>
                                             </div>
                                             <div className="insights-bot-strategy-proposal">
-                                                <span className="insights-bot-strategy-proposal-title">Accept Strategy Change?</span>
+                                                <span className="insights-bot-strategy-proposal-title">Accept New Rule?</span>
                                                 <hr className="hr-100" />
 
-                                                <span className="insights-text">{messageSplit[1].trim()}</span>
+                                                <span className="insights-text">Block {parts[0]} from {parts[1]} to {parts[2]}</span>
 
                                                 <div className="insights-bot-strategy-proposal-buttons">
                                                     <button
                                                         className="form-primary-button"
-                                                        onClick={
-                                                            () => 
-                                                            {
-                                                                onStrategyChange(messageSplit[1].trim());
-                                                                removeSuggestions();
-                                                            }
-                                                        }
+                                                        onClick={() => acceptSuggestions(idx)}
                                                     >
                                                         Accept Change
                                                     </button>
                                                     <button
                                                         className="form-secondary-button"
-                                                        onClick={removeSuggestions}
+                                                        onClick={() => removeSuggestions(idx)}
                                                     >
                                                         Decline Change
                                                     </button>

@@ -45,7 +45,7 @@ const LoginForm = () =>
             password: password,
         };
 
-        fetch(config.loginURL, {
+        fetch(config.baseURL + config.login, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -69,7 +69,15 @@ const LoginForm = () =>
 
                 if (loginResponseJson.isVerified == true)
                 {
-                    window.location.href = "/dashboard";
+                    if (loginResponseJson.paid == true)
+                    {
+                        window.location.href = "/dashboard";
+                    }
+                    else
+                    {
+                        window.location.href = "/createorder";
+                    }
+                    
                 }
                 else
                 {

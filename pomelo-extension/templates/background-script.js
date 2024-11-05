@@ -86,7 +86,7 @@ const postReport = async (url, favicon, runtime) =>
 {
     const token = await getToken(runtime);
 
-    const postReportEndpoint = "http://localhost:3080/api/report";
+    const postReportEndpoint = "https://api.pomeloprod.com:443/api/report";
 
     try
     {
@@ -116,7 +116,7 @@ const checkRules = async (domain, runtime) =>
     const token = await getToken(runtime);
 
     // Get rules.
-    const getRulesEndpoint = "http://localhost:3080/api/rules";
+    const getRulesEndpoint = "https://api.pomeloprod.com:443/api/rules";
     fetch(getRulesEndpoint, {
         method: "GET",
         headers: {

@@ -13,7 +13,7 @@ import auth from '../services/token';
 dotenv.config();
 
   
-router.get('/api/rules', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
+router.get('/api/rules', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.Paid), (req, res, next) =>
 {
     db.any("SELECT domain, starttime AS start, stoptime AS stop FROM rules WHERE user_id = $1;",
             [req.user.id ])
@@ -29,7 +29,7 @@ router.get('/api/rules', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
 });
 
 
-router.put('/api/rules', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
+router.put('/api/rules', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.Paid), (req, res, next) =>
 {
     if (!req.query.hasOwnProperty("domain") || !req.query.hasOwnProperty("start") || !req.query.hasOwnProperty("stop"))
     {
@@ -60,7 +60,7 @@ router.put('/api/rules', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
 
 });
 
-router.delete('/api/rules', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
+router.delete('/api/rules', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.Paid), (req, res, next) =>
 {
     if (!req.query.hasOwnProperty("domain") || !req.query.hasOwnProperty("start") || !req.query.hasOwnProperty("stop"))
     {

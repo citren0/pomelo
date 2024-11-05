@@ -13,7 +13,7 @@ var mustHaveRole_1 = require("../services/mustHaveRole");
 var token_1 = require("../services/token");
 // Environment setup.
 dotenv.config();
-router.post('/api/report', token_1.default, (0, mustHaveRole_1.default)(Roles_1.default.Verified), function (req, res, next) {
+router.post('/api/report', token_1.default, (0, mustHaveRole_1.default)(Roles_1.default.Verified), (0, mustHaveRole_1.default)(Roles_1.default.Paid), function (req, res, next) {
     if (!req.body.hasOwnProperty("domain") || !req.body.hasOwnProperty("favicon")) {
         return res.status(400).send({ status: "Include all fields before submitting.", });
     }
@@ -28,7 +28,7 @@ router.post('/api/report', token_1.default, (0, mustHaveRole_1.default)(Roles_1.
         return res.status(500).send({ status: "Failed to put report. Try again later." });
     });
 });
-router.get('/api/report', token_1.default, (0, mustHaveRole_1.default)(Roles_1.default.Verified), function (req, res, next) {
+router.get('/api/report', token_1.default, (0, mustHaveRole_1.default)(Roles_1.default.Verified), (0, mustHaveRole_1.default)(Roles_1.default.Paid), function (req, res, next) {
     var oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
     database_1.db.any("SELECT time_stamp, domain, faviconUrl from web_activity WHERE userid = $1 AND time_stamp > $2;", [req.user.id, oneDayAgo,])
         .then(function (reports) {
@@ -39,7 +39,7 @@ router.get('/api/report', token_1.default, (0, mustHaveRole_1.default)(Roles_1.d
         return res.status(500).send({ status: "Failed to get reports. Try again later." });
     });
 });
-router.post('/api/insights', token_1.default, (0, mustHaveRole_1.default)(Roles_1.default.Verified), function (req, res, next) {
+router.post('/api/insights', token_1.default, (0, mustHaveRole_1.default)(Roles_1.default.Verified), (0, mustHaveRole_1.default)(Roles_1.default.Paid), function (req, res, next) {
     if (!req.body.hasOwnProperty("messages")) {
         return res.status(400).send({ status: "Failed to get insights. Include all fields before submitting." });
     }
@@ -49,8 +49,8 @@ router.post('/api/insights', token_1.default, (0, mustHaveRole_1.default)(Roles_
         if (reports.length < parseInt(process.env.LLM_MIN_REVIEWS)) {
             return res.status(200).send({ status: "Successfully generated insights.", insights: "Too few datapoints. Try again when you've used Pomelo for longer.", });
         }
-        database_1.db.any("SELECT strategy FROM productivity_strategy WHERE user_id = $1;", [req.user.id])
-            .then(function (strategy) {
+        database_1.db.any("SELECT domain, starttime AS start, stoptime AS stop FROM rules WHERE user_id = $1;", [req.user.id])
+            .then(function (rules) {
             var minIndex = Math.max(0, reports.length - parseInt(process.env.LLM_SERVER_MAX_REPORTS));
             var maxIndex = reports.length;
             var body = {
@@ -63,7 +63,13 @@ router.post('/api/insights', token_1.default, (0, mustHaveRole_1.default)(Roles_
                         timestamp: (date.toDateString() + " " + date.toLocaleTimeString()),
                     };
                 }),
-                strategy: strategy[0].strategy,
+                rules: rules.map(function (rule) {
+                    return {
+                        domain: rule.domain,
+                        start: "".concat(((rule.start + 1) > 12) ? (rule.start + 1 - 12) : (rule.start + 1)).concat((rule.start < 11 || rule.start == 23) ? "AM" : "PM"),
+                        stop: "".concat(((rule.stop + 1) > 12) ? (rule.stop + 1 - 12) : (rule.stop + 1)).concat((rule.stop < 11 || rule.stop == 23) ? "AM" : "PM"),
+                    };
+                }),
                 conversation: req.body.messages.map(function (message) {
                     return {
                         user: message.me,
@@ -106,7 +112,6 @@ router.post('/api/insights', token_1.default, (0, mustHaveRole_1.default)(Roles_
         });
     })
         .catch(function (error) {
-        console.log(error);
         return res.status(500).send({ status: "Failed to get insights. Try again later." });
     });
 });

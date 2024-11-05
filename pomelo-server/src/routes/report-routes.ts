@@ -13,7 +13,7 @@ import auth from '../services/token';
 dotenv.config();
 
   
-router.post('/api/report', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
+router.post('/api/report', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.Paid), (req, res, next) =>
 {
     if (!req.body.hasOwnProperty("domain") || !req.body.hasOwnProperty("favicon"))
     {
@@ -39,7 +39,7 @@ router.post('/api/report', auth, mustHaveRole(Roles.Verified), (req, res, next) 
 });
 
 
-router.get('/api/report', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
+router.get('/api/report', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.Paid), (req, res, next) =>
 {
     const oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
 
@@ -59,7 +59,7 @@ router.get('/api/report', auth, mustHaveRole(Roles.Verified), (req, res, next) =
 });
 
 
-router.post('/api/insights', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
+router.post('/api/insights', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.Paid), (req, res, next) =>
 {
     if (!req.body.hasOwnProperty("messages"))
     {
@@ -77,10 +77,11 @@ router.post('/api/insights', auth, mustHaveRole(Roles.Verified), (req, res, next
             return res.status(200).send({ status: "Successfully generated insights.", insights: "Too few datapoints. Try again when you've used Pomelo for longer.", });
         }
 
-        db.any("SELECT strategy FROM productivity_strategy WHERE user_id = $1;",
+        db.any("SELECT domain, starttime AS start, stoptime AS stop FROM rules WHERE user_id = $1;",
                 [req.user.id])
-        .then((strategy) =>
+        .then((rules) =>
         {
+
             const minIndex = Math.max(0, reports.length - parseInt(process.env.LLM_SERVER_MAX_REPORTS));
             const maxIndex = reports.length;
 
@@ -97,14 +98,21 @@ router.post('/api/insights', auth, mustHaveRole(Roles.Verified), (req, res, next
                                 };
                             }
                         ),
-                strategy: strategy[0].strategy,
+                rules: rules.map((rule) =>
+                        {
+                            return {
+                                domain: rule.domain,
+                                start: `${((rule.start + 1) > 12) ? (rule.start + 1 - 12) : (rule.start + 1)}${(rule.start < 11 || rule.start == 23) ? "AM" : "PM"}`,
+                                stop: `${((rule.stop + 1) > 12) ? (rule.stop + 1 - 12) : (rule.stop + 1)}${(rule.stop < 11 || rule.stop == 23) ? "AM" : "PM"}`,
+                            };
+                        }),
                 conversation: req.body.messages.map((message) =>
-                                {
-                                    return {
-                                        user: message.me,
-                                        text: message.message,
-                                    };
-                                }),
+                        {
+                            return {
+                                user: message.me,
+                                text: message.message,
+                            };
+                        }),
             };
 
             const client = new OpenAI({
@@ -154,7 +162,6 @@ router.post('/api/insights', auth, mustHaveRole(Roles.Verified), (req, res, next
     })
     .catch((error) =>
     {
-        console.log(error);
         return res.status(500).send({ status: "Failed to get insights. Try again later." });
     });
     

@@ -1,0 +1,36 @@
+
+.order-success-wrapper
+{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 2rem;
+    padding: calc(2vw + 2rem) 3rem 5rem 3rem;
+}
+
+.order-success-title
+{
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.order-success-subtitle
+{
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.order-success-btn-row-wrapper
+{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.order-success-next-steps
+{
+    font-size: 24px;
+    font-weight: 500;
+}

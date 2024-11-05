@@ -49,7 +49,7 @@ const login = (): AppThunk => async (dispatch, getState) =>
     const username = loginSelectors.selectUsername(state);
     const password = loginSelectors.selectPassword(state);
 
-    const loginEndpoint = config.loginURL;
+    const loginEndpoint = config.baseURL + config.login;
 
     const loginRequestBody: LoginRequest = {
         username: username,

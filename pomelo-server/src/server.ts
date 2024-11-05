@@ -11,8 +11,8 @@ import { router as userRouter } from "./routes/user-routes";
 import { router as reportRouter } from "./routes/report-routes";
 import { router as emailRouter } from "./routes/email-routes";
 import { router as passwordRouter } from "./routes/password-routes";
-import { router as strategyRouter } from "./routes/strategy-routes";
 import { router as rulesRouter } from "./routes/rules-routes";
+import { router as paypalRouter } from "./routes/paypal-routes";
 
 // Server setup.
 connectToDatabase();
@@ -27,8 +27,8 @@ app.use("/", userRouter);
 app.use("/", reportRouter);
 app.use("/", emailRouter);
 app.use("/", passwordRouter);
-app.use("/", strategyRouter);
 app.use("/", rulesRouter);
+app.use("/", paypalRouter);
 
 app.listen(3000, () => {
     console.log("Server started.")

@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const cookieParser = require("cookie-parser");
 
-import { db } from '../database';
 import { JWTPayload } from '../models/JWTPayload';
 
 // Environment setup.

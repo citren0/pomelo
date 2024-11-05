@@ -4,10 +4,18 @@
     display: flex;
     flex-flow: column;
     border-radius: 0.5rem;
-    background-color: #fafaff;
+    background-color: #f7f7fb;
     box-shadow: 5px 5px 5px 0px #cccccc;
-    padding: 2rem;
+    padding: 1rem;
     margin: 2rem 2rem 1rem 2rem;
+    width: calc(80vw - 2rem - 2rem - 1px);
+}
+@media screen and (max-width: 800px)
+{
+    .reports-title-wrapper
+    {
+        width: calc(100vw - 2rem - 2rem - 1px);
+    }
 }
 
 .reports-wrapper
@@ -15,7 +23,6 @@
     display: flex;
     flex-flow: column;
     min-width: 40vw;
-    max-width: 80vw;
 }
 
 .reports-list
@@ -26,7 +33,7 @@
     padding: 1rem 0 1rem 0;
     align-items: center;
     max-width: 90vw;
-    overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .reports-title

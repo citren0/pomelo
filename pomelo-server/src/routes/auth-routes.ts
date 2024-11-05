@@ -153,6 +153,7 @@ router.post('/api/login', (req, res, next) =>
                             status: "Successfully logged in.",
                             token: auth_token,
                             isVerified: mapped_roles.includes(Roles.Verified),
+                            paid: mapped_roles.includes(Roles.Paid),
                         });
 
                     })
