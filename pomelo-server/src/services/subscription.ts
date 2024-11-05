@@ -35,8 +35,8 @@ const removePaidRole = (user_id: number) =>
 
 const createSubscription = (hookBody: any) =>
 {
-    db.any("INSERT INTO subscriptions (user_id, subscription_id, activated, time_stamp) values ($1, $2, $3, $4);",
-            [hookBody.resource.custom_id, hookBody.resource.id, false, Date.now()]);
+    db.any("INSERT INTO subscriptions (user_id, subscription_id, time_stamp) values ($1, $2, $3);",
+            [hookBody.resource.custom_id, hookBody.resource.id, Date.now()]);
 };
 
 
