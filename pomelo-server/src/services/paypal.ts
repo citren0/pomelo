@@ -146,12 +146,12 @@ export const downloadAndCache = async (url) =>
             .then((data) => data.text())
             .then((response) =>
             {
-                fs.writeFile(filePath, data);
-                resolve(data);
+                fs.writeFile(filePath, response);
+                resolve(response);
             })
             .catch((_) =>
             {
-                resolve("");
+                resolve(_);
             });
 
         });
@@ -175,7 +175,7 @@ export const verifySignature = async (event, headers) =>
     const signatureBuffer = Buffer.from(headers['paypal-transmission-sig'], 'base64');
 
     // Create a verification object
-    const verifier = crypto.createVerify('SHA256');
+    const verifier = crypto.createVerify('RSA-SHA256');
 
     // Add the original message to the verifier
     verifier.update(message);

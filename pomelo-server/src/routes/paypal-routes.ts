@@ -100,9 +100,6 @@ router.post("/api/capture_order", auth, mustHaveRole(Roles.Verified), (req, res,
 
 router.post("/api/webhook", async (req, res, next) =>
 {
-    console.log(`headers`, req.headers);
-    console.log(`raw event: ${req.body}`);
-
     const isSignatureValid = await verifySignature(req.body, req.headers);
 
     if (isSignatureValid)
