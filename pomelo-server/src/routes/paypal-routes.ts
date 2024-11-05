@@ -6,47 +6,16 @@ import { db } from "../database";
 import { WebhookEvent } from "../models/WebhookEvent";
 import { verifySignature } from "../services/paypal";
 import Roles from "../models/Roles";
+import { createSubscription, deleteSubscription, givePaidRole, removePaidRole } from "../services/subscription";
 
 // Environment setup.
 dotenv.config();
 
 
-const givePaidRole = (user_id: number) =>
-{
-    db.any("SELECT id FROM roles WHERE name = $1;",
-            [Roles.Paid])
-    .then((role_id) =>
-    {
-        db.any("INSERT INTO user_to_role (user_id, role_id) VALUES ($1, $2);",
-                [user_id, role_id[0].id]);
-    })
-    .catch((_) =>
-    {
-        // Handle error.
-    });
-
-};
-
-
-const removePaidRole = (user_id: number) =>
-{
-    db.any("SELECT id FROM roles WHERE name = $1;",
-            [Roles.Paid])
-    .then((role_id) =>
-    {
-        db.any("DELETE FROM user_to_role WHERE user_id = $1 AND role_id = $2;",
-                [user_id, role_id[0].id]);
-    })
-    .catch((_) =>
-    {
-        // Handle error.
-    });
-
-};
-
-
 const handleWebhook = (hookBody: any) =>
 {
+    // Paid role is used to determine if the user actually can access the resources.
+    // Subscription table is used to find information about a user's subscription so they can cancel or suspend it.
     switch (hookBody.event_type)
     {
         case WebhookEvent.ACTIVATED:
@@ -54,10 +23,12 @@ const handleWebhook = (hookBody: any) =>
             return;
 
         case WebhookEvent.CANCELLED:
+            deleteSubscription(hookBody);
             removePaidRole(hookBody.resource.custom_id);
             return;
 
         case WebhookEvent.CREATED:
+            createSubscription(hookBody);
             return;
 
         case WebhookEvent.EXPIRED:
@@ -65,6 +36,7 @@ const handleWebhook = (hookBody: any) =>
             return;
 
         case WebhookEvent.PAYMENT_FAILED:
+            removePaidRole(hookBody.resource.custom_id);
             return;
 
         case WebhookEvent.SUSPENDED:

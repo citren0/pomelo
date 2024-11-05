@@ -77,6 +77,16 @@ CREATE TABLE login_attempts
     CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE subscriptions
+(
+    user_id INT,
+    subscription_id text UNIQUE,
+    activated boolean,
+    time_stamp BIGINT,
+    CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    PRIMARY KEY (user_id)
+);
+
 insert into roles (name) values
     ('Verified'),
     ('Admin'),
