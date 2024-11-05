@@ -19,7 +19,6 @@ const CreateOrder = () =>
     {
         clientId: config.paypalClientId,
         currency: "USD",
-        intent: "capture",
         vault: true,
     };
 
@@ -41,7 +40,7 @@ const CreateOrder = () =>
                 <PayPalScriptProvider options={options} >
                     <PayPalButtons
                         style={{ layout: "vertical", disableMaxWidth: true, }}
-                        onApprove={captureOrder}
+                        //onApprove={captureOrder}
                         onError={onError}
                         createSubscription={(data: any, actions: any) => {
                             return actions.subscription.create({
