@@ -6,7 +6,7 @@ import { db } from "../database";
 import Roles from "../models/Roles";
 import auth from "../services/token";
 import mustHaveRole from "../services/mustHaveRole";
-import { captureOrder, createOrder } from "../services/paypal";
+import { captureOrder, createOrder, verifySignature } from "../services/paypal";
 import { checkStatusCode } from "../services/statusCode";
 
 // Environment setup.
@@ -95,6 +95,28 @@ router.post("/api/capture_order", auth, mustHaveRole(Roles.Verified), (req, res,
         return res.status(500).send({ status: "Failed to capture payment. Try again later.", });
     });
 
+});
+
+
+router.post("/api/webhook", async (req, res, next) =>
+{
+    console.log(`headers`, req.headers);
+    console.log(`raw event: ${req.body}`);
+
+    const isSignatureValid = await verifySignature(req.body, req.headers);
+
+    if (isSignatureValid)
+    {
+        // Successful receipt of webhook.
+        console.log(`Received event`, JSON.stringify(req.body, null, 2));
+    }
+    else
+    {
+        // Reject processing the webhook.
+        console.log(`Signature is not valid for ${req.body?.id} ${req.headers?.['correlation-id']}`);
+    }
+  
+    res.sendStatus(200);
 });
 
 

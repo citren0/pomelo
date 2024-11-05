@@ -10,6 +10,7 @@
 
 .order-success-title
 {
+    padding-top: 0.5rem;
     font-size: 32px;
     font-weight: 600;
 }

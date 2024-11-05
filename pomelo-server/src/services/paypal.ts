@@ -1,4 +1,8 @@
+import { crc32 } from "./crc";
+
 const dotenv = require("dotenv");
+const fs = require("fs");
+const crypto = require("crypto");
 
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 
@@ -119,4 +123,49 @@ export const captureOrder = async (orderID) =>
     const captureOrderResponseJson = await captureOrderResponse.json();
 
     return { ...captureOrderResponseJson, status: captureOrderResponse.status };
+};
+
+
+export const downloadAndCache = async (url) =>
+{
+    const cacheKey = url.replace(/\W+/g, '-')
+    const filePath = `./${cacheKey}`;
+
+    // Check if cached file exists
+    const cachedData = await fs.readFile(filePath, 'utf-8').catch(() => null);
+
+    if (cachedData)
+    {
+        return cachedData;
+    }
+
+    // Download the file if not cached
+    const response = await fetch(url);
+    const data = await response.text();
+    await fs.writeFile(filePath, data);
+
+    return data;
+};
+
+
+export const verifySignature = async (event, headers) =>
+{
+    const transmissionId = headers['paypal-transmission-id'];
+    const timeStamp = headers['paypal-transmission-time'];
+    const crc = parseInt("0x" + crc32(event).toString(16));
+
+    const message = `${transmissionId}|${timeStamp}|3RH04753AV665141L|${crc}`;
+
+    const certPem = await downloadAndCache(headers['paypal-cert-url']);
+
+    // Create buffer from base64-encoded signature
+    const signatureBuffer = Buffer.from(headers['paypal-transmission-sig'], 'base64');
+
+    // Create a verification object
+    const verifier = crypto.createVerify('SHA256');
+
+    // Add the original message to the verifier
+    verifier.update(message);
+
+    return verifier.verify(certPem, signatureBuffer);
 };
