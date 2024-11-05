@@ -34,7 +34,7 @@ services:
     image: nginx:latest
     restart: unless-stopped
     ports:
-      - "3443:3443"
+      - "443:443"
       - "3080:3080"
     volumes:
       - web-root:/var/www/html
