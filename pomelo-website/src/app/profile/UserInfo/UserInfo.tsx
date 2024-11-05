@@ -27,7 +27,7 @@ const UserInfo = () =>
             method: "GET",
             headers:
             {
-                "Authorization": "Bearer " + window.localStorage.getItem("token") ?? "",
+                "Authorization": "Bearer " + window.localStorage.getItem("token"),
             },
         })
         .then(async (userInfoResponse) =>

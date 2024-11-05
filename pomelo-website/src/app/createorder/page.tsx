@@ -1,19 +1,21 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./page.css";
 import { Message, NavBar } from "../../components";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import config from "@/constants/config";
 import { captureOrder, createOrder } from "@/services/paypal";
 import MessageTypes from "@/constants/messageTypes";
+import { checkStatusCode } from "@/services/checkStatusCode";
 
 
 const CreateOrder = () =>
 {
     const [ isError, setIsError ] = useState<boolean>(false);
     const [ errorMessage, setErrorMessage ] = useState<string>("");
+    const [ userId, setUserId ] = useState<number>(-1);
 
     const options =
     {
@@ -28,6 +30,49 @@ const CreateOrder = () =>
         setErrorMessage(String(error));
     };
 
+    const getUserInfo = () =>
+    {
+        setIsError(false);
+
+        fetch(config.baseURL + config.userInfo, {
+            method: "GET",
+            headers:
+            {
+                "Authorization": "Bearer " + window.localStorage.getItem("token"),
+            },
+        })
+        .then(async (userInfoResponse) =>
+        {
+            const userInfoResponseJson = await userInfoResponse.json();
+
+            if (!checkStatusCode(userInfoResponse.status))
+            {
+                setIsError(true);
+                setErrorMessage(userInfoResponseJson.status);
+            }
+            else
+            {
+                if (!userInfoResponseJson.hasOwnProperty("user"))
+                {
+                    setIsError(true);
+                    setErrorMessage("Are you sure you're logged in?");
+                }
+                else
+                {
+                    setUserId(userInfoResponseJson.user.id);
+                }
+                
+            }
+
+        });
+
+    };
+
+    useEffect(() =>
+    {
+        getUserInfo();
+    }, []);
+
 	return (
 		<>
 			<NavBar />
@@ -40,11 +85,12 @@ const CreateOrder = () =>
                 <PayPalScriptProvider options={options} >
                     <PayPalButtons
                         style={{ layout: "vertical", disableMaxWidth: true, }}
-                        //onApprove={captureOrder}
+                        disabled={userId == -1}
                         onError={onError}
                         createSubscription={(data: any, actions: any) => {
                             return actions.subscription.create({
-                                plan_id: 'P-8XA030171E179871EM4UUM3Y'
+                                plan_id: 'P-8XA030171E179871EM4UUM3Y',
+                                custom_id: userId,
                             });
                         }}
                     />
