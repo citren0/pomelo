@@ -128,23 +128,36 @@ export const captureOrder = async (orderID) =>
 
 export const downloadAndCache = async (url) =>
 {
-    const cacheKey = url.replace(/\W+/g, '-')
-    const filePath = `./${cacheKey}`;
-
-    // Check if cached file exists
-    const cachedData = await fs.readFile(filePath, 'utf-8').catch(() => null);
-
-    if (cachedData)
+    return new Promise<any>((resolve, reject) =>
     {
-        return cachedData;
-    }
+        const cacheKey = url.replace(/\W+/g, '-')
+        const filePath = `./${cacheKey}`;
 
-    // Download the file if not cached
-    const response = await fetch(url);
-    const data = await response.text();
-    await fs.writeFile(filePath, data);
+        // Check if cached file exists
+        fs.readFile(filePath, 'utf-8', (err, data) =>
+        {
+            if (!err)
+            {
+                resolve(data);
+            }
 
-    return data;
+            // Download the file if not cached
+            fetch(url)
+            .then((data) => data.text())
+            .then((response) =>
+            {
+                fs.writeFile(filePath, data);
+                resolve(data);
+            })
+            .catch((_) =>
+            {
+                resolve("");
+            });
+
+        });
+
+    });
+
 };
 
 
