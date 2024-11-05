@@ -29,7 +29,7 @@ const LoginForm = () =>
         if (href.includes("registered"))
         {
             setIsInfo(true);
-            setInfoMessage(getURLParameter("registered") ?? "Registration successful.");
+            setInfoMessage(getURLParameter("registered") ?? "Registration successful, you may log in now.");
         }
     });
 

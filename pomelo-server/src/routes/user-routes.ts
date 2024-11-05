@@ -27,7 +27,7 @@ router.get('/api/userdetails', (req, res, next) =>
     {
         if (err)
         {
-            return res.status(401).send({ isLoggedIn: false, });
+            return res.status(401).send({ status: "Are you sure you're logged in?", isLoggedIn: false, });
         }
 
         return res.status(200).send({ isLoggedIn: true, user: user, });
