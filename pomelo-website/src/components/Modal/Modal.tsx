@@ -7,12 +7,13 @@ import Image from "next/image";
 
 interface Props
 {
+    content: React.ReactNode;
     title: string;
     triggerOpen?: boolean;
     triggerOpenDone?: () => void;
 }
 
-const Modal = ({ title, triggerOpen, triggerOpenDone }: Props) =>
+const Modal = ({ content, title, triggerOpen, triggerOpenDone }: Props) =>
 {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
 
@@ -27,14 +28,20 @@ const Modal = ({ title, triggerOpen, triggerOpenDone }: Props) =>
 
     return (
         <>
-            <div className="modal-wrapper">
-                <div className="modal-top-bar">
-                    <span className="modal-title">{title}</span>
-                    <button className="btn-image" onClick={() => setIsOpen(false)}>
-                        <Image src="/assets/x.svg" height={32} width={32} alt={"Exit button."} />
-                    </button>
+            { isOpen && <>
+                <div className="modal-wrapper">
+                    <div className="modal-top-bar">
+                        <span className="modal-title">{title}</span>
+                        <button className="btn-image" onClick={() => setIsOpen(false)}>
+                            <Image src="/assets/x.svg" height={32} width={32} alt={"Exit button."} />
+                        </button>
+                    </div>
+                    <hr className="hr-100" />
+                    <div className="modal-content">
+                        {content}
+                    </div>
                 </div>
-            </div>
+            </> }
         </>
     );
 };

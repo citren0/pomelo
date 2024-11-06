@@ -4,6 +4,7 @@ import "./page.css";
 import { NavBar } from "../../components";
 import UserInfo from "./UserInfo/UserInfo";
 import Subscription from "./Subscription/Subscription";
+import DeleteAccount from "./DeleteAccount/DeleteAccount";
 
 const Login = () =>
 {
@@ -15,6 +16,7 @@ const Login = () =>
 			<div className="content-container">
 				<UserInfo />
 				<Subscription />
+				<DeleteAccount />
 			</div>
 		</>
 	);

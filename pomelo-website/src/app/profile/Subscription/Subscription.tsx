@@ -14,6 +14,7 @@ const Subscription = () =>
     const [ isError, setIsError ] = useState<boolean>(false);
     const [ errorMessage, setErrorMessage ] = useState<string>("");
     const [ subscriptionStatus, setSubscriptionStatus ] = useState<PaypalSubscriptionStatus>(PaypalSubscriptionStatus.NotLoaded);
+    const [ openCancelModal, setOpenCancelModal ] = useState<boolean>(false);
     
     const getSubscriptionStatus = () =>
     {        
@@ -81,6 +82,7 @@ const Subscription = () =>
     return (
         <>
             <div className="subscription-wrapper">
+
                 <div className="subscription-status-wrapper">
                     <span className="subscription-status-left">Your subscription status is: </span>
                     { subscriptionStatus == PaypalSubscriptionStatus.NotLoaded && <>
@@ -105,10 +107,19 @@ const Subscription = () =>
                         <span className="subscription-status-right" style={{ color: "#a3020a" }}>Suspended</span>
                     </> }
                 </div>
+
                 { [ PaypalSubscriptionStatus.Active, PaypalSubscriptionStatus.ApprovalPending, PaypalSubscriptionStatus.Approved ].includes(subscriptionStatus) && <>
-                    <button onClick={cancelSubscription} className="subscription-cancel-button">Cancel Subscription</button>
+                    <button onClick={() => setOpenCancelModal(true)} className="subscription-cancel-button">Cancel Subscription</button>
                 </> }
-                <Modal title="Cancel Subscription" triggerOpen={true} triggerOpenDone={() => {}} />
+
+                <Modal title="Cancel Subscription" triggerOpen={openCancelModal} triggerOpenDone={() => setOpenCancelModal(false)} content={
+                    <>
+                        <div className="subscription-status-cancel-wrapper">
+                            <span className="subscription-status-cancel-text">Are you sure you want to cancel? You can re-subscribe at any point after.</span>
+                            <button onClick={cancelSubscription} className="subscription-cancel-button">Yes I'm Sure</button>
+                        </div>
+                    </>
+                }/>
                 
             </div>
             
