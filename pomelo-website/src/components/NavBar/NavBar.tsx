@@ -50,6 +50,17 @@ const NavBar = () =>
                     </> }
                     
                     { isLoggedIn && <>
+                        <div className="nav-btn-grouping-collapse">
+                            <a className="nav-link-ext">
+                                <Image src="/assets/firefox.png" height={28} width={28} alt="Firefox logo" />
+                            </a>
+                            <a className="nav-link-ext">
+                                <Image src="/assets/chrome.png" height={28} width={28} alt="Chrome logo" />
+                            </a>
+                            <a className="nav-link-ext">
+                                <Image src="/assets/safari.png" height={28} width={28} alt="Safari logo" />
+                            </a>
+                        </div>
                         <a
                             className="nav-link"
                             href="/profile"

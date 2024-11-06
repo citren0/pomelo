@@ -4,6 +4,8 @@ const fs = require("fs");
 const crypto = require("crypto");
 const crc32 = require("buffer-crc32");
 
+import { PaypalSubscriptionStatus } from "../models/PaypalSubscriptionStatus";
+
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 export const fetch = async function (...args: any)
 {
@@ -70,4 +72,59 @@ export const verifySignature = async (event, headers) =>
     verifier.update(message);
 
     return verifier.verify(certPem, signatureBuffer);
+};
+
+
+// Authenticate to Paypal REST APIs
+const generateAccessToken = async () =>
+{
+    try
+    {
+        if (!process.env.PAYPAL_CLIENT_ID || !process.env.PAYPAL_CLIENT_SECRET)
+        {
+            throw new Error("MISSING_API_CREDENTIALS");
+        }
+
+        // Basic auth.
+        const auth = Buffer.from(process.env.PAYPAL_CLIENT_ID + ":" + process.env.PAYPAL_CLIENT_SECRET).toString("base64");
+
+        const response = await fetch(process.env.PAYPAL_BASE_URL + "/v1/oauth2/token",
+        {
+            method: "POST",
+            body: "grant_type=client_credentials",
+            headers:
+            {
+                Authorization: `Basic ${auth}`,
+            },
+        });
+
+        const data = await response.json() as any;
+        return data.access_token;
+    }
+    catch (error)
+    {
+        console.error("Failed to generate Access Token:", error);
+    }
+
+};
+
+
+export const getSubscriptionStatus = async (subscription_id) =>
+{
+    const accessToken = await generateAccessToken();
+
+    const subscriptionDetailsUrl = process.env.PAYPAL_BASE_URL + "/v1/billing/subscriptions/" + subscription_id;
+
+    const subscriptionDetails = await fetch(subscriptionDetailsUrl,
+    {
+        headers:
+        {
+            Authorization: `Bearer ${accessToken}`,
+        },
+        method: "GET",
+    });
+
+    const subscriptionStatus: PaypalSubscriptionStatus = await subscriptionDetails.status;
+
+    return subscriptionStatus;
 };

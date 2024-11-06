@@ -17,6 +17,7 @@ const config = {
     putRule: "/api/rules",
     createOrder: "/api/create_order",
     captureOrder: "/api/capture_order",
+    subscriptionDetails: "/api/subscription_status",
 };
 
 export default config;

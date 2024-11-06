@@ -17,7 +17,7 @@ const Login = () =>
 						src="/assets/laptop-portrait.jpg"
 						alt="Image of laptop with person typing."
 						height={400}
-						width={300}
+						width={325}
 						className="login-img img-border"
 					/>
 					<LoginForm />

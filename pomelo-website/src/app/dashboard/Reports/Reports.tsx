@@ -27,7 +27,7 @@ const Reports = () =>
             method: "GET",
             headers:
             {
-                "Authorization": "Bearer " + window.localStorage.getItem("token") ?? "",
+                "Authorization": "Bearer " + window.localStorage.getItem("token"),
             },
         })
         .then(async (getReportsResponse) =>
@@ -81,7 +81,7 @@ const Reports = () =>
 
                 <div className="reports-wrapper">
                     { (reports.length == 0 && !isLoading && !isError) && <>
-                        <Message message={"Download the Pomelo Extension to get started! CHANGEME"} type={MessageTypes.Info} />
+                        <Message message={"Download the Pomelo Extension to get started. Click the icon of your browser in the Pomelo navbar."} type={MessageTypes.Info} />
                     </> }
                     <div className="reports-list">
                         {

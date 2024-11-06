@@ -3,8 +3,10 @@ const dotenv = require('dotenv');
 const router = express.Router();
 
 import { db } from "../database";
+import mustHaveRole from "../services/mustHaveRole";
+import auth from "../services/token";
 import { WebhookEvent } from "../models/WebhookEvent";
-import { verifySignature } from "../services/paypal";
+import { getSubscriptionStatus, verifySignature } from "../services/paypal";
 import Roles from "../models/Roles";
 import { createSubscription, deleteSubscription, givePaidRole, removePaidRole } from "../services/subscription";
 
@@ -52,6 +54,7 @@ const handleWebhook = (hookBody: any) =>
 
 };
 
+
 router.post("/api/webhook", async (req, res, next) =>
 {
     const isSignatureValid = await verifySignature(req.body, req.headers);
@@ -68,6 +71,31 @@ router.post("/api/webhook", async (req, res, next) =>
     }
   
     res.sendStatus(200);
+});
+
+
+router.get('/api/subscription_status', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.Paid), (req, res, next) =>
+{
+    db.any("SELECT subscription_id FROM subscriptions WHERE user_id = $1;",
+            [req.user.id])
+    .then((subscription_id) =>
+    {
+        getSubscriptionStatus(subscription_id[0].subscription_id)
+        .then((status) =>
+        {
+            return res.status(200).send({ status: "Successfully fetched subscription status.", subscriptionStatus: status, });
+        })
+        .catch((error) =>
+        {
+            return res.status(500).send({ status: "Failed to get subscription details. Try again later." });
+        });
+
+    })
+    .catch((error) =>
+    {
+        return res.status(500).send({ status: "Failed to get subscription details. Try again later." });
+    });
+
 });
 
 
