@@ -5,6 +5,7 @@ const crypto = require("crypto");
 const crc32 = require("buffer-crc32");
 
 import { PaypalSubscriptionStatus } from "../models/PaypalSubscriptionStatus";
+import { checkStatusCode } from "./statusCode";
 
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 export const fetch = async function (...args: any)
@@ -129,4 +130,25 @@ export const getSubscriptionStatus = async (subscription_id) =>
     const subscriptionStatus: PaypalSubscriptionStatus = await subscriptionDetailsJson.status;
 
     return subscriptionStatus;
+};
+
+
+export const cancelSubscription = async (subscription_id) =>
+{
+    const accessToken = await generateAccessToken();
+
+    const cancelSubscriptionUrl = process.env.PAYPAL_BASE_URL + "/v1/billing/subscriptions/" + subscription_id + "/cancel";
+
+    const subscriptionDetails = await fetch(cancelSubscriptionUrl,
+    {
+        headers:
+        {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({ reason: "No reason given." }),
+    });
+
+    return checkStatusCode(subscriptionDetails.status);
 };

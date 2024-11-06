@@ -43,6 +43,11 @@ const Subscription = () =>
 
     };
 
+    const cancelSubscription = () =>
+    {
+
+    };
+
     useEffect(() =>
     {
         getSubscriptionStatus();
@@ -50,29 +55,36 @@ const Subscription = () =>
 
     return (
         <>
-            <span className="subscription-status-left">Your subscription status is: </span>
-
-            { subscriptionStatus == PaypalSubscriptionStatus.NotLoaded && <>
-                <span className="subscription-status-right">Loading</span>
-            </> }
-            { subscriptionStatus == PaypalSubscriptionStatus.Active && <>
-                <span className="subscription-status-right">Active</span>
-            </> }
-            { subscriptionStatus == PaypalSubscriptionStatus.ApprovalPending && <>
-                <span className="subscription-status-right">Pending</span>
-            </> }
-            { subscriptionStatus == PaypalSubscriptionStatus.Approved && <>
-                <span className="subscription-status-right">Approved</span>
-            </> }
-            { subscriptionStatus == PaypalSubscriptionStatus.Cancelled && <>
-                <span className="subscription-status-right">Cancelled</span>
-            </> }
-            { subscriptionStatus == PaypalSubscriptionStatus.Expired && <>
-                <span className="subscription-status-right">Expired</span>
-            </> }
-            { subscriptionStatus == PaypalSubscriptionStatus.Suspended && <>
-                <span className="subscription-status-right">Suspended</span>
-            </> }
+            <div className="subscription-wrapper">
+                <div className="subscription-status-wrapper">
+                    <span className="subscription-status-left">Your subscription status is: </span>
+                    { subscriptionStatus == PaypalSubscriptionStatus.NotLoaded && <>
+                        <span className="subscription-status-right" style={{ color: "#4a4a4a" }}>Loading</span>
+                    </> }
+                    { subscriptionStatus == PaypalSubscriptionStatus.Active && <>
+                        <span className="subscription-status-right" style={{ color: "#30b862" }}>Active</span>
+                    </> }
+                    { subscriptionStatus == PaypalSubscriptionStatus.ApprovalPending && <>
+                        <span className="subscription-status-right" style={{ color: "#c97104" }}>Pending</span>
+                    </> }
+                    { subscriptionStatus == PaypalSubscriptionStatus.Approved && <>
+                        <span className="subscription-status-right" style={{ color: "#30b862" }}>Approved</span>
+                    </> }
+                    { subscriptionStatus == PaypalSubscriptionStatus.Cancelled && <>
+                        <span className="subscription-status-right" style={{ color: "#a3020a" }}>Cancelled</span>
+                    </> }
+                    { subscriptionStatus == PaypalSubscriptionStatus.Expired && <>
+                        <span className="subscription-status-right" style={{ color: "#a3020a" }}>Expired</span>
+                    </> }
+                    { subscriptionStatus == PaypalSubscriptionStatus.Suspended && <>
+                        <span className="subscription-status-right" style={{ color: "#a3020a" }}>Suspended</span>
+                    </> }
+                </div>
+                { [ PaypalSubscriptionStatus.Active, PaypalSubscriptionStatus.ApprovalPending, PaypalSubscriptionStatus.Approved ].includes(subscriptionStatus) && <>
+                    <button onClick={cancelSubscription} className="subscription-cancel-button">Cancel Subscription</button>
+                </> }
+                
+            </div>
             
         </>
     );

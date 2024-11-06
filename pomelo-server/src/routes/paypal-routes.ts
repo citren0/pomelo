@@ -6,7 +6,7 @@ import { db } from "../database";
 import mustHaveRole from "../services/mustHaveRole";
 import auth from "../services/token";
 import { WebhookEvent } from "../models/WebhookEvent";
-import { getSubscriptionStatus, verifySignature } from "../services/paypal";
+import { cancelSubscription, getSubscriptionStatus, verifySignature } from "../services/paypal";
 import Roles from "../models/Roles";
 import { createSubscription, deleteSubscription, givePaidRole, removePaidRole } from "../services/subscription";
 
@@ -99,6 +99,58 @@ router.get('/api/subscription_status', auth, mustHaveRole(Roles.Verified), mustH
     .catch((error) =>
     {
         return res.status(500).send({ status: "Failed to get subscription details. Try again later." });
+    });
+
+});
+
+
+router.get('/api/cancel_subscription', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.Paid), (req, res, next) =>
+{
+    db.any("SELECT id FROM roles WHERE name = $1;",
+            [Roles.Paid])
+    .then((roleId) =>
+    {
+
+        db.any("SELECT subscription_id FROM subscriptions WHERE user_id = $1;",
+                [req.user.id])
+        .then((subscription_id) =>
+        {
+            if (subscription_id.length != 1)
+            {
+                return res.status(400).send({ status: "You do not have a subscription linked to your account." });
+            }
+
+            cancelSubscription(subscription_id[0].subscription_id)
+            .then((success) =>
+            {
+                if (success == true)
+                {
+                    db.any("DELETE FROM subscriptions WHERE id = $1;", [subscription_id[0].subscription_id]);
+                    db.any("DELETE FROM user_to_role WHERE user_id = $1 AND role_id = $2;", [req.user.id, roleId[0].id]);
+
+                    return res.status(200).send({ status: "Successfully cancelled subscription.", });
+                }
+                else
+                {
+                    return res.status(500).send({ status: "Failed to cancel subscription. Try again later." });
+                }
+                
+            })
+            .catch((error) =>
+            {
+                return res.status(500).send({ status: "Failed to cancel subscription. Try again later." });
+            });
+
+        })
+        .catch((error) =>
+        {
+            return res.status(500).send({ status: "Failed to cancel subscription. Try again later." });
+        });
+
+    })
+    .catch((_) =>
+    {
+        return res.status(500).send({ status: "Failed to cancel subscription. Try again later." });
     });
 
 });
