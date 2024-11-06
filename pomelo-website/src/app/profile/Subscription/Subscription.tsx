@@ -6,6 +6,7 @@ import "./Subscription.css";
 import config from "@/constants/config";
 import { checkStatusCode } from "@/services/checkStatusCode";
 import { PaypalSubscriptionStatus } from "@/constants/PaypalSubscriptionStatus";
+import { Modal } from "@/components";
 
 
 const Subscription = () =>
@@ -107,6 +108,7 @@ const Subscription = () =>
                 { [ PaypalSubscriptionStatus.Active, PaypalSubscriptionStatus.ApprovalPending, PaypalSubscriptionStatus.Approved ].includes(subscriptionStatus) && <>
                     <button onClick={cancelSubscription} className="subscription-cancel-button">Cancel Subscription</button>
                 </> }
+                <Modal title="Cancel Subscription" triggerOpen={true} triggerOpenDone={() => {}} />
                 
             </div>
             
