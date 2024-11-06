@@ -45,6 +45,30 @@ const Subscription = () =>
 
     const cancelSubscription = () =>
     {
+        setIsError(false);
+
+        fetch(config.baseURL + config.subscriptionDetails, {
+            method: "GET",
+            headers:
+            {
+                "Authorization": "Bearer " + window.localStorage.getItem("token"),
+            },
+        })
+        .then(async (cancelSubscriptionResponse) =>
+        {
+            const cancelSubscriptionResponseJson = await cancelSubscriptionResponse.json();
+
+            if (!checkStatusCode(cancelSubscriptionResponse.status))
+            {
+                setIsError(true);
+                setErrorMessage(cancelSubscriptionResponseJson.status);
+            }
+            else
+            {
+                window.location.href = "/logout";
+            }
+
+        });
 
     };
 

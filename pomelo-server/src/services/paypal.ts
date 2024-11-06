@@ -125,7 +125,7 @@ export const getSubscriptionStatus = async (subscription_id) =>
         method: "GET",
     });
 
-    const subscriptionDetailsJson = subscriptionDetails.json();
+    const subscriptionDetailsJson = await subscriptionDetails.json();
 
     const subscriptionStatus: PaypalSubscriptionStatus = await subscriptionDetailsJson.status;
 
