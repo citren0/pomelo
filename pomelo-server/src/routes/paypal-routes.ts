@@ -80,10 +80,15 @@ router.get('/api/subscription_status', auth, mustHaveRole(Roles.Verified), mustH
             [req.user.id])
     .then((subscription_id) =>
     {
-        getSubscriptionStatus(subscription_id[0].subscription_id)
-        .then((status) =>
+        if (subscription_id.length != 1)
         {
-            return res.status(200).send({ status: "Successfully fetched subscription status.", subscriptionStatus: status, });
+            return res.status(400).send({ status: "You do not have a subscription linked to your account." });
+        }
+
+        getSubscriptionStatus(subscription_id[0].subscription_id)
+        .then((subscription_status) =>
+        {
+            return res.status(200).send({ status: "Successfully fetched subscription status.", subscriptionStatus: subscription_status, });
         })
         .catch((error) =>
         {
