@@ -47,7 +47,7 @@ const Subscription = () =>
     {
         setIsError(false);
 
-        fetch(config.baseURL + config.subscriptionDetails, {
+        fetch(config.baseURL + config.cancelSubscription, {
             method: "GET",
             headers:
             {
