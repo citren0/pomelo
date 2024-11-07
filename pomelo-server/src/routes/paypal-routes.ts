@@ -125,9 +125,6 @@ router.get('/api/cancel_subscription', auth, mustHaveRole(Roles.Verified), mustH
             {
                 if (success == true)
                 {
-                    db.any("DELETE FROM subscriptions WHERE subscription_id = $1;", [subscription_id[0].subscription_id]);
-                    db.any("DELETE FROM user_to_role WHERE user_id = $1 AND role_id = $2;", [req.user.id, roleId[0].id]);
-
                     return res.status(200).send({ status: "Successfully cancelled subscription.", });
                 }
                 else
