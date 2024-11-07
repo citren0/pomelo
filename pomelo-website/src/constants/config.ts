@@ -18,7 +18,8 @@ const config = {
     createOrder: "/api/create_order",
     captureOrder: "/api/capture_order",
     subscriptionDetails: "/api/subscription_status",
-    cancelSubscription: "/api/cancel_subscription"
+    cancelSubscription: "/api/cancel_subscription",
+    deleteAccount: "/api/delete_account"
 };
 
 export default config;

@@ -115,7 +115,7 @@ const Subscription = () =>
                 <Modal title="Cancel Subscription" triggerOpen={openCancelModal} triggerOpenDone={() => setOpenCancelModal(false)} content={
                     <>
                         <div className="subscription-status-cancel-wrapper">
-                            <span className="subscription-status-cancel-text">Are you sure you want to cancel? You can re-subscribe at any point after.</span>
+                            <span className="subscription-status-cancel-text">Are you sure you want to cancel? You will be logged out. You can re-subscribe at any point after.</span>
                             <button onClick={cancelSubscription} className="subscription-cancel-button">Yes I'm Sure</button>
                         </div>
                     </>

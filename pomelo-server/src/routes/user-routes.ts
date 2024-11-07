@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const cookieParser = require("cookie-parser");
 
-import { JWTPayload } from '../models/JWTPayload';
+import { db } from "../database";
+import auth from "../services/token";
 
 // Environment setup.
 dotenv.config();
@@ -13,24 +14,38 @@ dotenv.config();
 router.use(cookieParser());
 
 
-router.get('/api/userdetails', (req, res, next) =>
+router.get('/api/userdetails', auth, (req, res, next) =>
 {
-    const authHeader = String(req.header('Authorization') ?? "");
-    const splitAuthHeader = authHeader.split(' ');
-    
-    if ((authHeader == undefined) || (splitAuthHeader.length != 2))
-    {
-        return res.status(401).send({ status: "Are you sure you're logged in?", isLoggedIn: false, });
-    }
+    return res.status(200).send({ isLoggedIn: true, user: req.user, });
+});
 
-    jwt.verify(splitAuthHeader[1], process.env.AUTH_SECRET, (err: any, user: JWTPayload) =>
+
+router.delete("/api/delete_account", auth, (req, res, next) =>
+{
+    db.any("SELECT subscription_id FROM subscriptions WHERE user_id = $1;",
+            [req.user.id])
+    .then((subscriptions) =>
     {
-        if (err)
+        if (subscriptions.length != 0)
         {
-            return res.status(401).send({ status: "Are you sure you're logged in?", isLoggedIn: false, });
+            return res.status(400).send({ status: "You must cancel your subscription before you can delete your account." });
         }
 
-        return res.status(200).send({ isLoggedIn: true, user: user, });
+        db.any("DELETE FROM users WHERE id = $1;",
+                [req.user.id])
+        .then((_) =>
+        {
+            return res.status(200).send({ status: "Successfully deleted account." });
+        })
+        .catch((error) =>
+        {
+            return res.status(500).send({ status: "Failed to delete account. Try again later." });
+        });
+        
+    })
+    .catch((error) =>
+    {
+        return res.status(500).send({ status: "Failed to delete account. Try again later." });
     });
 
 });

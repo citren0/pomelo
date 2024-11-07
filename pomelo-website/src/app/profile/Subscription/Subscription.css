@@ -35,15 +35,15 @@
     outline: none;
     border: none;
     border-radius: 0.5rem;
-    background-color: #cc1313;
+    background-color: #c53838;
     color: white;
-    font-size: 24px;
+    font-size: 22px;
     padding: 0.5rem 1.5rem;
     font-weight: 500;
 }
 .subscription-cancel-button:hover
 {
-    background-color: #900b0b;
+    background-color: #a83131;
 }
 
 .subscription-status-cancel-text

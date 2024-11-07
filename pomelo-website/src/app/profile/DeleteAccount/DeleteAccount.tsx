@@ -13,27 +13,27 @@ const DeleteAccount = () => // CHANGE NAMES OF VARIABLES AND MAKE DELETE ACCOUNT
 {
     const [ isError, setIsError ] = useState<boolean>(false);
     const [ errorMessage, setErrorMessage ] = useState<string>("");
-    const [ openCancelModal, setOpenCancelModal ] = useState<boolean>(false);
+    const [ openDeleteModal, setOpenDeleteModal ] = useState<boolean>(false);
 
-    const cancelSubscription = () =>
+    const deleteAccount = () =>
     {
         setIsError(false);
 
-        fetch(config.baseURL + config.cancelSubscription, {
-            method: "GET",
+        fetch(config.baseURL + config.deleteAccount, {
+            method: "DELETE",
             headers:
             {
                 "Authorization": "Bearer " + window.localStorage.getItem("token"),
             },
         })
-        .then(async (cancelSubscriptionResponse) =>
+        .then(async (deleteAccountResponse) =>
         {
-            const cancelSubscriptionResponseJson = await cancelSubscriptionResponse.json();
+            const deleteAccountResponseJson = await deleteAccountResponse.json();
 
-            if (!checkStatusCode(cancelSubscriptionResponse.status))
+            if (!checkStatusCode(deleteAccountResponse.status))
             {
                 setIsError(true);
-                setErrorMessage(cancelSubscriptionResponseJson.status);
+                setErrorMessage(deleteAccountResponseJson.status);
             }
             else
             {
@@ -46,14 +46,14 @@ const DeleteAccount = () => // CHANGE NAMES OF VARIABLES AND MAKE DELETE ACCOUNT
 
     return (
         <>
-            <div className="subscription-wrapper">
-                <button onClick={() => setOpenCancelModal(true)} className="subscription-cancel-button">Delete Account</button>
+            <div className="delete-account-wrapper">
+                <button onClick={() => setOpenDeleteModal(true)} className="delete-account-button">Delete Account</button>
 
-                <Modal title="Cancel Subscription" triggerOpen={openCancelModal} triggerOpenDone={() => setOpenCancelModal(false)} content={
+                <Modal title="Delete Account" triggerOpen={openDeleteModal} triggerOpenDone={() => setOpenDeleteModal(false)} content={
                     <>
-                        <div className="subscription-status-cancel-wrapper">
-                            <span className="subscription-status-cancel-text">Are you sure you want to cancel? You can re-subscribe at any point after.</span>
-                            <button onClick={cancelSubscription} className="subscription-cancel-button">Yes I'm Sure</button>
+                        <div className="delete-account-cancel-wrapper">
+                            <span className="delete-account-cancel-text">Are you sure you want to permanently delete your account? You will be logged out.</span>
+                            <button onClick={deleteAccount} className="delete-account-button">Yes I'm Sure</button>
                         </div>
                     </>
                 }/>
