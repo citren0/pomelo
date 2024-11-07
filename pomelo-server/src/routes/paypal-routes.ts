@@ -74,7 +74,7 @@ router.post("/api/webhook", async (req, res, next) =>
 });
 
 
-router.get('/api/subscription_status', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.Paid), (req, res, next) =>
+router.get('/api/subscription_status', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
 {
     db.any("SELECT subscription_id FROM subscriptions WHERE user_id = $1;",
             [req.user.id])
@@ -104,7 +104,7 @@ router.get('/api/subscription_status', auth, mustHaveRole(Roles.Verified), mustH
 });
 
 
-router.get('/api/cancel_subscription', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.Paid), (req, res, next) =>
+router.get('/api/cancel_subscription', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
 {
     db.any("SELECT id FROM roles WHERE name = $1;",
             [Roles.Paid])
