@@ -24,7 +24,7 @@ const removePaidRole = (user_id: number) =>
             [Roles.Paid])
     .then((role_id) =>
     {
-        db.any("DELETE FROM user_to_role WHERE user_id = $1 AND role_id = $2 IF EXISTS;",
+        db.any("DELETE FROM user_to_role WHERE user_id = $1 AND role_id = $2;",
                 [user_id, role_id[0].id]);
     })
     .catch((_) =>
@@ -42,7 +42,7 @@ const createSubscription = (hookBody: any) =>
 
 const deleteSubscription = (hookBody: any) =>
 {
-    db.any("DELETE FROM subscriptions WHERE user_id = $1 IF EXISTS;",
+    db.any("DELETE FROM subscriptions WHERE user_id = $1;",
             [hookBody.resource.custom_id]);
 };
 

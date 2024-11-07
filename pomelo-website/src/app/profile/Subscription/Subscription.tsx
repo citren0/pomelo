@@ -6,7 +6,8 @@ import "./Subscription.css";
 import config from "@/constants/config";
 import { checkStatusCode } from "@/services/checkStatusCode";
 import { PaypalSubscriptionStatus } from "@/constants/PaypalSubscriptionStatus";
-import { Modal } from "@/components";
+import { Message, Modal } from "@/components";
+import MessageTypes from "@/constants/messageTypes";
 
 
 const Subscription = () =>
@@ -82,6 +83,10 @@ const Subscription = () =>
     return (
         <>
             <div className="subscription-wrapper">
+
+                { isError && <>
+                    <Message type={MessageTypes.Error} message={errorMessage} />
+                </> }
 
                 <div className="subscription-status-wrapper">
                     <span className="subscription-status-left">Your subscription status is: </span>
