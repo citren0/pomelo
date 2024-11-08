@@ -40,7 +40,7 @@ const Landing = () =>
                     <div className="landing-card">
                         <span className="landing-card-title">Pomelo Dashboard</span>
                         <hr className="hr-100" />
-                        <span className="landing-card-text">Combines the data into one platform where you can make rules to block time-wasting websites.</span>
+                        <span className="landing-card-text">Offers platform where you can make rules to block time-wasting websites.</span>
                     </div>
                 </div>
 

@@ -65,6 +65,7 @@
     justify-content: center;
     gap: 2rem;
     padding-bottom: 3rem;
+    max-width: 100%;
 }
 
 .landing-images-flex
@@ -88,7 +89,7 @@
     box-shadow: 2px 2px 2px 0px #eeeeee;
     background: linear-gradient(135deg, rgb(247, 242, 255) 0%, rgb(237, 253, 255) 33%, rgb(247, 242, 255) 66%, rgb(237, 253, 255) 100%);
     background-size: 300% auto;
-    height: 12rem;
+    height: fit-content;
     width: 15rem;
     max-width: 100%;
     align-items: center;
@@ -135,8 +136,8 @@
     box-shadow: 2px 2px 2px 0px #eeeeee;
     background: linear-gradient(135deg, rgb(234, 223, 255) 0%, rgb(234, 255, 255) 33%, rgb(234, 223, 255) 66%, rgb(234, 255, 255) 100%);
     background-size: 300% auto;
-    height: 12rem;
-    width: 25em;
+    height: fit-content;
+    width: 25rem;
     max-width: 100%;
     align-items: center;
     justify-content: flex-start;
