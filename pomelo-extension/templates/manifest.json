@@ -1,10 +1,16 @@
 {
     "manifest_version": 3,
     "name": "Pomelo",
-    "version": "0.1.0",
+    "version": "1.0.0",
 
-    "description": "Pomelo CHANGE ME",
-    "homepage_url": "https://example.com",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{72a9f12f-ae33-425e-a1b7-049fd1c9dc47}"
+        }
+    },
+
+    "description": "Pomelo Productivity is a tool used to cut down on wasted time and increase productivity.",
+    "homepage_url": "https://pomeloprod.com",
     "icons": {
         "32": "favicon.png"
     },

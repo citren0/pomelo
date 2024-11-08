@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "mkdir -p ../build && npx vite build && cp -r ./dist/* ./../build/ && cp -r ./../templates/* ./../build/"
+    "build": "rm -r ../build && mkdir -p ../build && npx vite build && cp -r ./dist/* ./../build/ && cp -r ./../templates/* ./../build/"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.5",
