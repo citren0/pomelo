@@ -22,13 +22,14 @@
 {
     font-size: 30px;
     font-weight: 500;
+    padding-left: 0.5rem;
 }
 
 .rules-content
 {
     display: flex;
     flex-flow: row wrap;
-    gap: 2rem;
+    gap: 1rem;
     padding: 1rem 0;
 }
 
@@ -69,4 +70,6 @@
 {
     font-size: 26px;
     font-weight: 500;
+    padding-left: 0.5rem;
+    text-align: center;
 }

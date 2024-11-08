@@ -13,13 +13,6 @@ const Login = () =>
 			
 			<div className="content-container">
 				<div className="login-image-and-form">
-					<Image 
-						src="/assets/laptop-portrait.jpg"
-						alt="Image of laptop with person typing."
-						height={400}
-						width={325}
-						className="login-img img-border"
-					/>
 					<LoginForm />
 				</div>
 			</div>

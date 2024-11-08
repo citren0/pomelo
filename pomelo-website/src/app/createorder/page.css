@@ -1,0 +1,63 @@
+
+.create-order-wrapper
+{
+    display: flex;
+    flex-flow: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    padding: calc(3vw + 2rem) 3rem 5rem 3rem;
+    width: 70rem;
+    max-width: calc(100% - 6rem);
+}
+
+.create-order-card
+{
+    background-color: #f5f5f5;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #d0d0d0;
+    box-shadow: 5px 5px 5px 0px #cccccc;
+    max-width: 30rem;
+    display: flex;
+    flex-flow: column;
+    gap: 1.5rem;
+}
+
+.create-order-card-title
+{
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.create-order-card-text
+{
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.create-order-card-text-secondary
+{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.create-order-pay-group
+{
+    display: flex;
+    flex-flow: column;
+    gap: 0.5rem;
+}
+
+.create-order-links
+{
+    display: flex;
+    flex-flow: row;
+    gap: 1rem;
+}
+.create-order-links a
+{
+    font-size: 18px;
+    color: blue;
+    text-decoration: underline;
+}

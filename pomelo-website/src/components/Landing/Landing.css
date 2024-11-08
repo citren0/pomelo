@@ -54,7 +54,8 @@
 {
     font-size: 28px;
     font-weight: 500;
-    padding-top: 3rem;
+    padding-top: 1rem;
+    text-align: center;
 }
 
 .landing-card-flex
@@ -64,6 +65,15 @@
     justify-content: center;
     gap: 2rem;
     padding-bottom: 3rem;
+}
+
+.landing-images-flex
+{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding-bottom: 1;
 }
 
 .landing-card
@@ -98,6 +108,14 @@
     text-align: center;
 }
 
+.landing-card-title-big
+{
+    font-size: 34px;
+    font-weight: 600;
+    padding-top: 0.5rem;
+    text-align: center;
+}
+
 .landing-card-text
 {
     font-size: 20px;
@@ -127,4 +145,11 @@
 .landing-card-secondary:hover
 {
     background-position: right center;
+}
+
+.landing-img
+{
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
 }

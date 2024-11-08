@@ -1,4 +1,5 @@
 
+import Image from "next/image";
 import "./Landing.css";
 
 const Landing = () =>
@@ -7,11 +8,16 @@ const Landing = () =>
         <>
             <div className="landing-wrapper">
                 <span className="landing-title">
-                    Your AI-powered productivity coach.
+                    Your own AI-powered productivity coach.
                 </span>
                 <span className="landing-subtitle">
-                    Pomelo keeps an eye on your browsing, allowing you to correct bad habits and waste less time online.
+                    Pomelo allows you to correct bad habits and waste less time online by keeping an eye on your browsing activity.
                 </span>
+
+                <div className="landing-images-flex">
+                    <Image src="/assets/chat.png" height={450} width={535} className="landing-img" alt="A product demo showcasing the Pomelo chat functionality." />
+                    <Image src="/assets/blocked.png" height={450} width={535} className="landing-img" alt="A product demo showcasing the website blocking functionality." />
+                </div>
 
                 <a className="landing-conversion-button" href="/register">Get Started</a>
 
@@ -24,7 +30,7 @@ const Landing = () =>
                     <div className="landing-card">
                         <span className="landing-card-title">Browser Extension</span>
                         <hr className="hr-100" />
-                        <span className="landing-card-text">Keeps track of your browser activity and blocks time-wasters while respecting your privacy.</span>
+                        <span className="landing-card-text">Keeps an eye on your browsing habits while respecting your privacy.</span>
                     </div>
                     <div className="landing-card">
                         <span className="landing-card-title">AI-powered Insights</span>
@@ -34,7 +40,7 @@ const Landing = () =>
                     <div className="landing-card">
                         <span className="landing-card-title">Pomelo Dashboard</span>
                         <hr className="hr-100" />
-                        <span className="landing-card-text">Combines the data and insights into one platform for you.</span>
+                        <span className="landing-card-text">Combines the data into one platform where you can make rules to block time-wasting websites.</span>
                     </div>
                 </div>
 
@@ -43,9 +49,9 @@ const Landing = () =>
                 </span>
                 <div className="landing-card-flex">
                     <div className="landing-card-secondary">
-                        <span className="landing-card-title">$10</span>
+                        <span className="landing-card-title-big">$10 / month</span>
                         <hr className="hr-100" />
-                        <span className="landing-card-text">Includes all features: Productivity assistant, browser extension, and strategies.</span>
+                        <span className="landing-card-text">Includes all features: Productivity assistant, browser extension, and rules-based website blocking.</span>
                     </div>
                 </div>
             </div>
