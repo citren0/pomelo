@@ -66,6 +66,7 @@ const OrderSuccess = () =>
 	useEffect(() =>
 	{
 		setIntervalId(window.setInterval(getSubscriptionStatus, 2000));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
     return (
@@ -94,7 +95,7 @@ const OrderSuccess = () =>
 								<span className="order-success-active">Active</span>
 							</> }
 						</div>
-						<span className="order-success-status-small">Wait on this page until your subscription status becomes "Active". If it takes longer than a couple minutes, log out and back in.</span>
+						<span className="order-success-status-small">Wait on this page until your subscription status becomes &quot;Active&quot;. If it takes longer than a couple minutes, log out and back in.</span>
 					</div>
 
 					<div className="order-success-status-wrapper">

@@ -73,7 +73,7 @@ const CreateOrder = () =>
 
     const onApprove = (): Promise<void> =>
     {
-        return new Promise<void>((resolve, reject) =>
+        return new Promise<void>((resolve) =>
         {
             window.location.href = "/ordersuccess";
             resolve();
@@ -84,6 +84,7 @@ const CreateOrder = () =>
     useEffect(() =>
     {
         getUserInfo();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 	return (
