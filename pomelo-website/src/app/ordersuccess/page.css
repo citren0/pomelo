@@ -4,8 +4,8 @@
     display: flex;
     flex-flow: column;
     align-items: center;
-    gap: 4rem;
-    padding: calc(2vw + 2rem) 3rem 5rem 3rem;
+    gap: 2rem;
+    padding: calc(2vw + 1rem) 1rem 5rem 1rem;
 }
 
 .order-success-status-small
@@ -69,4 +69,23 @@
     flex-flow: column;
     align-items: center;
     gap: 0.75rem;
+}
+
+
+@media screen and (max-width: 800px)
+{
+    .text-with-image
+    {
+        flex-flow: column;
+        justify-content: center;
+        text-align: center;
+    }
+    .order-success-status-small
+    {
+        text-align: center;
+    }
+    .order-success-status
+    {
+        font-size: 24px;
+    }
 }

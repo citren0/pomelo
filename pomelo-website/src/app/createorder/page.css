@@ -6,9 +6,9 @@
     gap: 2rem;
     align-items: center;
     justify-content: center;
-    padding: calc(3vw + 2rem) 3rem 5rem 3rem;
+    padding: calc(3vw + 2rem) 1rem 5rem 1rem;
     width: 70rem;
-    max-width: calc(100% - 6rem);
+    max-width: calc(100% - 2rem);
 }
 
 .create-order-card
@@ -21,7 +21,7 @@
     max-width: 30rem;
     display: flex;
     flex-flow: column;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .create-order-card-title

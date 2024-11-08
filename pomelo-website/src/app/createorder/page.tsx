@@ -97,15 +97,13 @@ const CreateOrder = () =>
                         <div>
                             <span className="create-order-card-title">Your Pomelo Subscription</span>
                             <hr className="hr-100" />
+                            { isError && <>
+                                <Message message={errorMessage} type={MessageTypes.Error} />
+                            </> }
+                            { hasCurrentSubscription && <>
+                                <Message message="You already have an active subscription" type={MessageTypes.Warning} />
+                            </> }
                         </div>
-
-                        { isError && <>
-                            <Message message={errorMessage} type={MessageTypes.Error} />
-                        </> }
-
-                        { hasCurrentSubscription && <>
-                            <Message message="You already have an active subscription" type={MessageTypes.Warning} />
-                        </> }
 
                         <span className="create-order-card-text">A subscription to Pomelo costs $10 / month. This will grant you access to the entire website and all functionality. By subscribing, you agree to the terms of service and privacy policy below.</span>
 
