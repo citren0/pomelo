@@ -81,47 +81,49 @@ const Reports = () =>
 
                 <div className="reports-wrapper">
                     { (reports.length == 0 && !isLoading && !isError) && <>
-                        <Message message={"Download the Pomelo Extension to get started. Click the icon of your browser in the Pomelo navbar."} type={MessageTypes.Info} />
+                        <Message message={"Download the Pomelo Extension to get started. Find and click your preferred browser's icon in the nav-bar."} type={MessageTypes.Info} />
                     </> }
-                    <div className="reports-list">
-                        {
-                            reports.map((report, idx) =>
+                    { reports.length > 0 && <>
+                        <div className="reports-list">
                             {
-                                return (
-                                    <>
-                                        <div className="reports-report-wrapper">
-                                            <div className="reports-title-and-image-wrapper">
-                                                <img
-                                                    src={report.faviconurl}
-                                                    height={48}
-                                                    width={48}
-                                                    alt={report.domain + " favicon url"}
+                                reports.map((report, idx) =>
+                                {
+                                    return (
+                                        <>
+                                            <div className="reports-report-wrapper">
+                                                <div className="reports-title-and-image-wrapper">
+                                                    <img
+                                                        src={report.faviconurl}
+                                                        height={48}
+                                                        width={48}
+                                                        alt={report.domain + " favicon url"}
+                                                    />
+                                                    <span className="reports-report-domain">{report.domain}</span>
+                                                </div>
+                                                <div className="reports-report-date-time-group">
+                                                    <span className="reports-report-timestamp">{(new Date(parseInt(report.time_stamp))).toLocaleDateString()}</span>
+                                                    <span className="reports-report-timestamp">{(new Date(parseInt(report.time_stamp))).toLocaleTimeString()}</span>
+                                                </div>
+                                            </div>
+                                            { (idx != reports.length - 1) && <>
+                                                <hr
+                                                    className="reports-line"
+                                                    style={{ width: String(Math.log2(parseInt(reports[idx + 1].time_stamp) - parseInt(report.time_stamp))) + "px" }}
                                                 />
-                                                <span className="reports-report-domain">{report.domain}</span>
-                                            </div>
-                                            <div className="reports-report-date-time-group">
-                                                <span className="reports-report-timestamp">{(new Date(parseInt(report.time_stamp))).toLocaleDateString()}</span>
-                                                <span className="reports-report-timestamp">{(new Date(parseInt(report.time_stamp))).toLocaleTimeString()}</span>
-                                            </div>
-                                        </div>
-                                        { (idx != reports.length - 1) && <>
-                                            <hr
-                                                className="reports-line"
-                                                style={{ width: String(Math.log2(parseInt(reports[idx + 1].time_stamp) - parseInt(report.time_stamp))) + "px" }}
-                                            />
-                                        </> }
-                                    </>
-                                )
-                            })
-                        }
-                    </div>
+                                            </> }
+                                        </>
+                                    )
+                                })
+                            }
+                        </div>
+                    </> }
 
                     { isLoading && <>
                         <div className="loading-text">Loading...</div>
                     </> }
 
                     { reports.length == 0 && !isLoading && !isError && <>
-                        <span className="no-data-found-text">No data found.</span>
+                        <span className="no-reports-found-text">No data found.</span>
                     </> }
                 </div>
             </div>

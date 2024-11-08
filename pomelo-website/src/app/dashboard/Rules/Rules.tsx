@@ -116,7 +116,7 @@ const Rules = ({rules, getRules}: Props) =>
                                                 <Image src={"/assets/trash.svg"} height={24} width={24} alt={"Trash can icon"} />
                                             </button>
                                         </div>
-                                        <hr className="hr-100 rule-divider" />
+                                        <hr className="hr-100" />
                                     </>
                                 );
                             })
@@ -127,7 +127,7 @@ const Rules = ({rules, getRules}: Props) =>
                         </> }
                     </div>
 
-                    <div className="vertical-line"></div>
+                    <div className="vertical-line disappear-small"></div>
 
                     <CreateRuleForm getRules={getRulesDecorator} />
                 </div>

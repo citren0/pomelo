@@ -61,11 +61,12 @@
 .insights-chat-wrapper
 {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row;
     gap: 0.5rem;
     align-self: center;
     align-items: center;
-    max-width: 75vw;
+    justify-content: center;
+    max-width: 100%;
 }
 
 .insights-chat-send-button

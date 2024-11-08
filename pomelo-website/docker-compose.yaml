@@ -1,0 +1,39 @@
+version: '3.9'
+services:
+  server:
+    image: node:lts
+    user: 'node'
+    working_dir: /home/node/app/client
+    env_file: .env
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - db
+    expose:
+      - '3000'
+    networks:
+      - default
+    volumes:
+      - ./:/home/node/app
+    command: 'npm start'
+
+  webserver:
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    volumes:
+      - web-root:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - ./certs:/etc/letsencrypt/live/pomeloprod.com
+      - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - server
+    networks:
+      - default 
+
+networks:
+  default:
+
+volumes:
+  web-root:

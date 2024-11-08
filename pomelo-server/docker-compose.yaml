@@ -19,7 +19,7 @@ services:
     working_dir: /home/node/app/client
     env_file: .env
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
     depends_on:
       - db
     expose:

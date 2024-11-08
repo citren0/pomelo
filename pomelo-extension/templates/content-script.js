@@ -30,6 +30,7 @@ if (typeof chrome !== "undefined")
         {
             inject(browser, message);
         });
+
     }
     else
     {
@@ -37,6 +38,7 @@ if (typeof chrome !== "undefined")
         {
             inject(chrome, message);
         });
+
     }
     
 }
