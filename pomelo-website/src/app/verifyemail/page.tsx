@@ -2,7 +2,6 @@
 import React from "react";
 import "./page.css";
 import { NavBar } from "../../components";
-import Image from "next/image";
 import VerifyEmailForm from "./VerifyEmailForm/VerifyEmailForm";
 
 const Login = () =>

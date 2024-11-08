@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./DeleteAccount.css";
 import config from "@/constants/config";
 import { checkStatusCode } from "@/services/checkStatusCode";
@@ -58,7 +58,7 @@ const DeleteAccount = () =>
 
                         <div className="delete-account-cancel-wrapper">
                             <span className="delete-account-cancel-text">Are you sure you want to permanently delete your account? You will be logged out.</span>
-                            <button onClick={deleteAccount} className="delete-account-button">Yes I'm Sure</button>
+                            <button onClick={deleteAccount} className="delete-account-button">Yes I&apos;m Sure</button>
                         </div>
                     </>
                 }/>

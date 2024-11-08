@@ -24,7 +24,7 @@ const CreateOrder = () =>
         vault: true,
     };
 
-    const onError = (error: any) =>
+    const onError = (error: Record<string, unknown>) =>
     {
         setIsError(true);
         setErrorMessage(String(error));
@@ -88,10 +88,10 @@ const CreateOrder = () =>
                         style={{ layout: "vertical", disableMaxWidth: true, }}
                         disabled={(userId == -1)}
                         onError={onError}
-                        createSubscription={(data: any, actions: any) => {
+                        createSubscription={(data, actions) => {
                             return actions.subscription.create({
                                 plan_id: 'P-8XA030171E179871EM4UUM3Y',
-                                custom_id: userIdRef.current,
+                                custom_id: String(userIdRef.current),
                             });
                         }}
                     />

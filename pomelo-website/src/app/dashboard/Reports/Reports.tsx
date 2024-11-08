@@ -55,7 +55,7 @@ const Reports = () =>
 
             setIsLoading(false);
         })
-        .catch((_) =>
+        .catch(() =>
         {
             setIsError(true);
             setErrorMessage("Error encountered. Try again later.");
@@ -92,7 +92,7 @@ const Reports = () =>
                                         <>
                                             <div className="reports-report-wrapper">
                                                 <div className="reports-title-and-image-wrapper">
-                                                    <img
+                                                    <Image
                                                         src={report.faviconurl}
                                                         height={48}
                                                         width={48}

@@ -25,7 +25,7 @@ const Dashboard = () =>
 				method: "GET",
 				headers:
 				{
-					"Authorization": "Bearer " + window.localStorage.getItem("token") ?? "",
+					"Authorization": "Bearer " + window.localStorage.getItem("token"),
 				}
 			})
 			.then(async (getRulesResponse) =>
@@ -43,7 +43,7 @@ const Dashboard = () =>
 				}
 
 			})
-			.catch((_) =>
+			.catch(() =>
 			{
 				reject("Error encountered. Try again later.");
 			});

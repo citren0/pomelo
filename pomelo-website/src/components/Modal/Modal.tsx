@@ -24,6 +24,7 @@ const Modal = ({ content, title, triggerOpen, triggerOpenDone }: Props) =>
             setIsOpen(true);
             triggerOpenDone?.();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [triggerOpen]);
 
     return (

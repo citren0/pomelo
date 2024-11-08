@@ -40,7 +40,7 @@ const Insights = ({getRules}: Props) =>
             method: "POST",
             headers:
             {
-                "Authorization": "Bearer " + window.localStorage.getItem("token") ?? "",
+                "Authorization": "Bearer " + window.localStorage.getItem("token"),
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ messages: messages }),
@@ -78,7 +78,7 @@ const Insights = ({getRules}: Props) =>
 
             setIsLoading(false);
         })
-        .catch((_) =>
+        .catch(() =>
         {
             setIsError(true);
             setErrorMessage("Error encountered. Try again later.");
@@ -122,7 +122,7 @@ const Insights = ({getRules}: Props) =>
         setIsError(false);
         
         putRule(parts[0], start, stop)
-        .then((_) =>
+        .then(() =>
         {
             setIsLoading(false);
             getRules();
@@ -149,6 +149,7 @@ const Insights = ({getRules}: Props) =>
     useEffect(() =>
     {
         getInsights();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() =>
@@ -158,6 +159,7 @@ const Insights = ({getRules}: Props) =>
             sendMessage();
             setDoSend(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [doSend]);
     
     return (

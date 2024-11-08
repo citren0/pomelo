@@ -15,7 +15,7 @@ const Page404 = () =>
 						404
 					</span>
 					<span className="not-found-subtitle">
-						We didn't find what you're looking for.
+						We didn&apos;t find what you&apos;re looking for.
 					</span>
 				</div>
 			</div>

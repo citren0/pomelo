@@ -19,14 +19,11 @@ interface Props
 
 const Rules = ({rules, getRules}: Props) =>
 {
-    const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const [ isError, setIsError ] = useState<boolean>(false);
     const [ errorMessage, setErrorMessage ] = useState<string>("");
 
     const deleteRule = (domain: string, start: number, stop: number) =>
     {
-        setIsLoading(true);
-
         const deleteRulesURLWithQuery = config.baseURL + config.deleteRules + "?" + (new URLSearchParams(
             [
                 ["domain", domain],
@@ -55,30 +52,22 @@ const Rules = ({rules, getRules}: Props) =>
                 getRules();
             }
 
-            setIsLoading(false);
         })
-        .catch((_) =>
+        .catch(() =>
         {
             setIsError(true);
             setErrorMessage("Error encountered. Try again later.");
-            setIsLoading(false);
         });
 
     };
 
     const getRulesDecorator = () =>
     {
-        setIsLoading(true);
         setIsError(false);
         
         getRules()
-        .then((_) =>
-        {
-            setIsLoading(false);
-        })
         .catch((error) =>
         {
-            setIsLoading(false);
             setIsError(true);
             setErrorMessage(error);
         });
@@ -88,6 +77,7 @@ const Rules = ({rules, getRules}: Props) =>
     useEffect(() =>
     {
         getRulesDecorator();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 

@@ -3,7 +3,7 @@
 
 import { Message, SimpleInput } from "@/components";
 import "./VerifyEmailForm.css";
-import { ChangeEvent, FormEvent, FormEventHandler, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import MessageTypes from "@/constants/messageTypes";
 import config from "@/constants/config";
 import { checkStatusCode } from "@/services/checkStatusCode";
@@ -50,11 +50,11 @@ const VerifyEmailForm = () =>
             {
 
                 getNewToken()
-                .then((_) =>
+                .then(() =>
                 {
                     window.location.href = "/createorder";
                 })
-                .catch((_) =>
+                .catch(() =>
                 {
                     setIsError(true);
                     setErrorMessage("Failed to issue token. Log out and then log back in to fix this problem.");
@@ -62,7 +62,7 @@ const VerifyEmailForm = () =>
             }
 
         })
-        .catch((_) =>
+        .catch(() =>
         {
             setIsError(true);
             setErrorMessage("Failed to verify email. Try again later.");
@@ -97,7 +97,7 @@ const VerifyEmailForm = () =>
             }
 
         })
-        .catch((_) =>
+        .catch(() =>
         {
             setIsError(true);
             setErrorMessage("Failed to resend email. Try again later.")
@@ -112,7 +112,7 @@ const VerifyEmailForm = () =>
                     <span className="form-title">Verify Your Email</span>
                     <hr className="hr-100"/>
                     <span className="form-subtext">Before you can use Pomelo, check your email for a verification code.</span>
-                    <span className="form-subtext">If you don't see it, request another one.</span>
+                    <span className="form-subtext">If you don&apos;t see it, request another one.</span>
                 </div>
 
                 { isError && <>

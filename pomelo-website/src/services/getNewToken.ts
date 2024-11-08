@@ -29,7 +29,7 @@ const getNewToken = () =>
             }
 
         })
-        .catch((_) =>
+        .catch(() =>
         {
             reject();
         });

@@ -19,25 +19,21 @@ const CreateRuleForm = ({getRules}: Props) =>
     const [ domain, setDomain ] = useState<string>("");
     const [ start, setStart ] = useState<number>(0);
     const [ stop, setStop ] = useState<number>(0);
-    const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const [ isError, setIsError ] = useState<boolean>(false);
     const [ errorMessage, setErrorMessage ] = useState<string>("");
 
     const putRuleDecorator = () =>
     {
-        setIsLoading(true);
         setIsError(false);
         putRule(domain, start, stop)
-        .then((_) =>
+        .then(() =>
         {
-            setIsLoading(false);
             getRules();
         })
         .catch((error) =>
         {
             setIsError(true);
             setErrorMessage(error);
-            setIsLoading(false);
         });
 
     };

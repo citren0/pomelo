@@ -31,7 +31,8 @@ const LoginForm = () =>
             setIsInfo(true);
             setInfoMessage(getURLParameter("registered") ?? "Registration successful, you may log in now.");
         }
-    });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const login = (e: React.FormEvent<HTMLFormElement>) =>
     {

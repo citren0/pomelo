@@ -33,7 +33,7 @@ const putRule = (domain: string, start: number, stop: number) =>
             }
 
         })
-        .catch((_) =>
+        .catch(() =>
         {
             reject("Error encountered. Try again later.");
         });
