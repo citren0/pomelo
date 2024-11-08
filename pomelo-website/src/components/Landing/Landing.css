@@ -82,7 +82,7 @@
     width: 15rem;
     max-width: 100%;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     transition: 1s;
 }
 .landing-card:hover
@@ -121,7 +121,7 @@
     width: 25em;
     max-width: 100%;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     transition: 1s;
 }
 .landing-card-secondary:hover
