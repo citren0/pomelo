@@ -1,8 +1,6 @@
 
 .forgot-password-form-spacer
 {
-    display: flex;
-    flex-flow: row;
-    padding: 4rem;
-    gap: 4rem;
+    padding: 3rem 1rem;
+    max-width: calc(100% - 2rem);
 }
