@@ -1,8 +1,6 @@
 
 .verifyemail-form-wrapper
 {
-    display: flex;
-    flex-flow: row;
-    padding: 4rem;
-    gap: 4rem;
+    padding: 4rem 2rem;
+    max-width: calc(100% - 4rem);
 }
