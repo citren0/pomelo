@@ -15,6 +15,7 @@ const CreateOrder = () =>
     const [ isError, setIsError ] = useState<boolean>(false);
     const [ errorMessage, setErrorMessage ] = useState<string>("");
     const [ userId, setUserId ] = useState<number>(-1);
+    const [ hasCurrentSubscription, setHasCurrentSubscription ] = useState<boolean>(true);
     const userIdRef = useRef<number>(-1);
 
     const options =
@@ -60,11 +61,22 @@ const CreateOrder = () =>
                 else
                 {
                     setUserId(userInfoResponseJson.user.id);
+                    setHasCurrentSubscription(userInfoResponseJson.user.activeSubscription);
                     userIdRef.current = userInfoResponseJson.user.id;
                 }
                 
             }
 
+        });
+
+    };
+
+    const onApprove = (): Promise<void> =>
+    {
+        return new Promise<void>((resolve, reject) =>
+        {
+            window.location.href = "/ordersuccess";
+            resolve();
         });
 
     };
@@ -104,7 +116,8 @@ const CreateOrder = () =>
                             <PayPalScriptProvider options={options} >
                                 <PayPalButtons
                                     style={{ layout: "vertical", disableMaxWidth: true, }}
-                                    disabled={(userId == -1)}
+                                    disabled={(userId == -1) || hasCurrentSubscription}
+                                    onApprove={onApprove}
                                     onError={onError}
                                     createSubscription={(data, actions) => {
                                         return actions.subscription.create({

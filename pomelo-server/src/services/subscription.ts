@@ -1,6 +1,7 @@
 
 import { db } from "../database";
 import Roles from "../models/Roles";
+import { cancelSubscription } from "./paypal";
 
 
 const givePaidRole = (user_id: number) =>
@@ -36,7 +37,12 @@ const removePaidRole = (user_id: number) =>
 const createSubscription = (hookBody: any) =>
 {
     db.any("INSERT INTO subscriptions (user_id, subscription_id, time_stamp) values ($1, $2, $3);",
-            [hookBody.resource.custom_id, hookBody.resource.id, Date.now()]);
+            [hookBody.resource.custom_id, hookBody.resource.id, Date.now()])
+    .catch((_) =>
+    {
+        // If there is any error, catch and cancel that subscription.
+        cancelSubscription(hookBody.resource.id);
+    });
 };
 
 

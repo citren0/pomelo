@@ -16,7 +16,17 @@ router.use(cookieParser());
 
 router.get('/api/userdetails', auth, (req, res, next) =>
 {
-    return res.status(200).send({ isLoggedIn: true, user: req.user, });
+    db.any("SELECT * FROM subscriptions WHERE user_id = $1;",
+            [req.user.id])
+    .then((subscriptions) =>
+    {
+        return res.status(200).send({ isLoggedIn: true, user: { ...req.user, activeSubscription: (subscriptions.length != 0), }, });
+    })
+    .catch((error) =>
+    {
+        return res.status(500).send({ status: "Failed to get user details. Try again later." });
+    });
+    
 });
 
 
