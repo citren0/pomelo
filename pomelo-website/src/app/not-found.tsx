@@ -2,6 +2,7 @@
 import React from "react";
 import "./page.css";
 import { NavBar } from "../components";
+import Cookies from "@/components/Cookies/Cookies";
 
 const Page404 = () =>
 {
@@ -19,6 +20,8 @@ const Page404 = () =>
 					</span>
 				</div>
 			</div>
+
+			<Cookies />
 		</>
 	);
 };
