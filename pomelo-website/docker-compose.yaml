@@ -23,6 +23,7 @@ services:
       - web-root:/var/www/html
       - ./nginx-conf:/etc/nginx/conf.d
       - ./certs:/etc/letsencrypt/live/pomeloprod.com
+      - ./certs-www:/etc/letsencrypt/live/www.pomeloprod.com
     depends_on:
       - server
     networks:
