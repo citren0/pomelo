@@ -3,6 +3,7 @@ import React from "react";
 import "./page.css";
 import { NavBar } from "../../components";
 import VerifyEmailForm from "./VerifyEmailForm/VerifyEmailForm";
+import Cookies from "@/components/Cookies/Cookies";
 
 const Login = () =>
 {
@@ -15,6 +16,8 @@ const Login = () =>
 					<VerifyEmailForm />
 				</div>
 			</div>
+
+			<Cookies />
 		</>
 	);
 };

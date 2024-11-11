@@ -8,6 +8,7 @@ import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import config from "@/constants/config";
 import MessageTypes from "@/constants/messageTypes";
 import { checkStatusCode } from "@/services/checkStatusCode";
+import Cookies from "@/components/Cookies/Cookies";
 
 
 const CreateOrder = () =>
@@ -134,6 +135,8 @@ const CreateOrder = () =>
                     </div>
                 </div>
 			</div>
+
+            <Cookies />
 		</>
 	);
 };

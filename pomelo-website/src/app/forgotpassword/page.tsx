@@ -2,6 +2,7 @@
 import { NavBar } from "@/components";
 import ForgotPasswordForm from "./ForgotPasswordForm/ForgotPasswordForm";
 import "./page.css";
+import Cookies from "@/components/Cookies/Cookies";
 
 
 const ForgotPassword = () =>
@@ -15,6 +16,8 @@ const ForgotPassword = () =>
 					<ForgotPasswordForm />
 				</div>
 			</div>
+
+			<Cookies />
 		</>
     );
 };

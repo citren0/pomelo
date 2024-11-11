@@ -3,6 +3,7 @@ import React from "react";
 import "./page.css";
 import { NavBar } from "../../components";
 import LoginForm from "./LoginForm/LoginForm";
+import Cookies from "@/components/Cookies/Cookies";
 
 const Login = () =>
 {
@@ -15,6 +16,8 @@ const Login = () =>
 					<LoginForm />
 				</div>
 			</div>
+
+			<Cookies />
 		</>
 	);
 };

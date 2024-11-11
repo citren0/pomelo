@@ -10,6 +10,7 @@ import config from "@/constants/config";
 import { checkStatusCode } from "@/services/checkStatusCode";
 import getNewToken from "@/services/getNewToken";
 import MessageTypes from "@/constants/messageTypes";
+import Cookies from "@/components/Cookies/Cookies";
 
 const OrderSuccess = () =>
 {
@@ -119,6 +120,8 @@ const OrderSuccess = () =>
 
 				</div>
 			</div>
+
+			<Cookies />
 		</>
 	);
 };

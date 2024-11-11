@@ -10,6 +10,7 @@ import Rules from "./Rules/Rules";
 import { Rule } from "@/interfaces/Rule";
 import config from "@/constants/config";
 import { checkStatusCode } from "@/services/checkStatusCode";
+import Cookies from "@/components/Cookies/Cookies";
 
 
 
@@ -66,6 +67,8 @@ const Dashboard = () =>
 				<Insights getRules={getRules} />
 				<Rules rules={rules} getRules={getRules} />
 			</div>
+
+			<Cookies />
 		</>
 	);
 };
