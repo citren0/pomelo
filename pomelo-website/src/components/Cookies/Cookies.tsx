@@ -31,8 +31,7 @@ const Cookies = () =>
             { showBanner && <>
                 <div className="cookies-wrapper">
                     <div className="cookies-text-wrapper">
-                        <span className="cookies-wrapper-main-text">We use cookies to improve our website and provide persisting user sessions. By continuing to use the site, you consent to the use of cookies.</span>
-                        <span className="cookies-wrapper-main-text">To find out more, read our <a href="/privacy" className="cookies-privacy-policy-text">Privacy Policy</a></span>
+                        <span className="cookies-wrapper-main-text">We use cookies to improve our website and provide persisting user sessions. By continuing to use the site, you consent to the use of cookies. To find out more, read our <a href="/privacy" className="cookies-privacy-policy-text">Privacy Policy</a> and <a href="/cookies" className="cookies-privacy-policy-text">Cookie Policy</a></span>
                     </div>
                     <button className="cookies-go-away-button" onClick={consent}>I Understand</button>
                 </div>

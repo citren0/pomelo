@@ -3,15 +3,13 @@
 
 import React, { useEffect, useState } from "react";
 import "./page.css";
-import { NavBar } from "../../components";
+import { NavBar, Cookies } from "../../components";
 import Reports from "./Reports/Reports";
 import Insights from "./Insights/Insights";
 import Rules from "./Rules/Rules";
 import { Rule } from "@/interfaces/Rule";
 import config from "@/constants/config";
 import { checkStatusCode } from "@/services/checkStatusCode";
-import Cookies from "@/components/Cookies/Cookies";
-
 
 
 const Dashboard = () =>

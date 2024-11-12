@@ -171,6 +171,8 @@ const RegisterForm = () =>
                     <InputError text="Passwords must contain at least 1 uppercase, lowercase, and number and be 8 characters or longer." />
                 </> }
 
+                <span className="register-text-small">By registering, you agree to our <a href="/privacy">Privacy Policy</a>, <a href="/cookies">Cookie Policy</a>, and <a href="/terms">Terms of Service</a>.</span>
+
                 <button
                     type="submit"
                     className="form-primary-button"

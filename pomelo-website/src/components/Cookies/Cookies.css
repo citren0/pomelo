@@ -2,21 +2,29 @@
 .cookies-wrapper
 {
     border-radius: 0.5rem;
-    width: calc(100% - 5rem);
-    max-width: 90rem;
+    max-width: calc(100% - 4rem);
+    width: 90rem;
     background-color: #f0f0f9;
     display: flex;
     flex-flow: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem;
+    padding: 1rem;
     position: fixed;
     bottom: 0;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translate(calc(-50% - 1rem), 0);
     margin: 1rem;
     gap: 1rem;
     border: 1px solid #c0c0c0;
+}
+@media screen and (max-width: 800px)
+{
+    .cookies-wrapper
+    {
+        flex-flow: column;
+        align-items: center;
+    }
 }
 
 .cookies-text-wrapper
@@ -49,6 +57,7 @@
     outline: none;
     border: none;
     border-radius: 0.5rem;
+    text-wrap: nowrap;
 }
 .cookies-go-away-button:hover
 {

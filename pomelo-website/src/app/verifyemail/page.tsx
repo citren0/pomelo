@@ -1,9 +1,9 @@
 
 import React from "react";
 import "./page.css";
-import { NavBar } from "../../components";
+import { NavBar, Cookies } from "../../components";
 import VerifyEmailForm from "./VerifyEmailForm/VerifyEmailForm";
-import Cookies from "@/components/Cookies/Cookies";
+
 
 const Login = () =>
 {

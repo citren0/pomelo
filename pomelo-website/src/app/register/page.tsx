@@ -1,9 +1,9 @@
 
 import React from "react";
 import "./page.css";
-import { NavBar } from "../../components";
+import { NavBar, Cookies } from "../../components";
 import RegisterForm from "./RegisterForm/RegisterForm";
-import Cookies from "@/components/Cookies/Cookies";
+
 
 const Register = () =>
 {

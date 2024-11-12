@@ -1,9 +1,9 @@
 
 import React from "react";
 import "./page.css";
-import { NavBar } from "../../components";
+import { NavBar, Cookies } from "../../components";
 import LogoutClient from "./LogoutClient/LogoutClient";
-import Cookies from "@/components/Cookies/Cookies";
+
 
 const Login = () =>
 {

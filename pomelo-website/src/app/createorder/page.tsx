@@ -3,12 +3,11 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import "./page.css";
-import { Message, NavBar } from "../../components";
+import { Message, NavBar, Cookies } from "../../components";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import config from "@/constants/config";
 import MessageTypes from "@/constants/messageTypes";
 import { checkStatusCode } from "@/services/checkStatusCode";
-import Cookies from "@/components/Cookies/Cookies";
 
 
 const CreateOrder = () =>

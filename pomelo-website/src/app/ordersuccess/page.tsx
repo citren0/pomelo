@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Message, NavBar } from "@/components";
+import { Message, NavBar, Cookies } from "@/components";
 import "./page.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import config from "@/constants/config";
 import { checkStatusCode } from "@/services/checkStatusCode";
 import getNewToken from "@/services/getNewToken";
 import MessageTypes from "@/constants/messageTypes";
-import Cookies from "@/components/Cookies/Cookies";
+
 
 const OrderSuccess = () =>
 {
@@ -103,7 +103,7 @@ const OrderSuccess = () =>
 						<span className="order-success-subtitle">To use Pomelo, you will need to install and log into the browser extension.</span>
 						<span className="order-success-next-steps">After you do that, you can check back at the <a href="/dashboard">Dashboard</a> to set browsing rules or talk to your productivity assistant.</span>
 						<div className="order-success-btn-row-wrapper">
-							<a className="btn-primary-with-image">
+							<a className="btn-primary-with-image" href="https://addons.mozilla.org/en-US/firefox/addon/pomelo-productivity/">
 								<Image src="/assets/firefox.png" height={24} width={24} alt="Firefox logo" />
 								Firefox
 							</a>

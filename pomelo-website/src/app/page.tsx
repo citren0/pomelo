@@ -1,8 +1,7 @@
 
 import React from "react";
 import "./page.css";
-import { Landing, NavBar } from "../components";
-import Cookies from "@/components/Cookies/Cookies";
+import { Footer, Landing, NavBar, Cookies } from "../components";
 
 const Home = () =>
 {
@@ -13,6 +12,8 @@ const Home = () =>
 			<div className="content-container">
 				<Landing />
 			</div>
+
+			<Footer />
 
 			<Cookies />
 		</>

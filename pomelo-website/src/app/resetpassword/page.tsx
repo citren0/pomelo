@@ -1,8 +1,7 @@
 
-import { NavBar } from "@/components";
+import { NavBar, Cookies } from "@/components";
 import ResetPasswordForm from "./ResetPasswordForm/ResetPasswordForm";
 import "./page.css";
-import Cookies from "@/components/Cookies/Cookies";
 
 
 const ForgotPassword = () =>

@@ -51,7 +51,7 @@ const NavBar = () =>
                     
                     { isLoggedIn && <>
                         <div className="nav-btn-grouping-collapse">
-                            <a className="nav-link-ext">
+                            <a className="nav-link-ext" href="https://addons.mozilla.org/en-US/firefox/addon/pomelo-productivity/">
                                 <Image src="/assets/firefox.png" height={28} width={28} alt="Firefox logo" />
                             </a>
                             <a className="nav-link-ext">

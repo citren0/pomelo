@@ -6,3 +6,5 @@ export { default as SimpleTextArea } from "./SimpleTextArea/SimpleTextArea";
 export { default as Landing } from "./Landing/Landing";
 export { default as InputError } from "./InputError/InputError";
 export { default as Modal } from "./Modal/Modal";
+export { default as Cookies } from "./Cookies/Cookies";
+export { default as Footer } from "./Footer/Footer";
