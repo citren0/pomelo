@@ -116,12 +116,41 @@ const login = (): AppThunk => async (dispatch, getState) =>
 };
 
 
+const getTokenFromStorage = (): AppThunk => async (dispatch, getState) =>
+{
+    if (typeof chrome !== "undefined")
+    {
+        if (typeof browser !== "undefined")
+        {
+            // Firefox
+            browser.storage.local.get("token" )
+            .then((jwt: string) =>
+            {
+                dispatch(setJWT(jwt));
+            });
+
+        }
+        else
+        {
+            chrome.storage.local.get("token")
+            .then((jwt: string) =>
+            {
+                dispatch(setJWT(jwt));
+            });
+
+        }
+
+    }
+
+};
+
+
 const logout = (): AppThunk => async (dispatch, getState) =>
 {
     dispatch(clearJWTFromStore());
     dispatch(clearJWTFromLocalStorage());
     dispatch(navigateTo(Pages.Login));
-}
+};
 
 
-export { login, clearCredentials, clearJWTFromStore, logout, };
+export { login, clearCredentials, clearJWTFromStore, getTokenFromStorage, logout, };

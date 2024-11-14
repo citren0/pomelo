@@ -68,6 +68,7 @@
     text-overflow: ellipsis;
     max-width: 10rem;
     overflow: hidden;
+    white-space: pre;
 }
 
 .report-rotate

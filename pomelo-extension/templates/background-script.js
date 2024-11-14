@@ -58,7 +58,7 @@ const getAndSetCurrentUrl = () =>
 
     });
 
-}
+};
 
 
 const getToken = async (runtime) =>
@@ -107,6 +107,58 @@ const postReport = async (url, favicon, runtime) =>
     {
         console.log("Failed to post report.");
     }
+};
+
+
+const newToken = async (runtime) =>
+{
+    const token = await getToken(runtime);
+
+    const newTokenEndpoint = "https://api.pomeloprod.com:443/api/newtoken";
+
+    try
+    {
+        fetch(newTokenEndpoint, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token,
+            },
+        })
+        .then((res) =>
+        {
+            res.json()
+            .then((resJson) =>
+            {
+                // Don't set the token if we arent logged in. Even if token is set to "", the extension will redir from the login page.
+                if (resJson.hasOwnProperty("token"))
+                {
+                    if (typeof chrome !== "undefined")
+                    {
+                        if (typeof browser !== "undefined")
+                        {
+                            // Firefox
+                            browser.storage.local.set({ token: resJson.token ?? "" });
+                        }
+                        else
+                        {
+                            chrome.storage.local.set({ token: resJson.token ?? "" });
+                        }
+
+                    }
+
+                }
+                
+
+            });
+
+        });
+        
+    }
+    catch (e)
+    {
+        console.log("Failed to post report.");
+    }
+
 };
 
 
@@ -173,17 +225,27 @@ const checkRules = async (domain, runtime) =>
 };
 
 
+const startNewTokenIntervals = (runtime) =>
+{
+    const oneWeekms = (1000 * 60* 60 * 24 * 7);
+    setTimeout(() => newToken(runtime), 1000);
+    setInterval(() => newToken(runtime), oneWeekms);
+};
+
+
 // Setup.
 if (typeof chrome !== "undefined")
 {
     if (typeof browser !== "undefined")
     {
         // Firefox
+        startNewTokenIntervals(browser);
         browser.tabs.onUpdated.addListener(getAndSetCurrentUrl);
         browser.tabs.onActivated.addListener(getAndSetCurrentUrl);
     }
     else
     {
+        startNewTokenIntervals(chrome);
         chrome.tabs.onUpdated.addListener(getAndSetCurrentUrl);
         chrome.tabs.onActivated.addListener(getAndSetCurrentUrl);
     }
