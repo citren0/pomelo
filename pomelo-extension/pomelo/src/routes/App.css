@@ -19,7 +19,7 @@
 body
 {
     width: 30rem;
-    height: 25rem;
+    height: fit-content;
 }
 
 .hr-100
@@ -38,7 +38,10 @@ body
     font-weight: 600;
     padding: 0.5rem;
     text-align: center;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
 }
 .form-primary-button:hover
 {
@@ -57,6 +60,10 @@ body
     padding: 0.5rem;
     text-decoration: none;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2rem;
 }
 .form-secondary-button:hover
 {
@@ -108,4 +115,20 @@ body
 .m-top-2
 {
     margin-top: 2rem;
+}
+
+.spinner
+{
+    animation: rotation 2s infinite linear;
+}
+@keyframes rotation
+{
+    from
+    {
+        transform: rotate(0deg);
+    }
+    to
+    {
+        transform: rotate(359deg);
+    }
 }

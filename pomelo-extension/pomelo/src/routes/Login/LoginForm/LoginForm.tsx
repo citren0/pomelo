@@ -10,6 +10,7 @@ import { login } from "../../../store/login-slice/thunks";
 import loginSelectors from "../../../store/login-slice/selectors";
 import AsyncThunkStatus from "../../../enums/AsyncThunkStatus";
 import { setPassword, setUsername } from "../../../store/login-slice/slice";
+import spinner from "../../../../assets/spinner.svg";
 
 
 const LoginForm = () =>
@@ -56,7 +57,13 @@ const LoginForm = () =>
                     onChange={(e) => dispatch(setPassword(e.currentTarget.value))}
                 />
 
-                <button type="submit" className="form-primary-button">Login</button>
+                <button type="submit" className="form-primary-button">
+                    { loginThunkStatus.thunkStatus == AsyncThunkStatus.Pending && <>
+                        <img src={spinner} height={32} width={32} className="spinner" />
+                    </> || <>
+                        Login
+                    </> }
+                </button>
                 <a href="https://pomeloprod.com/register" target="_blank" className="form-secondary-button">Register</a>
             </form>
         </>
