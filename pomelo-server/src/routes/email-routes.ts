@@ -30,7 +30,7 @@ router.post('/api/verifyemail', auth, (req, res, next) =>
             [req.user.id, req.body.code])
     .then((token) =>
     {
-        if (token.length > 0)
+        if (token.length != 0)
         {
             // Token was valid if the query returned anything.
             db.any("SELECT id FROM roles WHERE name = $1;",
@@ -75,16 +75,25 @@ router.post('/api/resendemail', auth, (req, res, next) =>
             [req.user.id])
     .then((user) =>
     {
-        // Send verification email.
-        createAndSendEmailVerification(user[0].id, user[0].email)
-        .then((_) =>
+        // User cannot send verification email if they are already verified.
+        if (!req.user.roles.includes(Roles.Verified))
         {
-            return res.status(200).send({ status: "Successfully resent email code." });
-        })
-        .catch((error) =>
+            // Send verification email.
+            createAndSendEmailVerification(user[0].id, user[0].email)
+            .then((_) =>
+            {
+                return res.status(200).send({ status: "Successfully resent email code." });
+            })
+            .catch((error) =>
+            {
+                return res.status(500).send({ status: "Failed to register user. Try again later." });
+            });
+
+        }
+        else
         {
-            return res.status(500).send({ status: "Failed to register user. Try again later." });
-        });
+            return res.status(400).send({ status: "Failed to register user. You are already verified." });
+        }
 
     })
     .catch((error) =>

@@ -18,7 +18,6 @@ function connectToDatabase()
         database: process.env.POSTGRES_DB,
         host: process.env.POSTGRES_HOST,
         port: process.env.POSTGRES_PORT,
-        max: 30,
         capSQL: true,
         connect: (e) => {
             console.log("Successfully connected to the database: " + e.client.connectionParameters.database);

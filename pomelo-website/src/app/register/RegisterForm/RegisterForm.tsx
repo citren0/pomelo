@@ -109,11 +109,13 @@ const RegisterForm = () =>
         const uppercase = /[A-Z]/;
         const number = /[0-9]/;
         const minLength = 8;
+        const maxLength = 32;
 
         if (lowercase.test(newPassword) &&
             uppercase.test(newPassword) &&
             number.test(newPassword) &&
-            newPassword.length >= minLength)
+            newPassword.length >= minLength &&
+            newPassword.length <= maxLength)
         {
             setPasswordValid(true);
         }
@@ -174,7 +176,7 @@ const RegisterForm = () =>
                 />
                 
                 { !passwordValid && <>
-                    <InputError text="Passwords must contain at least 1 uppercase, lowercase, and number and be 8 characters or longer." />
+                    <InputError text="Passwords must contain at least 1 uppercase, 1 lowercase, and 1 number, and be 8-32 characters long." />
                 </> }
 
                 <span className="register-text-small">By registering, you agree to our <a href="/privacy">Privacy Policy</a>, <a href="/cookies">Cookie Policy</a>, and <a href="/terms">Terms of Service</a>.</span>

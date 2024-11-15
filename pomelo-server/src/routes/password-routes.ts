@@ -69,17 +69,22 @@ router.post("/api/resetpassword", (req, res, next) =>
 
     // Check for password requirements.
     const minPasswordLength = 8;
+    const maxPasswordLength = 32;
     const uppercase = /[A-Z]/;
     const lowercase = /[a-z]/;
     const number = /[0-9]/;
 
-    if (req.body.password.length < minPasswordLength || !uppercase.test(req.body.password) || !lowercase.test(req.body.password) || !number.test(req.body.password))
+    if (req.body.password.length < minPasswordLength ||
+        req.body.password.length > maxPasswordLength ||
+        !uppercase.test(req.body.password) ||
+        !lowercase.test(req.body.password) ||
+        !number.test(req.body.password))
     {
         return res.status(500).send({ status: "Failed to reset password. Password is not valid." });
     }
 
     // Continue.
-    db.any("SELECT id FROM users WHERE username = $1;", 
+    db.any("SELECT id FROM users WHERE lower(username) = lower($1);", 
             [req.body.username])
     .then((user) =>
     {
@@ -95,7 +100,7 @@ router.post("/api/resetpassword", (req, res, next) =>
         {
             if (attempts[0].count > parseInt(process.env.AUTH_MAX_RESET_PASSWORD_ATTEMPTS))
             {
-                return res.status(401).send({ status: "Failed to reset password. Too many attempts. Wait 5 minutes and try again." });
+                return res.status(401).send({ status: "Failed to reset password. Too many attempts. Wait 30 minutes and try again." });
             }
 
             db.any("DELETE FROM forgot_password WHERE user_id = $1 AND token = $2 RETURNING user_id;",
@@ -108,7 +113,7 @@ router.post("/api/resetpassword", (req, res, next) =>
                     db.any("INSERT INTO forgot_password_attempts (user_id, time_stamp, success) values ($1, $2, $3);",
                             [user[0].id, Date.now(), true]);
 
-                    bcrypt.hash(req.body.password, 14)
+                    bcrypt.hash(req.body.password, parseInt(process.env.PASSWORD_HASHING_ROUNDS))
                     .then((hash: string) =>
                     {
                         db.any("UPDATE users SET hash = $1 WHERE id = $2;",

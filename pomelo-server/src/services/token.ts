@@ -8,7 +8,7 @@ const auth = (req, res, next) =>
     const authHeader = String(req.header('Authorization') ?? "");
     const splitAuthHeader = authHeader.split(' ');
     
-    if ((authHeader == undefined) || (splitAuthHeader.length != 2))
+    if ((authHeader == "") || (splitAuthHeader.length != 2))
     {
         return res.status(401).send({ status: "Unauthorized, please log in.", isLoggedIn: false, });
     }
@@ -24,6 +24,7 @@ const auth = (req, res, next) =>
 
         return next();
     });
+    
 };
 
 export default auth;

@@ -31,16 +31,22 @@ router.put('/api/register', (req, res, next) =>
     const minUsernameLength = 4;
     const maxUsernameLength = 16;
     const minPasswordLength = 8;
+    const maxPasswordLength = 32;
     const uppercase = /[A-Z]/;
     const lowercase = /[a-z]/;
     const number = /[0-9]/;
 
-    if (req.body.username.length < minUsernameLength || req.body.username.length > maxUsernameLength)
+    if (req.body.username.length < minUsernameLength ||
+        req.body.username.length > maxUsernameLength)
     {
         return res.status(500).send({ status: "Failed to register user. Username is not valid." });
     }
 
-    if (req.body.password.length < minPasswordLength || !uppercase.test(req.body.password) || !lowercase.test(req.body.password) || !number.test(req.body.password))
+    if (req.body.password.length < minPasswordLength ||
+        req.body.password.length > maxPasswordLength ||
+        !uppercase.test(req.body.password) ||
+        !lowercase.test(req.body.password) ||
+        !number.test(req.body.password))
     {
         return res.status(500).send({ status: "Failed to register user. Password is not valid." });
     }
@@ -52,7 +58,7 @@ router.put('/api/register', (req, res, next) =>
     }
 
     // Generate a salt then hash the password.
-    bcrypt.hash(req.body.password, 14)
+    bcrypt.hash(req.body.password, parseInt(process.env.PASSWORD_HASHING_ROUNDS))
     .then((hash: string) =>
     {
         db.any('insert into users (username, email, hash, registration) values (lower($1), lower($2), $3, $4) returning id;',
@@ -147,9 +153,10 @@ router.post('/api/login', (req, res, next) =>
                             roles: mapped_roles,
                         };
         
-                        const auth_token = jwt.sign(auth_payload, process.env.AUTH_SECRET, {expiresIn: process.env.AUTH_JWT_EXPIRE_AGE, });
+                        const auth_token = jwt.sign(auth_payload, process.env.AUTH_SECRET, { expiresIn: process.env.AUTH_JWT_EXPIRE_AGE, });
                         
-                        return res.status(200).send({
+                        return res.status(200).send(
+                        {
                             status: "Successfully logged in.",
                             token: auth_token,
                             isVerified: mapped_roles.includes(Roles.Verified),
@@ -190,13 +197,13 @@ router.post('/api/login', (req, res, next) =>
 
 router.get("/api/newtoken", auth, (req, res, next) =>
 {
-    db.any('select username, id, email, hash, registration from users where lower(username) = lower($1);',
-            [req.user.username])
+    db.any('select username, id, email, hash, registration from users where id = $1;',
+            [req.user.id])
     .then((user) =>
     {
         if (user.length != 1)
         {
-            return res.status(400).send({ status: "Failed to issue token. Username or password invalid." });
+            return res.status(400).send({ status: "Failed to issue token. Try again later." });
         }
 
         // Get user's roles.

@@ -30,8 +30,9 @@ app.use("/", passwordRouter);
 app.use("/", rulesRouter);
 app.use("/", paypalRouter);
 
-app.listen(3000, () => {
-    console.log("Server started.")
+app.listen(3000, () =>
+{
+    console.log("Server started.");
 });
 
 export default app;

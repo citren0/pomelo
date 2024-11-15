@@ -13,8 +13,7 @@ const givePaidRole = (user_id: number) =>
         db.any("INSERT INTO user_to_role (user_id, role_id) VALUES ($1, $2);",
                 [user_id, role_id[0].id]);
     })
-    .catch((_) =>
-    {});
+    .catch((_) => {});
 
 };
 
@@ -28,8 +27,7 @@ const removePaidRole = (user_id: number) =>
         db.any("DELETE FROM user_to_role WHERE user_id = $1 AND role_id = $2;",
                 [user_id, role_id[0].id]);
     })
-    .catch((_) =>
-    {});
+    .catch((_) => {});
 
 };
 
