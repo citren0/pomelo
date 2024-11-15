@@ -7,12 +7,15 @@ import MessageTypes from "@/constants/messageTypes";
 import { InputError, Message, SimpleInput } from "@/components";
 import config from "@/constants/config";
 import { checkStatusCode } from "@/services/checkStatusCode";
+import Image from "next/image";
 
 
 const ResetPasswordForm = () =>
 {
     const [ isError, setIsError ] = useState<boolean>(false);
     const [ errorMessage, setErrorMessage ] = useState<string>("");
+
+    const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
     const [ isInfo, setIsInfo ] = useState<boolean>(false);
     const [ infoMessage, setInfoMessage ] = useState<string>("");
@@ -53,6 +56,7 @@ const ResetPasswordForm = () =>
 
         setIsError(false);
         setIsInfo(false);
+        setIsLoading(true);
 
         const resetPasswordBody =
         {
@@ -70,6 +74,8 @@ const ResetPasswordForm = () =>
         })
         .then(async (resetPasswordResponse) =>
         {
+            setIsLoading(false);
+            
             const resetPasswordResponseJson = await resetPasswordResponse.json();
 
             if (!checkStatusCode(resetPasswordResponse.status))
@@ -139,7 +145,12 @@ const ResetPasswordForm = () =>
                     className="form-primary-button"
                     disabled={(!passwordValid || username == "" || token == "" || password == "")}
                 >
-                    Reset Password
+                    { isLoading && <>
+                        <Image src="/assets/spinner.svg" height={32} width={32} alt="Loading spinner" className="spinner" />
+                    </> || <>
+                        Reset Password
+                    </> }
+                    
                 </button>
                 <a href="/forgotpassword" className="form-subtle-button">Need a Code?</a>
             </form>

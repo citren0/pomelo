@@ -7,16 +7,19 @@ import "./RegisterForm.css";
 import config from "../../../constants/config";
 import { checkStatusCode } from "../../../services/checkStatusCode";
 import MessageTypes from "../../../constants/messageTypes";
+import Image from "next/image";
 
 
 const RegisterForm = () =>
 {
-    const [ username, setUsername ] = useState("");
-	const [ password, setPassword ] = useState("");
-    const [ email, setEmail ] = useState("");
+    const [ username, setUsername ] = useState<string>("");
+	const [ password, setPassword ] = useState<string>("");
+    const [ email, setEmail ] = useState<string>("");
 
-    const [ isError, setIsError ] = useState(false);
-    const [ errorMessage, setErrorMessage ] = useState("");
+    const [ isError, setIsError ] = useState<boolean>(false);
+    const [ errorMessage, setErrorMessage ] = useState<string>("");
+
+    const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
     const [ usernameValid, setUsernameValid ] = useState<boolean>(true);
     const [ emailValid, setEmailValid ] = useState<boolean>(true);
@@ -27,6 +30,7 @@ const RegisterForm = () =>
         e.preventDefault();
         
         setIsError(false);
+        setIsLoading(true);
 
         const registerRequestBody =
         {
@@ -44,6 +48,8 @@ const RegisterForm = () =>
         })
         .then(async (registerResponse) =>
         {
+            setIsLoading(false);
+            
             const registerResponseJson = await registerResponse.json();
 
             if (!checkStatusCode(registerResponse.status))
@@ -185,7 +191,11 @@ const RegisterForm = () =>
                         password.length == 0)
                     }
                 >
-                    Register
+                    { isLoading && <>
+                        <Image src="/assets/spinner.svg" height={32} width={32} alt="Loading spinner" className="spinner" />
+                    </> || <>
+                        Register
+                    </> }
                 </button>
                 <a href="/login" className="form-secondary-button">Login</a>
             </form>

@@ -7,12 +7,16 @@ import MessageTypes from "@/constants/messageTypes";
 import { Message, SimpleInput } from "@/components";
 import config from "@/constants/config";
 import { checkStatusCode } from "@/services/checkStatusCode";
+import Image from "next/image";
 
 
 const ForgotPasswordForm = () =>
 {
     const [ isError, setIsError ] = useState<boolean>(false);
     const [ errorMessage, setErrorMessage ] = useState<string>("");
+
+    const [ isLoading, setIsLoading ] = useState<boolean>(false);
+
     const [ username, setUsername ] = useState<string>("");
     
     const forgotPassword = (e: React.FormEvent<HTMLFormElement>) =>
@@ -20,6 +24,7 @@ const ForgotPasswordForm = () =>
         e.preventDefault();
 
         setIsError(false);
+        setIsLoading(true);
 
         const forgotPasswordBody =
         {
@@ -35,6 +40,8 @@ const ForgotPasswordForm = () =>
         })
         .then(async (forgotPasswordResponse) =>
         {
+            setIsLoading(false);
+
             const forgotPasswordResponseJson = await forgotPasswordResponse.json();
 
             if (!checkStatusCode(forgotPasswordResponse.status))
@@ -74,7 +81,13 @@ const ForgotPasswordForm = () =>
                     onChange={(e) => setUsername(e.currentTarget.value)}
                 />
 
-                <button type="submit" className="form-primary-button" disabled={(username == "")}>Send Forgot Password Email</button>
+                <button type="submit" className="form-primary-button" disabled={(username == "")}>
+                    { isLoading && <>
+                        <Image src="/assets/spinner.svg" height={32} width={32} alt="Loading spinner" className="spinner" />
+                    </> || <>
+                        Send Forgot Password Email
+                    </> }
+                </button>
                 <a href="/resetpassword" className="form-subtle-button">Already Have a Code?</a>
             </form>
         </>

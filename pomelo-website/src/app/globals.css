@@ -96,7 +96,10 @@
     font-weight: 600;
     padding: 0.5rem;
     text-align: center;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.75rem;
 }
 .form-primary-button:hover
 {
@@ -119,6 +122,10 @@
     padding: 0.5rem;
     text-decoration: none;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1.75rem;
 }
 .form-secondary-button:hover
 {
@@ -136,6 +143,11 @@
     padding: 0.5rem;
     text-decoration: none;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1.75rem;
+    margin: 0;
 }
 .form-subtle-button:hover
 {

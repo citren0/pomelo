@@ -8,18 +8,21 @@ import config from "../../../constants/config";
 import { checkStatusCode } from "../../../services/checkStatusCode";
 import MessageTypes from "@/constants/messageTypes";
 import { getURLParameter } from "@/services/getURLParameters";
+import Image from "next/image";
 
 
 const LoginForm = () =>
 {
-    const [ username, setUsername ] = useState("");
-	const [ password, setPassword ] = useState("");
+    const [ username, setUsername ] = useState<string>("");
+	const [ password, setPassword ] = useState<string>("");
 
-    const [ isError, setIsError ] = useState(false);
-    const [ errorMessage, setErrorMessage ] = useState("");
+    const [ isError, setIsError ] = useState<boolean>(false);
+    const [ errorMessage, setErrorMessage ] = useState<string>("");
 
-    const [ isInfo, setIsInfo ] = useState(false);
-    const [ infoMessage, setInfoMessage ] = useState("");
+    const [ isInfo, setIsInfo ] = useState<boolean>(false);
+    const [ infoMessage, setInfoMessage ] = useState<string>("");
+
+    const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
     useEffect(() =>
     {
@@ -39,6 +42,7 @@ const LoginForm = () =>
         e.preventDefault();
         
         setIsError(false);
+        setIsLoading(true);
 
         const loginRequestBody =
         {
@@ -55,6 +59,8 @@ const LoginForm = () =>
         })
         .then(async (loginResponse) =>
         {
+            setIsLoading(false);
+
             const loginResponseJson = await loginResponse.json();
 
             if (!checkStatusCode(loginResponse.status))
@@ -124,7 +130,13 @@ const LoginForm = () =>
                     placeholder="••••••••"
                     onChange={(e) => setPassword(e.currentTarget.value)}
                 />
-                <button type="submit" className="form-primary-button">Login</button>
+                <button type="submit" className="form-primary-button">
+                    { isLoading && <>
+                        <Image src="/assets/spinner.svg" height={32} width={32} alt="Loading spinner" className="spinner" />
+                    </> || <>
+                        Login
+                    </> }
+                </button>
                 <a href="/register" className="form-secondary-button">Register</a>
                 <a href="/forgotpassword" className="form-subtle-button">Forgot Password?</a>
             </form>
