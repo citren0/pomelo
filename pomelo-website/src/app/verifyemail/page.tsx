@@ -3,9 +3,14 @@ import React from "react";
 import "./page.css";
 import { NavBar, Cookies } from "../../components";
 import VerifyEmailForm from "./VerifyEmailForm/VerifyEmailForm";
+import { Metadata } from "next";
 
 
-const Login = () =>
+export const metadata: Metadata = {
+    title: "Verify Email - Pomelo",
+};
+
+const VerifyEmail = () =>
 {
 	return (
 		<>
@@ -22,4 +27,4 @@ const Login = () =>
 	);
 };
 
-export default Login;
+export default VerifyEmail;

@@ -3,7 +3,12 @@ import React from "react";
 import "./page.css";
 import { NavBar, Cookies } from "../../components";
 import LogoutClient from "./LogoutClient/LogoutClient";
+import { Metadata } from "next";
 
+
+export const metadata: Metadata = {
+    title: "Logout - Pomelo",
+};
 
 const Login = () =>
 {

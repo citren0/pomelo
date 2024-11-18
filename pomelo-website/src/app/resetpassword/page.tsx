@@ -2,7 +2,12 @@
 import { NavBar, Cookies } from "@/components";
 import ResetPasswordForm from "./ResetPasswordForm/ResetPasswordForm";
 import "./page.css";
+import { Metadata } from "next";
 
+
+export const metadata: Metadata = {
+    title: "Reset Password - Pomelo",
+};
 
 const ForgotPassword = () =>
 {

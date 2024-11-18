@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Pomelo",
-  description: "Track your productivity across different types of websites.",
+  description: "Track your productivity and cut down on wasted time with Pomelo, your personal productivity coach.",
 };
 
 const RootLayout = (

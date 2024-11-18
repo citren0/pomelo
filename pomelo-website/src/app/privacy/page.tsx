@@ -2,7 +2,12 @@
 import { NavBar, Cookies } from "@/components";
 import privacy from "./privacy";
 import "./page.css";
+import { Metadata } from "next";
 
+
+export const metadata: Metadata = {
+    title: "Privacy Policy - Pomelo",
+};
 
 const Privacy = () =>
 {

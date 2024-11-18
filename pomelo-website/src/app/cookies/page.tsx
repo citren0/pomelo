@@ -2,7 +2,12 @@
 import { Cookies, NavBar } from "@/components";
 import cookiesPolicy from "./cookiesPolicy";
 import "./page.css";
+import { Metadata } from "next";
 
+
+export const metadata: Metadata = {
+    title: "Cookie Policy - Pomelo",
+};
 
 const CookiesPage = () =>
 {

@@ -2,7 +2,12 @@
 import { Cookies, NavBar } from "@/components";
 import "./page.css";
 import tos from "./tos";
+import { Metadata } from "next";
 
+
+export const metadata: Metadata = {
+    title: "Terms of Service - Pomelo",
+};
 
 const Terms = () =>
 {
