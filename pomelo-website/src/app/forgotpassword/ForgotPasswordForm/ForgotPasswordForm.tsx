@@ -81,14 +81,16 @@ const ForgotPasswordForm = () =>
                     onChange={(e) => setUsername(e.currentTarget.value)}
                 />
 
-                <button type="submit" className="form-primary-button" disabled={(username == "")}>
-                    { isLoading && <>
-                        <Image src="/assets/spinner.svg" height={32} width={32} alt="Loading spinner" className="spinner" />
-                    </> || <>
-                        Send Forgot Password Email
-                    </> }
-                </button>
-                <a href="/resetpassword" className="form-subtle-button">Already Have a Code?</a>
+                <div className="form-buttons">
+                    <button type="submit" className="form-primary-button" disabled={(username == "")}>
+                        { isLoading && <>
+                            <Image src="/assets/spinner.svg" height={32} width={32} alt="Loading spinner" className="spinner" />
+                        </> || <>
+                            Send Forgot Password Email
+                        </> }
+                    </button>
+                    <a href="/resetpassword" className="form-subtle-button">Already Have a Code?</a>
+                </div>
             </form>
         </>
     );

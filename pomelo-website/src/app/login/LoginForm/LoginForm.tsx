@@ -130,15 +130,18 @@ const LoginForm = () =>
                     placeholder="••••••••"
                     onChange={(e) => setPassword(e.currentTarget.value)}
                 />
-                <button type="submit" className="form-primary-button">
-                    { isLoading && <>
-                        <Image src="/assets/spinner.svg" height={32} width={32} alt="Loading spinner" className="spinner" />
-                    </> || <>
-                        Login
-                    </> }
-                </button>
-                <a href="/register" className="form-secondary-button">Register</a>
-                <a href="/forgotpassword" className="form-subtle-button">Forgot Password?</a>
+
+                <div className="form-buttons">
+                    <button type="submit" className="form-primary-button">
+                        { isLoading && <>
+                            <Image src="/assets/spinner.svg" height={32} width={32} alt="Loading spinner" className="spinner" />
+                        </> || <>
+                            Login
+                        </> }
+                    </button>
+                    <a href="/register" className="form-secondary-button">Register</a>
+                    <a href="/forgotpassword" className="form-subtle-button">Forgot Password?</a>
+                </div>
             </form>
         </>
     );

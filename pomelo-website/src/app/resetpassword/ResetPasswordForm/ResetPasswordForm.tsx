@@ -142,19 +142,21 @@ const ResetPasswordForm = () =>
                     <InputError text="Passwords must contain at least 1 uppercase, 1 lowercase, and 1 number, and be 8-32 characters long." />
                 </> }
 
-                <button
-                    type="submit"
-                    className="form-primary-button"
-                    disabled={(!passwordValid || username == "" || token == "" || password == "")}
-                >
-                    { isLoading && <>
-                        <Image src="/assets/spinner.svg" height={32} width={32} alt="Loading spinner" className="spinner" />
-                    </> || <>
-                        Reset Password
-                    </> }
-                    
-                </button>
-                <a href="/forgotpassword" className="form-subtle-button">Need a Code?</a>
+                <div className="form-buttons">
+                    <button
+                        type="submit"
+                        className="form-primary-button"
+                        disabled={(!passwordValid || username == "" || token == "" || password == "")}
+                    >
+                        { isLoading && <>
+                            <Image src="/assets/spinner.svg" height={32} width={32} alt="Loading spinner" className="spinner" />
+                        </> || <>
+                            Reset Password
+                        </> }
+                        
+                    </button>
+                    <a href="/forgotpassword" className="form-subtle-button">Need a Code?</a>
+                </div>
             </form>
         </>
     );

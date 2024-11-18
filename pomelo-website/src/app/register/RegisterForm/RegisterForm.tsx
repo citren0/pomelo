@@ -181,25 +181,27 @@ const RegisterForm = () =>
 
                 <span className="register-text-small">By registering, you agree to our <a href="/privacy">Privacy Policy</a>, <a href="/cookies">Cookie Policy</a>, and <a href="/terms">Terms of Service</a>.</span>
 
-                <button
-                    type="submit"
-                    className="form-primary-button"
-                    disabled={
-                        (!usernameValid ||
-                        !emailValid ||
-                        !passwordValid ||
-                        username.length == 0 ||
-                        email.length == 0 ||
-                        password.length == 0)
-                    }
-                >
-                    { isLoading && <>
-                        <Image src="/assets/spinner.svg" height={32} width={32} alt="Loading spinner" className="spinner" />
-                    </> || <>
-                        Register
-                    </> }
-                </button>
-                <a href="/login" className="form-secondary-button">Login</a>
+                <div className="form-buttons">
+                    <button
+                        type="submit"
+                        className="form-primary-button"
+                        disabled={
+                            (!usernameValid ||
+                            !emailValid ||
+                            !passwordValid ||
+                            username.length == 0 ||
+                            email.length == 0 ||
+                            password.length == 0)
+                        }
+                    >
+                        { isLoading && <>
+                            <Image src="/assets/spinner.svg" height={32} width={32} alt="Loading spinner" className="spinner" />
+                        </> || <>
+                            Register
+                        </> }
+                    </button>
+                    <a href="/login" className="form-secondary-button">Login</a>
+                </div>
             </form>
         </>
     );
