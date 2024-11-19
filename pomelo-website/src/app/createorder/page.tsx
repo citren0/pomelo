@@ -23,7 +23,6 @@ const CreateOrder = () =>
         clientId: config.paypalClientId,
         currency: "USD",
         vault: true,
-        sdkBaseUrl: "https://api-m.paypal.com"
     };
 
     const onError = (error: Record<string, unknown>) =>
