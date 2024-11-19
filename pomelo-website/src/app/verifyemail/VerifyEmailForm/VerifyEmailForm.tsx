@@ -132,7 +132,7 @@ const VerifyEmailForm = () =>
 
                 <div className="form-buttons">
                     <button type="submit" className="form-primary-button">Verify Code</button>
-                    <button type="button" onClick={resendEmail} className="form-secondary-button">Send Another Code</button>
+                    <button type="button" onClick={resendEmail} className="form-secondary-button" style={{ height: "2.75rem", }}>Send Another Code</button>
                 </div>
             </form>
         </>
