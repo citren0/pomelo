@@ -1,0 +1,22 @@
+
+.data-request-container
+{
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.5rem;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-top: 3rem;
+}
+
+.data-request-title
+{
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.data-request-subtitle
+{
+    font-size: 24px;
+    font-weight: 500;
+}

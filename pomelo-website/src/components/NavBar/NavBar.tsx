@@ -54,12 +54,12 @@ const NavBar = () =>
                             <a className="nav-link-ext" href="https://addons.mozilla.org/en-US/firefox/addon/pomelo-productivity/">
                                 <Image src="/assets/firefox.png" height={28} width={28} alt="Firefox logo" />
                             </a>
-                            <a className="nav-link-ext">
+                            <a className="nav-link-ext" href="https://chromewebstore.google.com/detail/pomelo/licdjpgagagjhlbpigijhjaepohieman">
                                 <Image src="/assets/chrome.png" height={28} width={28} alt="Chrome logo" />
                             </a>
-                            <a className="nav-link-ext">
+                            {/* <a className="nav-link-ext">
                                 <Image src="/assets/safari.png" height={28} width={28} alt="Safari logo" />
-                            </a>
+                            </a> */}
                         </div>
                         <a
                             className="nav-link"

@@ -34,14 +34,14 @@ const OrderSuccess = () =>
 								<Image src="/assets/firefox.png" height={24} width={24} alt="Firefox logo" />
 								Firefox
 							</a>
-							<a className="btn-primary-with-image">
+							<a className="btn-primary-with-image" href="https://chromewebstore.google.com/detail/pomelo/licdjpgagagjhlbpigijhjaepohieman">
 								<Image src="/assets/chrome.png" height={24} width={24} alt="Chrome logo" />
 								Chrome
 							</a>
-							<a className="btn-primary-with-image">
+							{/* <a className="btn-primary-with-image-disabled">
 								<Image src="/assets/safari.png" height={24} width={24} alt="Safari logo" />
 								Safari
-							</a>
+							</a> */}
 						</div>
 					</div>
 

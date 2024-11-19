@@ -2,25 +2,23 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Pomelo",
-  description: "Track your productivity and cut down on wasted time with Pomelo, your personal productivity coach.",
+	title: "Pomelo",
+	description: "Track your productivity and cut down on wasted time with Pomelo, your personal productivity coach.",
 };
 
 const RootLayout = (
 {
-  children, 
-}: Readonly<{
-  children: React.ReactNode;
-}>) =>
+	children, 
+}: Readonly<{ children: React.ReactNode; }>) =>
 {
-  return (
-    <html lang="en">
-      <link rel="icon" href="/assets/pomelo.svg" sizes="any" />
-      <body>
-        {children}
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<link rel="icon" href="/assets/pomelo.svg" sizes="any" />
+			<body>
+				{children}
+			</body>
+		</html>
+	);
 }
 
 export default RootLayout;
