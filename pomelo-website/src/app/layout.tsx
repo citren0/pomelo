@@ -13,7 +13,7 @@ const RootLayout = (
 {
 	return (
 		<html lang="en">
-			<link rel="icon" href="/assets/pomelo.svg" sizes="any" />
+			<link rel="icon" href="/assets/pomelo.png" sizes="any" />
 			<body>
 				{children}
 			</body>
