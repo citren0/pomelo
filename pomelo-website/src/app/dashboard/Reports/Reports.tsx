@@ -8,7 +8,6 @@ import { checkStatusCode } from "../../../services/checkStatusCode";
 import { Message } from "../../../components";
 import MessageTypes from "../../../constants/messageTypes";
 import Report from "@/interfaces/Report";
-import Image from "next/image";
 
 
 const Reports = () =>
@@ -92,7 +91,7 @@ const Reports = () =>
                                         <>
                                             <div className="reports-report-wrapper">
                                                 <div className="reports-title-and-image-wrapper">
-                                                    <Image
+                                                    <img
                                                         src={report.faviconurl}
                                                         height={48}
                                                         width={48}
