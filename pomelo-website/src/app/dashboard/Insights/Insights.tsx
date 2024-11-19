@@ -217,6 +217,7 @@ const Insights = ({getRules}: Props) =>
                                                     </button>
                                                     <button
                                                         className="form-secondary-button"
+                                                        style={{ height: "2.75rem", }}
                                                         onClick={() => removeSuggestions(idx)}
                                                     >
                                                         Decline Change
