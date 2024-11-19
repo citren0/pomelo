@@ -8,7 +8,7 @@ const Landing = () =>
         <>
             <div className="landing-wrapper">
                 <span className="landing-title">
-                    Your own AI-powered productivity coach.
+                    Your own AI-powered productivity coach.&nbsp;
                 </span>
                 <span className="landing-subtitle">
                     Pomelo allows you to correct bad habits and waste less time online by keeping an eye on your browsing activity.
