@@ -111,8 +111,11 @@ router.get('/api/subscription_status', auth, mustHaveRole(Roles.Verified), (req,
                     return res.status(500).send({ status: "Failed to get subscription details. Try again later." });
                 });
             }
+            else
+            {
+                return res.status(200).send({ status: "Successfully fetched subscription status.", subscriptionStatus: subscription_status, });
+            }
 
-            return res.status(200).send({ status: "Successfully fetched subscription status.", subscriptionStatus: subscription_status, });
         })
         .catch((error) =>
         {
