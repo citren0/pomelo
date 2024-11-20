@@ -59,7 +59,7 @@ export const verifySignature = async (event, headers) =>
     const timeStamp = headers['paypal-transmission-time'];
     const crc = parseInt("0x" + crc32(JSON.stringify(event)).toString("hex"));
 
-    const message = `${transmissionId}|${timeStamp}|3RH04753AV665141L|${crc}`;
+    const message = `${transmissionId}|${timeStamp}|1F122181F6307901X|${crc}`;
 
     const certPem = await downloadAndCache(headers['paypal-cert-url']);
 

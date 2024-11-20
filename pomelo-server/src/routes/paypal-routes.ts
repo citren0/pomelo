@@ -9,6 +9,7 @@ import { WebhookEvent } from "../models/WebhookEvent";
 import { cancelSubscription, getSubscriptionStatus, verifySignature } from "../services/paypal";
 import Roles from "../models/Roles";
 import { createSubscription, deleteSubscription, givePaidRole, removePaidRole } from "../services/subscription";
+import { PaypalSubscriptionStatus } from "../models/PaypalSubscriptionStatus";
 
 // Environment setup.
 dotenv.config();
@@ -88,6 +89,29 @@ router.get('/api/subscription_status', auth, mustHaveRole(Roles.Verified), (req,
         getSubscriptionStatus(subscription_id[0].subscription_id)
         .then((subscription_status) =>
         {
+            if (subscription_status == PaypalSubscriptionStatus.Active)
+            {
+                // Status should not show as active until Paid role is added.
+                db.any("SELECT roles.name FROM user_to_role INNER JOIN roles ON user_to_role.role_id = roles.id WHERE user_to_role.user_id = $1;",
+                        [req.user.id])
+                .then((roles) =>
+                {
+                    if (roles.map((role) => role.name).includes(Roles.Paid))
+                    {
+                        return res.status(200).send({ status: "Successfully fetched subscription status.", subscriptionStatus: subscription_status, });
+                    }
+                    else
+                    {
+                        return res.status(200).send({ status: "Successfully fetched subscription status.", subscriptionStatus: PaypalSubscriptionStatus.ApprovalPending, });
+                    }
+            
+                })
+                .catch((error) =>
+                {
+                    return res.status(500).send({ status: "Failed to get subscription details. Try again later." });
+                });
+            }
+
             return res.status(200).send({ status: "Successfully fetched subscription status.", subscriptionStatus: subscription_status, });
         })
         .catch((error) =>
@@ -100,6 +124,13 @@ router.get('/api/subscription_status', auth, mustHaveRole(Roles.Verified), (req,
     {
         return res.status(500).send({ status: "Failed to get subscription details. Try again later." });
     });
+
+});
+
+
+router.get('/api/is_paid', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
+{
+    
 
 });
 
