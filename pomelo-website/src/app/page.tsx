@@ -1,5 +1,4 @@
 
-"use client";
 import React, { useEffect } from "react";
 import "./page.css";
 import { Footer, Landing, NavBar, Cookies } from "../components";
