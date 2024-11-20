@@ -10,6 +10,7 @@ import CreateRuleForm from "./CreateRuleForm/CreateRuleForm";
 import { Message } from "@/components";
 import MessageTypes from "@/constants/messageTypes";
 import { Rule } from "@/interfaces/Rule";
+import { hoursDictionary } from "@/constants/dropdownHours";
 
 interface Props
 {
@@ -94,14 +95,11 @@ const Rules = ({rules, getRules}: Props) =>
                     <div className="rules-container">
                         { rules.map((rule, idx) =>
                             {
-                                const startFriendly = `${((rule.start + 1) > 12) ? (rule.start + 1 - 12) : (rule.start + 1)}${(rule.start < 11 || rule.start == 23) ? "AM" : "PM"}`;
-                                const stopFriendly = `${((rule.stop + 1) > 12) ? (rule.stop + 1 - 12) : (rule.stop + 1)}${(rule.stop < 11 || rule.stop == 23) ? "AM" : "PM"}`;
-
                                 return (
                                     <>
                                         <div className="rule-wrapper">
                                             <span className="rule-number">{idx + 1}</span>
-                                            <span>{ rule.domain } from { startFriendly } to { stopFriendly }</span>
+                                            <span>{ rule.domain } from { hoursDictionary[String(rule.start)] } to { hoursDictionary[String(rule.stop)] }</span>
                                             <button className="btn-image" onClick={() => deleteRule(rule.domain, rule.start, rule.stop)}>
                                                 <Image src={"/assets/trash.svg"} height={24} width={24} alt={"Trash can icon"} />
                                             </button>

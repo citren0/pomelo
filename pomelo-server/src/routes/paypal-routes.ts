@@ -131,13 +131,6 @@ router.get('/api/subscription_status', auth, mustHaveRole(Roles.Verified), (req,
 });
 
 
-router.get('/api/is_paid', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
-{
-    
-
-});
-
-
 router.get('/api/cancel_subscription', auth, mustHaveRole(Roles.Verified), (req, res, next) =>
 {
     db.any("SELECT id FROM roles WHERE name = $1;",
