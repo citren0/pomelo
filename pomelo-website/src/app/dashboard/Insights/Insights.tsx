@@ -9,8 +9,8 @@ import { Message, SimpleTextArea } from "@/components";
 import Image from "next/image";
 import MessageTypes from "@/constants/messageTypes";
 import putRule from "@/services/putRule";
-import humanReadableTimeToFormat from "@/services/humanReadableTimeToFormat";
 import { chatToHoursDictionary } from "@/constants/dropdownHours";
+
 
 interface Message
 {
@@ -22,6 +22,7 @@ interface Props
 {
     getRules: () => Promise<void | string>;
 };
+
 
 const Insights = ({getRules}: Props) =>
 {
@@ -116,12 +117,8 @@ const Insights = ({getRules}: Props) =>
         const messageSplit = messages[idx].message.split("NEW RULE");
         const parts = messageSplit[1]?.trim().split(" ") ?? ["Invalid Rule.", "N/A", "N/A"];
 
-        console.log(parts);
-
         const start = chatToHoursDictionary?.[parts[1]] ?? 0;
         const stop = chatToHoursDictionary?.[parts[2]] ?? 0;
-
-        console.log(start + " " + stop);
 
         setIsLoading(true);
         setIsError(false);
