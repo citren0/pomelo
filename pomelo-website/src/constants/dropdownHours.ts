@@ -1,3 +1,4 @@
+import ChatHoursDictionary from "@/interfaces/ChatHoursDictionary";
 import HoursDictionary from "@/interfaces/HoursDictionary";
 
 const dropdownHours = [
@@ -26,6 +27,34 @@ const dropdownHours = [
     { value: "22", display: "10 PM" },
     { value: "23", display: "11 PM" }
 ];
+
+
+const chatToHoursDictionary: ChatHoursDictionary = {
+    "12AM": 0,
+    "1AM": 1,
+    "2AM": 2,
+    "3AM": 3,
+    "4AM": 4,
+    "5AM": 5,
+    "6AM": 6,
+    "7AM": 7,
+    "8AM": 8,
+    "9AM": 9,
+    "10AM": 10,
+    "11AM": 11,
+    "12PM": 12,
+    "1PM": 13,
+    "2PM": 14,
+    "3PM": 15,
+    "4PM": 16,
+    "5PM": 17,
+    "6PM": 18,
+    "7PM": 19,
+    "8PM": 20,
+    "9PM": 21,
+    "10PM": 22,
+    "11PM": 23
+}
 
 
 const hoursDictionary: HoursDictionary = {
@@ -57,4 +86,4 @@ const hoursDictionary: HoursDictionary = {
 
 export default dropdownHours;
 
-export { hoursDictionary };
+export { chatToHoursDictionary, hoursDictionary };
