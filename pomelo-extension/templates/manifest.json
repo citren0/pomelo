@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Pomelo",
-    "version": "1.0.2",
+    "version": "1.0.3",
 
     "browser_specific_settings": {
         "gecko": {
@@ -16,6 +16,7 @@
     },
 
     "background": {
+        "scripts": ["background-script.js"],
         "service_worker": "background-script.js"
     },
 

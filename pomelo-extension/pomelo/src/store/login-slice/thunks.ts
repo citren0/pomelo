@@ -30,11 +30,11 @@ const clearJWTFromLocalStorage = (): AppThunk => async (dispatch, getState) =>
         if (typeof browser !== "undefined")
         {
             // Firefox
-            browser.storage.local.set({ key: null });
+            browser.storage.local.remove("token");
         }
         else
         {
-            chrome.storage.local.set({ key: null });
+            chrome.storage.local.remove("token");
         }        
     }
 }
@@ -123,7 +123,7 @@ const getTokenFromStorage = (): AppThunk => async (dispatch, getState) =>
         if (typeof browser !== "undefined")
         {
             // Firefox
-            browser.storage.local.get("token" )
+            browser.storage.local.get("token")
             .then((jwt: string) =>
             {
                 dispatch(setJWT(jwt));

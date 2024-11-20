@@ -54,8 +54,7 @@ const chatToHoursDictionary: ChatHoursDictionary = {
     "9PM": 21,
     "10PM": 22,
     "11PM": 23
-}
-
+};
 
 const hoursDictionary: HoursDictionary = {
     "0": "12 AM",
@@ -82,7 +81,7 @@ const hoursDictionary: HoursDictionary = {
     "21": "9 PM",
     "22": "10 PM",
     "23": "11 PM"
-}
+};
 
 export default dropdownHours;
 
