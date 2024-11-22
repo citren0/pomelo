@@ -2,7 +2,6 @@
 import React from "react";
 import "./page.css";
 import { NavBar, Cookies } from "../../components";
-import Image from "next/image";
 
 
 const DataRequest = () =>
