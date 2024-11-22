@@ -133,6 +133,9 @@ const CreateOrder = () =>
                         </div>
                     </div>
                 </div>
+                <a className="need-help-text" href="/contactus">
+                    Need help?
+                </a>
 			</div>
 
             <Cookies />

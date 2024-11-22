@@ -1,5 +1,5 @@
 
-.data-request-container
+.contact-us-container
 {
     display: flex;
     flex-flow: column nowrap;
@@ -9,19 +9,19 @@
     padding-top: 3rem;
 }
 
-.data-request-title
+.contact-us-title
 {
     font-size: 48px;
     font-weight: 600;
 }
 
-.data-request-subtitle
+.contact-us-subtitle
 {
     font-size: 32px;
     font-weight: 500;
 }
 
-.data-request-image
+.contact-us-image
 {
     max-width: 100%;
     position: relative;

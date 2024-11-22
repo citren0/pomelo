@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./page.css";
-import { NavBar, Cookies } from "../../components";
+import { NavBar, Cookies, Footer } from "../../components";
 import Reports from "./Reports/Reports";
 import Insights from "./Insights/Insights";
 import Rules from "./Rules/Rules";
@@ -65,6 +65,8 @@ const Dashboard = () =>
 				<Insights getRules={getRules} />
 				<Rules rules={rules} getRules={getRules} />
 			</div>
+
+			<Footer />
 
 			<Cookies />
 		</>

@@ -19,7 +19,7 @@ const DataRequest = () =>
 					<span className="data-request-subtitle">
 						Email us at the address below:
 					</span>
-                    <Image src={"/assets/email.png"} height={45} width={300} alt={"Pomelo email."} />
+                    <Image src={"/assets/email.png"} height={45} width={300} alt={"Pomelo email."} className="data-request-image" />
 				</div>
 			</div>
 

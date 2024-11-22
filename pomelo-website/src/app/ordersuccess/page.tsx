@@ -49,6 +49,10 @@ const OrderSuccess = () =>
 					</div>
 
 				</div>
+
+				<a className="need-help-text" href="/contactus">
+                    Need help?
+                </a>
 			</div>
 
 			<Cookies />

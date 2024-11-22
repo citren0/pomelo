@@ -21,6 +21,7 @@ const Footer = () =>
                     <a href="/privacy">Privacy Policy</a>
                     <a href="/cookies">Cookie Policy</a>
                     <a href="/datarequest">Request Your Data</a>
+                    <a href="/contactus">Support</a>
                 </div>
             </div>
         </>
