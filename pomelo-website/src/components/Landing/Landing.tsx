@@ -15,8 +15,18 @@ const Landing = () =>
                 </span>
 
                 <div className="landing-images-flex">
-                    <Image src="/assets/chat.png" height={450} width={535} className="landing-img" alt="A product demo showcasing the Pomelo chat functionality." />
-                    <Image src="/assets/blocked.png" height={450} width={535} className="landing-img" alt="A product demo showcasing the website blocking functionality." />
+                    <div className="landing-images-wrapper">
+                        <Image src="/assets/chat.png" height={450} width={535} className="landing-img" alt="A product demo showcasing the Pomelo chat functionality." />
+                        <span className="landing-images-explanation">
+                            Your personal assistant will recommend new productivity strategies and block time-wasting websites whenever it detects you're slacking.
+                        </span>
+                    </div>
+                    <div className="landing-images-wrapper">
+                        <Image src="/assets/blocked.png" height={450} width={535} className="landing-img" alt="A product demo showcasing the website blocking functionality." />
+                        <span className="landing-images-explanation">
+                            When you violate a productivity block, Pomelo will let you know with an un-removable message, discouraging time-wasting behavior.
+                        </span>
+                    </div>
                 </div>
 
                 <a className="landing-conversion-button" href="/register">Get Started</a>

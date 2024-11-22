@@ -74,7 +74,8 @@
     flex-flow: row wrap;
     justify-content: center;
     gap: 2rem;
-    padding-bottom: 1;
+    padding-bottom: 0.5rem;
+    align-items: flex-end;
 }
 
 .landing-card
@@ -153,4 +154,19 @@
     max-width: 100%;
     height: auto;
     border-radius: 0.5rem;
+}
+
+.landing-images-wrapper
+{
+    display: flex;
+    flex-flow: column;
+    overflow-wrap: break-word;
+    max-width: 535px;
+}
+
+.landing-images-explanation
+{
+    font-size: 20px;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
 }
