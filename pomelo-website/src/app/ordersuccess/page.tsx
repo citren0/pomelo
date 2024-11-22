@@ -4,6 +4,7 @@ import "./page.css";
 import Image from "next/image";
 import { Metadata } from "next";
 import SubscriptionStatus from "./SubscriptionStatus/SubscriptionStatus";
+import Script from "next/script";
 
 
 export const metadata: Metadata = {
@@ -15,6 +16,8 @@ const OrderSuccess = () =>
     return (
 		<>
 			<NavBar />
+
+			<Script type="text/javascript" async defer src="/postpurchase.js" />
 			
 			<div className="content-container">
                 <div className="order-success-wrapper">
