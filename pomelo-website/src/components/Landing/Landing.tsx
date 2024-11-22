@@ -17,7 +17,7 @@ const Landing = () =>
                     <div className="landing-images-wrapper">
                         <img src="/assets/chat.png" height={450} width={535} className="landing-img" alt="A product demo showcasing the Pomelo chat functionality." />
                         <span className="landing-images-explanation">
-                            Your personal assistant will recommend new productivity strategies and block time-wasting websites whenever it detects you're slacking.
+                            Your personal assistant will recommend new productivity strategies and block time-wasting websites whenever it detects you&apos;re slacking.
                         </span>
                     </div>
                     <div className="landing-images-wrapper">
