@@ -19,7 +19,7 @@ const ContactUs = () =>
 					<span className="contact-us-subtitle">
 						Email us at the address below:
 					</span>
-                    <Image src={"/assets/email.png"} height={90} width={600} alt={"Pomelo email."} className="contact-us-image" />
+                    <img src={"/assets/email.png"} height={90} width={600} alt={"Pomelo email."} className="contact-us-image" />
 				</div>
 			</div>
 
