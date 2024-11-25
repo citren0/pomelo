@@ -13,6 +13,7 @@ import { router as emailRouter } from "./routes/email-routes";
 import { router as passwordRouter } from "./routes/password-routes";
 import { router as rulesRouter } from "./routes/rules-routes";
 import { router as paypalRouter } from "./routes/paypal-routes";
+import { router as trendsRouter } from "./routes/trends-routes";
 
 // Server setup.
 connectToDatabase();
@@ -29,6 +30,7 @@ app.use("/", emailRouter);
 app.use("/", passwordRouter);
 app.use("/", rulesRouter);
 app.use("/", paypalRouter);
+app.use("/", trendsRouter);
 
 app.listen(3000, () =>
 {
