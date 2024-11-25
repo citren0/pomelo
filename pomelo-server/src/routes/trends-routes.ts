@@ -39,6 +39,11 @@ router.put('/api/time_wasting_websites', auth, mustHaveRole(Roles.Verified), mus
         return res.status(400).send({ status: "Failed to put user data. Include all fields before submitting.", });
     }
 
+    if (req.query.domain.length == 0)
+    {
+        return res.status(400).send({ status: "Failed to put user data. Include all fields before submitting.", });
+    }
+
     db.any("INSERT INTO time_wasters (user_id, domain) VALUES ($1, $2);",
             [req.user.id, decodeURIComponent(req.query.domain)])
     .then((domains) =>
