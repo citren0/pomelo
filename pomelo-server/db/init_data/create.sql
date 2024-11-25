@@ -86,6 +86,14 @@ CREATE TABLE subscriptions
     PRIMARY KEY (user_id)
 );
 
+CREATE TABLE time_wasters
+(
+    user_id INT,
+    domain text,
+    CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    PRIMARY KEY (user_id, domain)
+);
+
 insert into roles (name) values
     ('Verified'),
     ('Admin'),

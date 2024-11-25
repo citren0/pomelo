@@ -1,8 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const fetch = require("node-fetch");
 const router = express.Router();
-const OpenAI = require("openai");
 
 import { db } from '../database';
 import Roles from '../models/Roles';
