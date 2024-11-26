@@ -110,7 +110,9 @@ router.get('/api/time_wasted', auth, mustHaveRole(Roles.Verified), mustHaveRole(
         {
             const websites = domains.reduce((accum, val) => { accum.push(val.domain); return accum; } , []);
 
-            const total_time_spent = reports.reduce(
+            const sorted_reports = reports.sort((a, b) => a.time_stamp - b.time_stamp);
+
+            const total_time_spent = sorted_reports.reduce(
                 (accum, val, idx, arr) =>
                 {
                     if (idx == (arr.length - 1))
@@ -126,7 +128,7 @@ router.get('/api/time_wasted', auth, mustHaveRole(Roles.Verified), mustHaveRole(
                     }
                 }, 0);
             
-            const time_wasted = reports.reduce(
+            const time_wasted = sorted_reports.reduce(
                 (accum, val, idx, arr) =>
                 {
                     if (websites.includes(val.domain))
