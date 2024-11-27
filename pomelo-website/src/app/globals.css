@@ -229,6 +229,7 @@
 {
     border: 1px black solid;
     width: 0;
+    height: 100%;
 }
 
 .btn-primary-with-image

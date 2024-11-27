@@ -6,6 +6,7 @@ import { db } from '../database';
 import Roles from '../models/Roles';
 import mustHaveRole from '../services/mustHaveRole';
 import auth from '../services/token';
+import { TimeWasted } from '../models/TimeWasted';
 
 // Environment setup.
 dotenv.config();
@@ -81,16 +82,22 @@ router.delete('/api/time_wasting_websites', auth, mustHaveRole(Roles.Verified), 
 
 router.get('/api/time_wasted', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.Paid), (req, res, next) =>
 {
-    if (!req.query.hasOwnProperty("month") ||
-        !req.query.hasOwnProperty("day") ||
-        !req.query.hasOwnProperty("year"))
+    if (!req.query.hasOwnProperty("start_month") ||
+        !req.query.hasOwnProperty("start_day") ||
+        !req.query.hasOwnProperty("start_year") ||
+        !req.query.hasOwnProperty("stop_month") ||
+        !req.query.hasOwnProperty("stop_day") ||
+        !req.query.hasOwnProperty("stop_year"))
     {
         return res.status(400).send({ status: "Failed to get time wasted. Include all fields before submitting.", });
     }
 
-    if (isNaN(parseInt(req.query.day)) ||
-        isNaN(parseInt(req.query.year)) ||
-        isNaN(parseInt(req.query.month)))
+    if (isNaN(parseInt(req.query.start_month)) ||
+        isNaN(parseInt(req.query.start_year)) ||
+        isNaN(parseInt(req.query.start_month)) ||
+        isNaN(parseInt(req.query.stop_month)) ||
+        isNaN(parseInt(req.query.stop_year)) ||
+        isNaN(parseInt(req.query.stop_month)))
     {
         return res.status(400).send({ status: "Failed to get time wasted. Include all fields before submitting.", });
     }
@@ -101,9 +108,20 @@ router.get('/api/time_wasted', auth, mustHaveRole(Roles.Verified), mustHaveRole(
     .then((domains) =>
     {
         // Get user's reports
-        const startDay = new Date(Date.UTC(req.query.year, req.query.month, req.query.day, 0, 0, 0));
-        const stopDay = new Date(Date.UTC(req.query.year, req.query.month, req.query.day, 23, 59, 59, 999));
+        const startDay = new Date(Date.UTC(req.query.start_year, req.query.start_month, req.query.start_day, 0, 0, 0));
+        const stopDay = new Date(Date.UTC(req.query.stop_year, req.query.stop_month, req.query.stop_day, 23, 59, 59, 999));
 
+        // Create buckets by day.
+        const buckets: number[][] = [];
+        var time = startDay.getTime();
+        while (time < stopDay.getTime())
+        {
+            const oldTime = time;
+            time = time + (24 * 60 * 60 * 1000);
+            buckets.push([oldTime, time]);
+        }
+
+        // Select all reports within that time frame.
         db.any("SELECT time_stamp, domain, faviconUrl from web_activity WHERE userid = $1 AND time_stamp >= $2 AND time_stamp <= $3;",
                 [req.user.id, startDay.getTime(), stopDay.getTime()])
         .then((reports) =>
@@ -112,26 +130,12 @@ router.get('/api/time_wasted', auth, mustHaveRole(Roles.Verified), mustHaveRole(
 
             const sorted_reports = reports.sort((a, b) => a.time_stamp - b.time_stamp);
 
-            const total_time_spent = sorted_reports.reduce(
-                (accum, val, idx, arr) =>
-                {
-                    if (idx == (arr.length - 1))
-                    {
-                        // Last index, dont count. Accuracy will be sacrificed.
-                        return accum;
-                    }
-                    else
-                    {
-                        // Calculate time between this report and the next.
-                        const time_spent = Math.abs(arr[idx + 1].time_stamp - val.time_stamp);
-                        return accum + time_spent;
-                    }
-                }, 0);
-            
-            const time_wasted = sorted_reports.reduce(
-                (accum, val, idx, arr) =>
-                {
-                    if (websites.includes(val.domain))
+            // Bucket time by day.
+            const days: TimeWasted[] = [];
+            buckets.forEach((bucket: number[]) =>
+            {
+                const total_time_spent = sorted_reports.reduce(
+                    (accum, val, idx, arr) =>
                     {
                         if (idx == (arr.length - 1))
                         {
@@ -140,18 +144,58 @@ router.get('/api/time_wasted', auth, mustHaveRole(Roles.Verified), mustHaveRole(
                         }
                         else
                         {
-                            // Calculate time between this report and the next.
-                            const time_spent = Math.abs(arr[idx + 1].time_stamp - val.time_stamp);
-                            return accum + time_spent;
+                            if (val.time_stamp >= bucket[0] && val.time_stamp < bucket[1])
+                            {
+                                // Calculate time between this report and the next.
+                                const time_spent = Math.abs(arr[idx + 1].time_stamp - val.time_stamp);
+                                return accum + time_spent;
+                            }
+                            else
+                            {
+                                return accum;
+                            }
                         }
-                    }
-                    else
+                    }, 0);
+                
+                const time_wasted = sorted_reports.reduce(
+                    (accum, val, idx, arr) =>
                     {
-                        return accum;
-                    }
-                }, 0);
+                        if (websites.includes(val.domain))
+                        {
+                            if (idx == (arr.length - 1))
+                            {
+                                // Last index, dont count. Accuracy will be sacrificed.
+                                return accum;
+                            }
+                            else
+                            {
+                                if (val.time_stamp >= bucket[0] && val.time_stamp < bucket[1])
+                                {
+                                    // Calculate time between this report and the next.
+                                    const time_spent = Math.abs(arr[idx + 1].time_stamp - val.time_stamp);
+                                    return accum + time_spent;
+                                }
+                                else
+                                {
+                                    return accum;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            return accum;
+                        }
+                    }, 0);
 
-            return res.status(200).send({ status: "Fetched time wasted.", time_wasted: time_wasted, total_time_spent: total_time_spent, });
+                days.push({
+                    time_stamp: bucket[0],
+                    total_time_spent: Number((total_time_spent / (1000 * 60)).toPrecision(3)),
+                    time_wasted: Number((time_wasted / (1000 * 60)).toPrecision(3)),
+                });
+
+            });
+
+            return res.status(200).send({ status: "Fetched time wasted.", days: days, });
         })
         .catch((error) =>
         {

@@ -190,3 +190,15 @@
     padding: 0.5rem 1rem;
     text-align: center;
 }
+
+.landing-card-list
+{
+    margin: 0;
+    font-size: 22px;
+}
+
+.landing-card-text-big
+{
+    font-size: 22px;
+    font-weight: 500;
+}

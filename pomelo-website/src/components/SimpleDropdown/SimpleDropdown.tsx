@@ -31,9 +31,7 @@ const SimpleDropdown = ({label, id, options, onSelect}: Props) =>
                     { options.map((option) =>
                     {
                         return (
-                            <>
-                                <option key={option.value} value={option.value} onClick={() => onSelect(option.value)}>{option.display}</option>
-                            </>
+                            <option key={option.value} value={option.value} onClick={() => onSelect(option.value)}>{option.display}</option>
                         );
                     }) }
                 </select>

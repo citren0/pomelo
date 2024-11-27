@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Script from "next/script";
+import { CheckToken } from "@/components";
 
 export const metadata: Metadata = {
 	title: "Pomelo",
@@ -22,6 +23,7 @@ const RootLayout = (
 			<body>
 				{children}
 			</body>
+			<CheckToken />
 		</html>
 	);
 }

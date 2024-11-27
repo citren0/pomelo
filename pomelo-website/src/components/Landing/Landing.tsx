@@ -10,7 +10,7 @@ const Landing = () =>
                     Save time for the things you <span className="landing-title-italic">really</span> care about.&nbsp;
                 </span>
                 <span className="landing-subtitle">
-                    Your own AI productivity coach will block time-wasting websites to <span className="landing-subtitle-bold">save you time</span>.
+                    Get&nbsp;<span className="landing-subtitle-bold">real results</span>&nbsp;with your own AI coach, time-tracking, and website blocking.
                 </span>
 
                 <div className="landing-images-flex">
@@ -37,19 +37,19 @@ const Landing = () =>
                 </span>
                 <div className="landing-card-flex">
                     <div className="landing-card">
-                        <span className="landing-card-title">Browser Extension</span>
+                        <span className="landing-card-title">Report Habits in Real-Time</span>
                         <hr className="hr-100" />
                         <span className="landing-card-text">Keeps an eye on your browsing habits and enforces your website blocks.</span>
                     </div>
                     <div className="landing-card">
-                        <span className="landing-card-title">AI-powered Insights</span>
+                        <span className="landing-card-title">Generate Insights with AI</span>
                         <hr className="hr-100" />
-                        <span className="landing-card-text">Provides a personal productivity coach to help you learn from your habits.</span>
+                        <span className="landing-card-text">Your productivity coach and automatic time-tracking will help you learn from your habits.</span>
                     </div>
                     <div className="landing-card">
-                        <span className="landing-card-title">Pomelo Dashboard</span>
+                        <span className="landing-card-title">Focus on Results</span>
                         <hr className="hr-100" />
-                        <span className="landing-card-text">Combines your insights, coach, and habits into one platform to save you time.</span>
+                        <span className="landing-card-text">Keep track of your productivity journey by noting the websites you tend to waste time on.</span>
                     </div>
                 </div>
 
@@ -60,7 +60,13 @@ const Landing = () =>
                     <div className="landing-card-secondary">
                         <span className="landing-card-title-big">$10 / month</span>
                         <hr className="hr-100" />
-                        <span className="landing-card-text">Includes all features: Productivity assistant, browser extension, and rules-based website blocking.</span>
+                        <span className="landing-card-text-big">An All Inclusive Plan:</span>
+                        <ul className="landing-card-list">
+                            <li>AI productivity coach</li>
+                            <li>Progress tracking</li>
+                            <li>Automatic time-tracking</li>
+                            <li>Website blocking</li>
+                        </ul>
                     </div>
                 </div>
             </div>

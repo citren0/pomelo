@@ -19,7 +19,11 @@ const config = {
     captureOrder: "/api/capture_order",
     subscriptionDetails: "/api/subscription_status",
     cancelSubscription: "/api/cancel_subscription",
-    deleteAccount: "/api/delete_account"
+    deleteAccount: "/api/delete_account",
+    getTimeWasted: "/api/time_wasted",
+    getTimeWastingWebsites: "/api/time_wasting_websites",
+    putTimeWastingWebsites: "/api/time_wasting_websites",
+    deleteTimeWastingWebsites: "/api/time_wasting_websites",
 };
 
 export default config;

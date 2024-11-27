@@ -99,7 +99,7 @@ const Rules = ({rules, getRules}: Props) =>
                                     <>
                                         <div className="rule-wrapper">
                                             <span className="rule-number">{idx + 1}</span>
-                                            <span>{ rule.domain } from { hoursDictionary[String(rule.start)] } to { hoursDictionary[String(rule.stop)] }</span>
+                                            <span className="rule-domain">{ rule.domain } from { hoursDictionary[String(rule.start)] } to { hoursDictionary[String(rule.stop)] }</span>
                                             <button className="btn-image" onClick={() => deleteRule(rule.domain, rule.start, rule.stop)}>
                                                 <Image src={"/assets/trash.svg"} height={24} width={24} alt={"Trash can icon"} />
                                             </button>
@@ -110,12 +110,10 @@ const Rules = ({rules, getRules}: Props) =>
                             })
                         }
 
-                        { rules.length == 0 && <>
+                        { rules.length == 0 && !isError && <>
                             <span className="rules-non-found-text">No rules found.</span>
                         </> }
                     </div>
-
-                    <div className="vertical-line disappear-small"></div>
 
                     <CreateRuleForm getRules={getRulesDecorator} />
                 </div>

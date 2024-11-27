@@ -17,7 +17,6 @@
     display: flex;
     flex-flow: column;
     gap: 0;
-    flex-grow: 1;
 }
 
 .simple-input-label

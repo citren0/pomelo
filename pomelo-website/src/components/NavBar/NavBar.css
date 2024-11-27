@@ -4,11 +4,13 @@
     background-color: #f5f5fa;
     display: flex;
     flex-flow: row nowrap;
-    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+    margin-left: 0.5rem;
     align-items: center;
     border-radius: 0.5rem;
     height: 3.25rem;
-    justify-content: space-around;
+    justify-content: space-between;
+    width: calc(100% - 7rem);
 }
 
 .nav-logo-wrapper
@@ -29,13 +31,6 @@
     font-size: 30px;
     font-weight: 600;
     padding-top: 0.35rem;
-}
-@media screen and (max-width: 800px)
-{
-    .nav-title
-    {
-        display: none;
-    }
 }
 
 .nav-page-title
@@ -148,4 +143,61 @@
 {
     background-color: #00009f;
     color: white;
+}
+
+.nav-btn-grouping-dropdown
+{
+    display: none;
+}
+.nav-btn-grouping-dropdown-display
+{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    width: calc(100% - 3rem);
+    position: relative;
+    top: -0.5rem;
+    left: 0.5rem;
+    background-color: #f5f5fa;
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+@media screen and (min-width: 800px)
+{
+    .nav-btn-grouping-dropdown-display
+    {
+        display: none;
+    }
+}
+
+.nav-btn-grouping-appear
+{
+    display: none;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+}
+@media screen and (max-width: 800px)
+{
+    .nav-btn-grouping-appear
+    {
+        display: flex;
+    }
+}
+
+.nav-btn-hamburger
+{
+    border: none;
+    cursor: pointer;
+    height: fit-content;
+    display: flex;
+    padding: 0.3rem;
+    border-radius: 0.5rem;
+    align-items: center;
+    background-color: #f5f5fa;
+}
+.nav-btn-hamburger:hover
+{
+    background-color: #f0f0fa;
 }

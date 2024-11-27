@@ -10,6 +10,7 @@ import Rules from "./Rules/Rules";
 import { Rule } from "@/interfaces/Rule";
 import config from "@/constants/config";
 import { checkStatusCode } from "@/services/checkStatusCode";
+import TimeWasted from "./TimeWasted/TimeWasted";
 
 
 const Dashboard = () =>
@@ -62,6 +63,7 @@ const Dashboard = () =>
 			
 			<div className="content-container">
 				<Reports />
+				<TimeWasted />
 				<Insights getRules={getRules} />
 				<Rules rules={rules} getRules={getRules} />
 			</div>

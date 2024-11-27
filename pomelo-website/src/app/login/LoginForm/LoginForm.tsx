@@ -72,7 +72,12 @@ const LoginForm = () =>
             {
                 const token = loginResponseJson.token;
 
+                // Token will expire in 10 days.
+                const now = new Date();
+                now.setDate(now.getDate() + 10);
+
                 window.localStorage.setItem('token', token);
+                window.localStorage.setItem('token_expires', String(now.getTime()));
 
                 if (loginResponseJson.isVerified == true)
                 {
