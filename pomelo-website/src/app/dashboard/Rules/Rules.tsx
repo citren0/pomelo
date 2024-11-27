@@ -111,7 +111,7 @@ const Rules = ({rules, getRules}: Props) =>
                         }
 
                         { rules.length == 0 && !isError && <>
-                            <span className="rules-non-found-text">No rules found.</span>
+                            <span className="rules-non-found-text">Any websites added here will be blocked between the hours specified.</span>
                         </> }
                     </div>
 

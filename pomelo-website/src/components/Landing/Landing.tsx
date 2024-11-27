@@ -53,6 +53,24 @@ const Landing = () =>
                     </div>
                 </div>
 
+                <hr className="hr-100" />
+
+                <div className="landing-product-demo-flex">
+                    <div className="landing-product-demo-col">
+                        <span className="landing-product-demo-title">
+                            How do I know I'm making progress?
+                        </span>
+
+                        <span className="landing-product-demo-text">
+                            With Pomelo's automatic time tracking, you can see how much time you spend online and how much time you're wasting.
+                        </span>
+                    </div>
+
+                    <img src="/assets/chart.png" height={673} width={800} className="landing-img" alt="A product demo showcasing the Pomelo time-tracking functionality." />
+                </div>
+
+                <hr className="hr-100" />
+
                 <span className="landing-card-flex-title">
                     Pomelo has one price for all users.
                 </span>
@@ -60,7 +78,7 @@ const Landing = () =>
                     <div className="landing-card-secondary">
                         <span className="landing-card-title-big">$10 / month</span>
                         <hr className="hr-100" />
-                        <span className="landing-card-text-big">An All Inclusive Plan:</span>
+                        <span className="landing-card-text-big">All Inclusive Subscription:</span>
                         <ul className="landing-card-list">
                             <li>AI productivity coach</li>
                             <li>Progress tracking</li>
@@ -68,6 +86,14 @@ const Landing = () =>
                             <li>Website blocking</li>
                         </ul>
                     </div>
+                </div>
+
+                <hr className="hr-100" />
+
+                <div className="landing-supports-flex">
+                    <span className="landing-supports-text">Supports: </span>
+                    <img src="/assets/firefox.png" height={38} width={38} alt="Firefox logo" />
+                    <img src="/assets/chrome.png" height={38} width={38} alt="Chrome logo" />
                 </div>
             </div>
         </>

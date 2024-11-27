@@ -23,12 +23,15 @@ export interface TimeWasted
 
 const TimeWasted = () =>
 {
-    const [ now ] = useState<Date>(new Date());
+    const now = (new Date());
+    const weekAgo = (new Date());
+    weekAgo.setDate((new Date()).getDate() - 7);
+
     const [ isError, setIsError ] = useState<boolean>(false);
     const [ errorMessage, setErrorMessage ] = useState<string>("");
     const [ timeWastedDays, setTimeWastedDays ] = useState<TimeWastedDay[]>([]);
     const [ timeWastingWebsites, setTimeWastingWebsites ] = useState<string[]>([]);
-    const [ startTime, setStartTime ] = useState<DayMonthYear>({ day: now.getDate() - 7, month: now.getMonth(), year: now.getFullYear(), });
+    const [ startTime, setStartTime ] = useState<DayMonthYear>({ day: weekAgo.getDate(), month: weekAgo.getMonth(), year: weekAgo.getFullYear(), });
     const [ stopTime, setStopTime ] = useState<DayMonthYear>({ day: now.getDate(), month: now.getMonth(), year: now.getFullYear(), });
 
     
@@ -211,14 +214,14 @@ const TimeWasted = () =>
                     <div className="time-wasted-input-row">
                         <input
                             type="date"
-                            defaultValue={`${(new Date()).getFullYear()}-${(new Date()).getMonth() + 1}-${(new Date()).getDate()}`}
+                            defaultValue={`${weekAgo.getFullYear()}-${weekAgo.getMonth() + 1}-${weekAgo.getDate()}`}
                             className="time-wasted-input-calendar"
                             onChange={(e: ChangeEvent<HTMLInputElement>) => changeStart(e.currentTarget.valueAsNumber)}
                         />
                         <span className="time-wasted-input-label">-</span>
                         <input
                             type="date"
-                            defaultValue={`${(new Date()).getFullYear()}-${(new Date()).getMonth() + 1}-${(new Date()).getDate()}`}
+                            defaultValue={`${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`}
                             className="time-wasted-input-calendar"
                             onChange={(e: ChangeEvent<HTMLInputElement>) => changeStop(e.currentTarget.valueAsNumber)}
                         />
@@ -269,7 +272,7 @@ const TimeWasted = () =>
                             }
 
                             { timeWastingWebsites.length == 0 && !isError && <>
-                                <span className="time-wasted-non-found-text">You haven't added any of your common time wasting websites. Add one to get started.</span>
+                                <span className="time-wasted-non-found-text">Any websites added here will be counted as &quot;Wasted Time&quot; in the automatic time-tracker.</span>
                             </> }
                         </div>
 

@@ -77,12 +77,11 @@ const SubscriptionStatus = () =>
                 </> }
 
                 <div className="text-with-image">
-                    <span className="order-success-status">Your subscription status is: </span>
                     { !isActive && <>
                         <Image src="/assets/spinner.svg" className="spinner" height={48} width={48} alt="Loading spinner" />
-                        <span className="order-success-pending">Pending</span>
+                        <span className="order-success-pending">Your subscription is Pending</span>
                     </> || <>
-                        <span className="order-success-active">Active</span>
+                        <span className="order-success-active">Your subscription is Active</span>
                     </> }
                 </div>
                 <span className="order-success-status-small">Wait on this page until your subscription status becomes &quot;Active&quot;. If it takes longer than a couple minutes, log out and back in.</span>
