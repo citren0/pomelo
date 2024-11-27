@@ -58,11 +58,11 @@ const Landing = () =>
                 <div className="landing-product-demo-flex">
                     <div className="landing-product-demo-col">
                         <span className="landing-product-demo-title">
-                            How do I know I'm making progress?
+                            How do I know I&apos;m making progress?
                         </span>
 
                         <span className="landing-product-demo-text">
-                            With Pomelo's automatic time tracking, you can see how much time you spend online and how much time you're wasting.
+                            With Pomelo&apos;s automatic time tracking, you can see how much time you spend online and how much time you&apos;re wasting.
                         </span>
                     </div>
 
