@@ -198,6 +198,7 @@ const TimeWasted = () =>
     {
         getTimeWasted();
         getTimeWastingWebsites();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [startTime, stopTime]);
 
 
