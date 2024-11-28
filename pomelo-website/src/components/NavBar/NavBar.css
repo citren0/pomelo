@@ -4,13 +4,13 @@
     background-color: #f5f5fa;
     display: flex;
     flex-flow: row nowrap;
-    padding: 0.5rem 3rem 0.5rem 3rem;
+    padding: 0.5rem 3vw 0.5rem 3vw;
     margin-left: 0.5rem;
     align-items: center;
     border-radius: 0.5rem;
     height: 3.25rem;
     justify-content: space-between;
-    width: calc(100% - 7rem);
+    width: calc(100% - 6vw - 1rem);
 }
 
 .nav-logo-wrapper
