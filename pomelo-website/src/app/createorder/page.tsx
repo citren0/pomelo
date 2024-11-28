@@ -124,7 +124,7 @@ const CreateOrder = () =>
                                     onError={onError}
                                     createSubscription={(data, actions) => {
                                         return actions.subscription.create({
-                                            plan_id: 'P-8XA030171E179871EM4UUM3Y',
+                                            plan_id: config.paypalSubscriptionPlan,
                                             custom_id: String(userIdRef.current),
                                         });
                                     }}

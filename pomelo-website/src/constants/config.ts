@@ -1,6 +1,7 @@
 
 const config = {
     paypalClientId: "AWzsggzP2HDuhQr7fpb6AiZPz3n-Xs9qhe0FuNOnRPJJ5Rh8yblLoLgvrG9WdFN5SpaPRiX10qY3Gq6S",
+    paypalSubscriptionPlan: "P-6MD88519RX659384KM46OVZY",
     baseURL: "https://api.pomeloprod.com:443",
     login: "/api/login",
     register: "/api/register",
