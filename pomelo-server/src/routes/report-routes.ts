@@ -81,14 +81,10 @@ router.post('/api/insights', auth, mustHaveRole(Roles.Verified), mustHaveRole(Ro
                 [req.user.id])
         .then((rules) =>
         {
-
-            const minIndex = Math.max(0, reports.length - parseInt(process.env.LLM_SERVER_MAX_REPORTS));
-            const maxIndex = reports.length;
-
             // Assemble JSON containing rules and reports.
             const body = {
                 reports: reports
-                        .slice(minIndex, maxIndex)
+                        .sort((a, b) => a.time_stamp - b.time_stamp)
                         .map((report) =>
                             {
                                 const date = new Date(parseInt(report.time_stamp));
