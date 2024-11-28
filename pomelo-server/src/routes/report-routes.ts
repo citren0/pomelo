@@ -85,6 +85,7 @@ router.post('/api/insights', auth, mustHaveRole(Roles.Verified), mustHaveRole(Ro
             const minIndex = Math.max(0, reports.length - parseInt(process.env.LLM_SERVER_MAX_REPORTS));
             const maxIndex = reports.length;
 
+            // Assemble JSON containing rules and reports.
             const body = {
                 reports: reports
                         .slice(minIndex, maxIndex)
@@ -106,31 +107,33 @@ router.post('/api/insights', auth, mustHaveRole(Roles.Verified), mustHaveRole(Ro
                                 stop: `${((rule.stop + 1) > 12) ? (rule.stop + 1 - 12) : (rule.stop + 1)}${(rule.stop < 11 || rule.stop == 23) ? "AM" : "PM"}`,
                             };
                         }),
-                conversation: req.body.messages.map((message) =>
-                        {
-                            return {
-                                user: message.me,
-                                text: message.message,
-                            };
-                        }),
             };
 
             const client = new OpenAI({
                 apiKey: process.env.OPENAI_API_KEY,
             });
+
+            // Assemble messages.
+            var messages = [
+                {
+                    role: "system",
+                    content: process.env.OPENAI_SYSTEM_PROMPT
+                },
+                {
+                    role: "user",
+                    content: JSON.stringify(body),
+                },
+            ];
+            messages = messages.concat(req.body.messages.map((message) =>
+            {
+                return {
+                    role: message.me ? "user" : "assistant",
+                    content: message.message,
+                };
+            }));
             
             const params = {
-                messages:
-                [
-                    {
-                        role: "system",
-                        content: process.env.OPENAI_SYSTEM_PROMPT
-                    },
-                    {
-                        role: "user",
-                        content: JSON.stringify(body),
-                    }
-                ],
+                messages: messages,
                 model: process.env.OPENAI_MODEL,
             };
 
