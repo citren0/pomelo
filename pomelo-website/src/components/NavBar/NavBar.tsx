@@ -31,7 +31,7 @@ const NavBar = () =>
                             height={48}
                             className="nav-logo"
                         />
-                        <span className="nav-title">Pomelo</span>
+                        <span className="nav-title nav-btn-grouping-collapse">Pomelo</span>
                     </div>
                 </a>
 
