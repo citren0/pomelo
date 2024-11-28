@@ -5,6 +5,7 @@ const router = express.Router();
 const OpenAI = require("openai");
 
 import { db } from '../database';
+import { hoursDictionary } from '../models/HoursDictionary';
 import Roles from '../models/Roles';
 import mustHaveRole from '../services/mustHaveRole';
 import auth from '../services/token';
@@ -99,8 +100,8 @@ router.post('/api/insights', auth, mustHaveRole(Roles.Verified), mustHaveRole(Ro
                         {
                             return {
                                 domain: rule.domain,
-                                start: `${((rule.start + 1) > 12) ? (rule.start + 1 - 12) : (rule.start + 1)}${(rule.start < 11 || rule.start == 23) ? "AM" : "PM"}`,
-                                stop: `${((rule.stop + 1) > 12) ? (rule.stop + 1 - 12) : (rule.stop + 1)}${(rule.stop < 11 || rule.stop == 23) ? "AM" : "PM"}`,
+                                start: hoursDictionary[rule.start],
+                                stop: hoursDictionary[rule.stop],
                             };
                         }),
             };
