@@ -1,23 +1,4 @@
 
-.reports-title-wrapper
-{
-    display: flex;
-    flex-flow: column;
-    border-radius: 0.5rem;
-    background-color: #f7f7fb;
-    box-shadow: 5px 5px 5px 0px #cccccc;
-    padding: 1rem;
-    margin: 2rem 2rem 1rem 2rem;
-    width: calc(80vw - 2rem - 2rem - 1px);
-}
-@media screen and (max-width: 800px)
-{
-    .reports-title-wrapper
-    {
-        width: calc(100vw - 2rem - 2rem - 1px);
-    }
-}
-
 .reports-wrapper
 {
     display: flex;
@@ -36,11 +17,24 @@
     overflow-x: scroll;
 }
 
+.reports-title-and-image
+{
+    display: flex;
+    flex-flow: row;
+    gap: 0.5rem;
+    align-items: center;
+    background: linear-gradient(135deg, rgb(233, 218, 255) 0%, rgb(216, 250, 255) 100%);
+    border-radius: 0.5rem;
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+    width: fit-content;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+}
+
 .reports-title
 {
     font-size: 30px;
     font-weight: 500;
-    padding-left: 0.5rem;
 }
 
 .reports-report-wrapper

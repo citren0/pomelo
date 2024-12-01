@@ -9,7 +9,6 @@ import "./NavBar.css";
 const NavBar = () =>
 {
     const [ isLoggedIn, setIsLoggedIn ] = useState(false);
-    const [ dropdownOpen, setDropdownOpen ] = useState(false);
 
     useEffect(() =>
     {
@@ -31,7 +30,7 @@ const NavBar = () =>
                             height={48}
                             className="nav-logo"
                         />
-                        <span className="nav-title nav-btn-grouping-collapse">Pomelo</span>
+                        <span className="nav-title nav-btn-collapse">Pomelo</span>
                     </div>
                 </a>
 
@@ -51,66 +50,19 @@ const NavBar = () =>
                     </> }
                     
                     { isLoggedIn && <>
-                        <div className="nav-btn-grouping-collapse">
-                            <a className="nav-link-ext" href="https://addons.mozilla.org/en-US/firefox/addon/pomelo-productivity/">
-                                <Image src="/assets/firefox.png" height={28} width={28} alt="Firefox logo" />
+                        <div className="nav-btn-grouping">
+                            <a className="nav-link-ext" href="/dashboard" title="Dashboard">
+                                <Image src="/assets/report.svg" height={28} width={28} alt="Dashboard" />
                             </a>
-                            <a className="nav-link-ext" href="https://chromewebstore.google.com/detail/pomelo/licdjpgagagjhlbpigijhjaepohieman">
-                                <Image src="/assets/chrome.png" height={28} width={28} alt="Chrome logo" />
+                            <a className="nav-link-ext" href="/profile" title="User's Profile">
+                                <Image src="/assets/profile.svg" height={28} width={28} alt="User's profile" />
                             </a>
-                            {/* <a className="nav-link-ext">
-                                <Image src="/assets/safari.png" height={28} width={28} alt="Safari logo" />
-                            </a> */}
-                            <a
-                                className="nav-link"
-                                href="/profile"
-                            >Profile</a>
-                            <a
-                                className="nav-link"
-                                href="/dashboard"
-                            >Dashboard</a>
-                            <a
-                                className="nav-link"
-                                href="/logout"
-                            >Logout</a>
-                        </div>
-                    </> }
-
-                    { isLoggedIn && <>
-                        <div className="nav-btn-grouping-appear">
-                            <button className="nav-btn-hamburger" onClick={() => setDropdownOpen(!dropdownOpen)}>
-                                { dropdownOpen && <>
-                                    <img src="/assets/x.svg" height={48} alt="Open dropdown menu" />
-                                </> || <>
-                                    <img src="/assets/menu.svg" height={48} alt="Close dropdown menu" />
-                                </> }
-                            </button>
+                            <a className="nav-link-ext" href="/logout" title="Log Out">
+                                <Image src="/assets/log-out.svg" height={28} width={28} alt="Log Out" />
+                            </a>
                         </div>
                     </> }
                 </div>
-            </div>
-
-            <div className={"nav-btn-grouping-dropdown " + ((dropdownOpen) ? "nav-btn-grouping-dropdown-display" : "")}>
-                <div className="nav-buttons">
-                    <a className="nav-link-ext" href="https://addons.mozilla.org/en-US/firefox/addon/pomelo-productivity/">
-                        <Image src="/assets/firefox.png" height={28} width={28} alt="Firefox logo" />
-                    </a>
-                    <a className="nav-link-ext" href="https://chromewebstore.google.com/detail/pomelo/licdjpgagagjhlbpigijhjaepohieman">
-                        <Image src="/assets/chrome.png" height={28} width={28} alt="Chrome logo" />
-                    </a>
-                </div>
-                <a
-                    className="nav-link"
-                    href="/profile"
-                >Profile</a>
-                <a
-                    className="nav-link"
-                    href="/dashboard"
-                >Dashboard</a>
-                <a
-                    className="nav-link"
-                    href="/logout"
-                >Logout</a>
             </div>
         </>
     );

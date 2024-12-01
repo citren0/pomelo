@@ -8,6 +8,7 @@ import { checkStatusCode } from "../../../services/checkStatusCode";
 import { Message } from "../../../components";
 import MessageTypes from "../../../constants/messageTypes";
 import Report from "@/interfaces/Report";
+import Image from "next/image";
 
 
 const Reports = () =>
@@ -71,7 +72,11 @@ const Reports = () =>
     return (
         <>
             <div className="reports-title-wrapper">
-                <span className="reports-title">Your Web Activity</span>
+                <div className="reports-title-and-image">
+                    <Image src="/assets/sparks.svg" height={24} width={24} alt="Sparkle Icon" />
+                    <span className="reports-title">Web History & Coach</span>
+                </div>
+
                 <hr className="hr-100" />
 
                 { isError && <>
@@ -85,7 +90,7 @@ const Reports = () =>
                     { reports.length > 0 && <>
                         <div className="reports-list">
                             {
-                                reports.map((report, idx) =>
+                                reports.sort((a, b) => parseInt(a.time_stamp) - parseInt(b.time_stamp)).map((report, idx) =>
                                 {
                                     return (
                                         <>

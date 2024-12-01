@@ -178,11 +178,6 @@ const Insights = ({getRules}: Props) =>
     return (
         <>
             <div className="insights-wrapper">
-                <div className="insights-title-and-image">
-                    <Image src="/assets/sparks.svg" height={24} width={24} alt="Sparkle Icon" />
-                    <span className="insights-title">AI Productivity Coach</span>
-                </div>
-                <hr className="hr-100" />
 
                 { isError && <>
                     <Message type={MessageTypes.Error} message={errorMessage} />

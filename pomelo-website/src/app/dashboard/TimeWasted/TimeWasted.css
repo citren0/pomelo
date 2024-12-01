@@ -3,21 +3,10 @@
 {
     display: flex;
     flex-flow: column;
-    border-radius: 0.5rem;
-    background-color: #f7f7fb;
-    box-shadow: 5px 5px 5px 0px #cccccc;
     padding: 1rem;
-    margin: 1rem;
     width: fit-content;
     height: fit-content;
-    max-width: 35rem;
-}
-@media screen and (max-width: 800px)
-{
-    .time-wasted-wrapper
-    {
-        width: calc(100vw - 2rem - 2rem - 1px);
-    }
+    width: calc(100% - 2rem);
 }
 
 .time-wasted-title
@@ -88,15 +77,6 @@
     text-align: center;
     width: 30rem;
     max-width: 100%;
-}
-
-.time-wasted-row
-{
-    display: flex;
-    flex-flow: row wrap;
-    max-width: 100%;
-    justify-content: center;
-    width: calc(80vw - 2rem - 2rem - 1px);
 }
 
 .time-wasted-input-row
