@@ -258,7 +258,7 @@ const TimeWasted = () =>
                             { timeWastingWebsites.map((website, idx) =>
                                 {
                                     return (
-                                        <div key={website}>
+                                        <div className="w-100" key={website}>
                                             <div className="time-waste-website-wrapper">
                                                 <span className="time-waste-website-number">{idx + 1}</span>
                                                 <span className="time-waste-website-domain">{ website }</span>

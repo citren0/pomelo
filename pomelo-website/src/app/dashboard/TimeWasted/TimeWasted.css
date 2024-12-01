@@ -10,6 +10,7 @@
     margin: 1rem;
     width: fit-content;
     height: fit-content;
+    max-width: 35rem;
 }
 @media screen and (max-width: 800px)
 {
@@ -46,18 +47,20 @@
     background-color: #fafafa;
     padding: 0.5rem;
     border-radius: 0.5rem;
+    width: calc(100% - 1rem);
 }
 
 .time-waste-website-wrapper
 {
-    padding: 0 1rem;
+    padding: 0 0.5rem 0 1rem;
     font-size: 22px;
     display: flex;
     flex-flow: row;
     justify-content: space-between;
     gap: 1rem;
     align-items: center;
-    width: 30rem;
+    width: calc(100% - 1.5rem);
+    min-width: 20rem;
     text-overflow: ellipsis;
     overflow-wrap: break-word;
 }
@@ -115,8 +118,9 @@
 {
     border: 2px solid #9f9ff0;
     border-radius: 0.5rem;
-    font-size: 20px;
+    font-size: 22px;
     background-color: #f7f7fb;
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
 }
 
 .time-wasted-plot-title

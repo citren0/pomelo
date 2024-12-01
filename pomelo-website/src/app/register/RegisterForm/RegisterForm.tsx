@@ -134,7 +134,7 @@ const RegisterForm = () =>
                 onSubmit={register}
             >
                 <div>
-                    <span className="form-title">Register</span>
+                    <span className="form-title">Get Started</span>
                     <hr className="hr-100"/>
                     <span className="form-subtext">Create an account to use the Pomelo website and extension.</span>
                 </div>
@@ -200,7 +200,7 @@ const RegisterForm = () =>
                             Register
                         </> }
                     </button>
-                    <a href="/login" className="form-secondary-button">Login</a>
+                    <a href="/login" className="form-secondary-button">Already have an account?</a>
                 </div>
             </form>
         </>

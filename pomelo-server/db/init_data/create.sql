@@ -24,6 +24,7 @@ CREATE TABLE rules
     domain text,
     starttime INT,
     stoptime INT,
+    days jsonb,
     PRIMARY KEY (user_id, domain, starttime, stoptime),
     CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

@@ -34,7 +34,7 @@
 
 .landing-subtitle
 {
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 500;
     text-align: center;
     padding-bottom: 1rem;
@@ -42,7 +42,7 @@
 
 .landing-subtitle-bold
 {
-    font-size: 34px;
+    font-size: 32px;
     font-weight: 700;
     text-align: center;
     padding-bottom: 0.5rem;
@@ -50,13 +50,13 @@
 
 .landing-conversion-button
 {
-    background-image: linear-gradient(45deg, rgb(75, 75, 179) 0%, rgb(70, 18, 142) 100%);
+    background-image: linear-gradient(45deg, rgb(108, 108, 219) 0%, rgb(84, 11, 185) 33%, rgb(92, 92, 227) 66%, rgb(84, 11, 185) 100%);
     background-size: 200% auto;
     color: white;
     border-radius: 1rem;
     outline: none;
     border: none;
-    font-size: 28px;
+    font-size: 34px;
     font-weight: 600;
     padding: 1rem 2rem 1rem 2rem;
     margin-top: 1rem;

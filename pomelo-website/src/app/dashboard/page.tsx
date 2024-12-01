@@ -63,8 +63,8 @@ const Dashboard = () =>
 			
 			<div className="content-container">
 				<Reports />
-				<TimeWasted />
 				<Insights getRules={getRules} />
+				<TimeWasted />
 				<Rules rules={rules} getRules={getRules} />
 			</div>
 

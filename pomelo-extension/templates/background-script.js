@@ -29,6 +29,8 @@ const hoursDictionary = {
     "23": "11 PM"
 };
 
+const weekday = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+
 
 const getAndSetCurrentUrl = () =>
 {
@@ -217,7 +219,8 @@ const checkRules = async (domain, runtime) =>
         {
             if ((rule.domain == domain) &&
                 (rule.start <= currentTime.getHours()) &&
-                (rule.stop >= currentTime.getHours()))
+                (rule.stop >= currentTime.getHours()) &&
+                (rule.days[weekday[(new Date()).getDay()]] == true))
             {
                 // Rule broken! Send message to block.
                 violated = true;

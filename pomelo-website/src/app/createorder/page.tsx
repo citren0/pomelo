@@ -95,7 +95,7 @@ const CreateOrder = () =>
                 <div className="create-order-wrapper">
                     <div className="create-order-card">
                         <div>
-                            <span className="create-order-card-title">Your Pomelo Subscription</span>
+                            <span className="form-title">Finish Setting Up</span>
                             <hr className="hr-100" />
                             { isError && <>
                                 <Message message={errorMessage} type={MessageTypes.Error} />
@@ -105,7 +105,8 @@ const CreateOrder = () =>
                             </> }
                         </div>
 
-                        <span className="create-order-card-text">A subscription to Pomelo costs $10 / month. This will grant you access to the entire website and all functionality. By subscribing, you agree to the terms of service and privacy policy below.</span>
+                        <p className="create-order-card-text">A subscription to Pomelo costs $10 / month. This will grant you access to all functionality.</p>
+                        <p className="create-order-card-text">By subscribing, you agree to the terms of service and privacy policy below.</p>
 
                         <div className="create-order-links">
                             <a href="/privacy">Privacy Policy</a>

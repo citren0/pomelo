@@ -34,11 +34,13 @@
 {
     font-size: 22px;
     font-weight: 400;
+    padding: 0;
+    margin: 0;
 }
 
 .create-order-card-text-secondary
 {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
 }
 
@@ -57,7 +59,7 @@
 }
 .create-order-links a
 {
-    font-size: 18px;
+    font-size: 20px;
     color: blue;
     text-decoration: underline;
 }

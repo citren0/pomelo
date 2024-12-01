@@ -98,11 +98,62 @@ const Rules = ({rules, getRules}: Props) =>
                                 return (
                                     <>
                                         <div className="rule-wrapper">
-                                            <span className="rule-number">{idx + 1}</span>
-                                            <span className="rule-domain">{ rule.domain } from { hoursDictionary[String(rule.start)] } to { hoursDictionary[String(rule.stop)] }</span>
-                                            <button className="btn-image" onClick={() => deleteRule(rule.domain, rule.start, rule.stop)}>
-                                                <Image src={"/assets/trash.svg"} height={24} width={24} alt={"Trash can icon"} />
-                                            </button>
+                                            <div className="rule-row-space-between">
+                                                <span className="rule-domain">{ rule.domain }</span>
+                                                <button className="btn-image" onClick={() => deleteRule(rule.domain, rule.start, rule.stop)}>
+                                                    <Image src={"/assets/trash.svg"} height={26} width={26} alt={"Trash can icon"} />
+                                                </button>
+                                            </div>
+                                            
+                                            <div className="rule-row">
+                                                <div className="rule-days-wrapper">
+                                                    { rule.days.sunday == true && <>
+                                                        <div className="rule-days-active"><span>S</span></div>
+                                                    </> || <>
+                                                        <div className="rule-days-inactive"><span>S</span></div>
+                                                    </> }
+
+                                                    { rule.days.monday == true && <>
+                                                        <div className="rule-days-active"><span>M</span></div>
+                                                    </> || <>
+                                                        <div className="rule-days-inactive"><span>M</span></div>
+                                                    </> }
+
+                                                    { rule.days.tuesday == true && <>
+                                                        <div className="rule-days-active"><span>T</span></div>
+                                                    </> || <>
+                                                        <div className="rule-days-inactive"><span>T</span></div>
+                                                    </> }
+
+                                                    { rule.days.wednesday == true && <>
+                                                        <div className="rule-days-active"><span>W</span></div>
+                                                    </> || <>
+                                                        <div className="rule-days-inactive"><span>W</span></div>
+                                                    </> }
+
+                                                    { rule.days.thursday == true && <>
+                                                        <div className="rule-days-active"><span>T</span></div>
+                                                    </> || <>
+                                                        <div className="rule-days-inactive"><span>T</span></div>
+                                                    </> }
+
+                                                    { rule.days.friday == true && <>
+                                                        <div className="rule-days-active"><span>F</span></div>
+                                                    </> || <>
+                                                        <div className="rule-days-inactive"><span>F</span></div>
+                                                    </> }
+
+                                                    { rule.days.saturday == true && <>
+                                                        <div className="rule-days-active"><span>S</span></div>
+                                                    </> || <>
+                                                        <div className="rule-days-inactive"><span>S</span></div>
+                                                    </> }
+                                                </div>
+                                            </div>
+
+                                            <div className="rule-row">
+                                                <span className="rule-domain">{ hoursDictionary[String(rule.start)] } - { hoursDictionary[String(rule.stop)] }</span>
+                                            </div>
                                         </div>
                                         <hr className="hr-100" />
                                     </>

@@ -10,6 +10,7 @@ import Image from "next/image";
 import MessageTypes from "@/constants/messageTypes";
 import putRule from "@/services/putRule";
 import { chatToHoursDictionary } from "@/constants/dropdownHours";
+import DaysOfTheWeek from "@/interfaces/DaysOfTheWeek";
 
 
 interface Message
@@ -120,10 +121,20 @@ const Insights = ({getRules}: Props) =>
         const start = chatToHoursDictionary?.[parts[1]] ?? 0;
         const stop = chatToHoursDictionary?.[parts[2]] ?? 0;
 
+        const daysOfWeek: DaysOfTheWeek = {
+            sunday: true,
+            monday: true,
+            tuesday: true,
+            wednesday: true,
+            thursday: true,
+            friday: true,
+            saturday: true,
+        };
+
         setIsLoading(true);
         setIsError(false);
         
-        putRule(parts[0], start, stop)
+        putRule(parts[0], start, stop, daysOfWeek)
         .then(() =>
         {
             setIsLoading(false);
@@ -168,8 +179,8 @@ const Insights = ({getRules}: Props) =>
         <>
             <div className="insights-wrapper">
                 <div className="insights-title-and-image">
-                    <span className="insights-title">Insights</span>
                     <Image src="/assets/sparks.svg" height={24} width={24} alt="Sparkle Icon" />
+                    <span className="insights-title">AI Productivity Coach</span>
                 </div>
                 <hr className="hr-100" />
 

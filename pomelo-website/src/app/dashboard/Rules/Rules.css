@@ -14,7 +14,7 @@
 {
     .rules-wrapper
     {
-        width: calc(100vw - 2rem - 2rem - 1px);
+        width: calc(80vw - 2rem - 2rem - 1px);
     }
 }
 
@@ -31,7 +31,7 @@
     flex-flow: row wrap;
     gap: 1rem;
     padding: 1rem 0;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     max-width: 70rem;
 }
@@ -54,19 +54,11 @@
 
 .rule-wrapper
 {
-    padding: 0 1rem;
-    font-size: 22px;
     display: flex;
-    flex-flow: row;
-    justify-content: space-between;
-    gap: 1rem;
-    align-items: center;
-}
-
-.rule-number
-{
-    width: 1.5rem;
-    text-align: center;
+    flex-flow: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 .rule-divider
@@ -85,6 +77,79 @@
 
 .rule-domain
 {
-    max-width: 75%;
-    overflow-wrap: break-word;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 1lh;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.rule-days-wrapper
+{
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.rule-days-active
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff8a8a;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 22px;
+    color: white;
+    font-weight: 600;
+}
+.rule-days-active span
+{
+    padding-top: 0.25rem;
+}
+
+.rule-days-inactive
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #dadada;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 22px;
+    color: black;
+    font-weight: 600;
+}
+.rule-days-inactive span
+{
+    padding-top: 0.25rem;
+}
+
+.rule-row
+{
+    padding: 0 1rem;
+    font-size: 22px;
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-start;
+    gap: 1rem;
+    align-items: center;
+    max-width: calc(100% - 2rem);
+}
+
+.rule-row-space-between
+{
+    padding: 0 1rem;
+    font-size: 22px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    max-width: calc(100% - 2rem);
 }

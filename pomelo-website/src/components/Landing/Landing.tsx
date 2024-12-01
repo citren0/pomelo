@@ -10,14 +10,14 @@ const Landing = () =>
                     Save time for the things you <span className="landing-title-italic">really</span> care about.&nbsp;
                 </span>
                 <span className="landing-subtitle">
-                    Get&nbsp;<span className="landing-subtitle-bold">real results</span>&nbsp;with your own AI coach, time-tracking, and website blocking.
+                    Get&nbsp;<span className="landing-subtitle-bold">real results</span>&nbsp;with automatic time-tracking, website blocking, and your own productivity coach.
                 </span>
 
                 <div className="landing-images-flex">
                     <div className="landing-images-wrapper">
                         <img src="/assets/chat.png" height={673} width={800} className="landing-img" alt="A product demo showcasing the Pomelo chat functionality." />
                         <span className="landing-images-explanation">
-                            Your personal assistant will recommend productivity strategies and block time-wasting websites.
+                            Your personal coach will recommend productivity strategies and block time-wasting websites.
                         </span>
                     </div>
                     <div className="landing-images-wrapper">
@@ -33,7 +33,7 @@ const Landing = () =>
                 <hr className="hr-100" />
 
                 <span className="landing-card-flex-title">
-                    How does Pomelo work?
+                    How does it work?
                 </span>
                 <div className="landing-card-flex">
                     <div className="landing-card">
@@ -72,7 +72,7 @@ const Landing = () =>
                 <hr className="hr-100" />
 
                 <span className="landing-card-flex-title">
-                    Pomelo has one price for all users.
+                    How much does it cost?
                 </span>
                 <div className="landing-card-flex">
                     <div className="landing-card-secondary">

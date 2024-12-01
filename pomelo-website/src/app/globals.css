@@ -18,6 +18,7 @@
     display: flex;
     flex-flow: column;
     align-items: center;
+    padding-bottom: 5rem;
 }
 
 .img-border
@@ -274,4 +275,9 @@
     font-size: 20px;
     font-weight: 500;
     color: #0f0ff0;
+}
+
+.w-100
+{
+    width: 100%;
 }

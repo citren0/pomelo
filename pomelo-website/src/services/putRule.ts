@@ -1,7 +1,8 @@
 import config from "@/constants/config";
 import { checkStatusCode } from "./checkStatusCode";
+import DaysOfTheWeek from "@/interfaces/DaysOfTheWeek";
 
-const putRule = (domain: string, start: number, stop: number) =>
+const putRule = (domain: string, start: number, stop: number, daysOfWeek: DaysOfTheWeek) =>
 {
     return new Promise<void | string>((resolve, reject) =>
     {
@@ -9,7 +10,8 @@ const putRule = (domain: string, start: number, stop: number) =>
         [
             ["domain", domain],
             ["start", String(start)],
-            ["stop", String(stop)]
+            ["stop", String(stop)],
+            ["days", encodeURIComponent(JSON.stringify(daysOfWeek))]
         ]));
 
         fetch(putRuleURLWithQuery, {

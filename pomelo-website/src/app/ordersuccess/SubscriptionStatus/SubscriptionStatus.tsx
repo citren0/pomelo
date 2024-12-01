@@ -19,9 +19,7 @@ const SubscriptionStatus = () =>
 	const [ intervalId, setIntervalId ] = useState<number>();
 
     const getSubscriptionStatus = () =>
-    {        
-        setIsError(false);
-
+    {
         fetch(config.baseURL + config.subscriptionDetails, {
             method: "GET",
             headers:
@@ -47,6 +45,7 @@ const SubscriptionStatus = () =>
                     getNewToken()
                     .then(() =>
                     {
+                        setIsError(false);
                         setIsActive(true);
                     })
                     .catch(() =>

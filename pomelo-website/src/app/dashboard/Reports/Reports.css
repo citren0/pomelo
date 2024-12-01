@@ -38,7 +38,7 @@
 
 .reports-title
 {
-    font-size: 28px;
+    font-size: 30px;
     font-weight: 500;
     padding-left: 0.5rem;
 }
@@ -47,12 +47,28 @@
 {
     display: flex;
     flex-flow: column;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
-    border-radius: 0.5rem;
-    border: 1px #505050 solid;
+    flex-shrink: 0;
+    max-width: calc(8rem + 2px);
+}
+
+.reports-round-wrapper
+{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border-radius: 50%;
+    border: 1.5px #a0a0a0 solid;
     padding: 1rem;
     flex-shrink: 0;
+    height: 6rem;
+    width: 6rem;
     box-shadow: 2px 2px 2px 0px #eeeeee;
+    overflow: hidden;
 }
 
 .reports-report-date-time-group
@@ -65,6 +81,8 @@
 .reports-report-domain
 {
     font-size: 22px;
+    font-weight: 600;
+    color: #180054;
     text-overflow: ellipsis;
     max-width: 10rem;
     overflow: hidden;
@@ -90,12 +108,18 @@
     background-color: #505050;
     flex-shrink: 0;
     border: none;
-    margin: 0;
+    margin: 0 0 22px 0;
 }
 
 .no-reports-found-text
 {
     font-size: 26px;
     padding: 0.75rem;
+    font-weight: 500;
+}
+
+.reports-report-timestamp
+{
+    font-size: 17px;
     font-weight: 500;
 }

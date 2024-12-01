@@ -109,7 +109,7 @@ const LoginForm = () =>
                 onSubmit={login}
             >
                 <div>
-                    <span className="form-title">Pomelo Login</span>
+                    <span className="form-title">Login</span>
                     <hr className="hr-100"/>
                 </div>
 
@@ -144,8 +144,8 @@ const LoginForm = () =>
                             Login
                         </> }
                     </button>
-                    <a href="/register" className="form-secondary-button">Register</a>
-                    <a href="/forgotpassword" className="form-subtle-button">Forgot Password?</a>
+                    <a href="/register" className="form-secondary-button">Don't have an account?</a>
+                    <a href="/forgotpassword" className="form-subtle-button">Forgot your password?</a>
                 </div>
             </form>
         </>

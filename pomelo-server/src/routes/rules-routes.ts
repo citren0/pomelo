@@ -13,7 +13,7 @@ dotenv.config();
   
 router.get('/api/rules', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.Paid), (req, res, next) =>
 {
-    db.any("SELECT domain, starttime AS start, stoptime AS stop FROM rules WHERE user_id = $1;",
+    db.any("SELECT domain, starttime AS start, stoptime AS stop, days FROM rules WHERE user_id = $1;",
             [req.user.id ])
     .then((rules) =>
     {
@@ -29,9 +29,12 @@ router.get('/api/rules', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.
 
 router.put('/api/rules', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.Paid), (req, res, next) =>
 {
-    if (!req.query.hasOwnProperty("domain") || !req.query.hasOwnProperty("start") || !req.query.hasOwnProperty("stop"))
+    if (!req.query.hasOwnProperty("domain") ||
+        !req.query.hasOwnProperty("start") ||
+        !req.query.hasOwnProperty("stop") ||
+        !req.query.hasOwnProperty("days"))
     {
-        return res.status(400).send({ status: "Failed to remove rule. Include all fields before submitting." });
+        return res.status(400).send({ status: "Failed to create rule. Include all fields before submitting." });
     }
 
     const decodeDomain = decodeURIComponent(req.query.domain);
@@ -39,14 +42,31 @@ router.put('/api/rules', auth, mustHaveRole(Roles.Verified), mustHaveRole(Roles.
     const decodeStop = decodeURIComponent(req.query.stop);
 
     if (typeof decodeDomain != "string" ||
+        decodeDomain == "" ||
         isNaN(parseInt(decodeStart)) ||
         isNaN(parseInt(decodeStop)))
     {
-        return res.status(400).send({ status: "Failed to remove rule. Include all fields before submitting." });
+        return res.status(400).send({ status: "Failed to create rule. Include all fields before submitting." });
     }
 
-    db.any("INSERT INTO rules (user_id, domain, starttime, stoptime) values ($1, $2, $3, $4);",
-            [req.user.id, decodeDomain, parseInt(decodeStart), parseInt(decodeStop)])
+    if (req.query.days.length > 256)
+    {
+        return res.status(400).send({ status: "Failed to create rule. Include all fields before submitting." });
+    }
+
+    var days = JSON.parse(decodeURIComponent(req.query.days));
+    days = {
+        sunday: days.sunday ?? false,
+        monday: days.monday ?? false,
+        tuesday: days.tuesday ?? false,
+        wednesday: days.wednesday ?? false,
+        thursday: days.thursday ?? false,
+        friday: days.friday ?? false,
+        saturday: days.saturday ?? false,
+    };
+
+    db.any("INSERT INTO rules (user_id, domain, starttime, stoptime, days) values ($1, $2, $3, $4, $5);",
+            [req.user.id, decodeDomain, parseInt(decodeStart), parseInt(decodeStop), days])
     .then((_) =>
     {
         return res.status(200).send({ status: "Successfully added rule." });

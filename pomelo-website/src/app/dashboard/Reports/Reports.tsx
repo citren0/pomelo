@@ -71,7 +71,7 @@ const Reports = () =>
     return (
         <>
             <div className="reports-title-wrapper">
-                <span className="reports-title">Last 24 Hours</span>
+                <span className="reports-title">Your Web Activity</span>
                 <hr className="hr-100" />
 
                 { isError && <>
@@ -90,14 +90,16 @@ const Reports = () =>
                                     return (
                                         <>
                                             <div className="reports-report-wrapper">
-                                                <div className="reports-title-and-image-wrapper">
-                                                    <img
-                                                        src={report.faviconurl}
-                                                        height={48}
-                                                        width={48}
-                                                        alt={report.domain + " favicon url"}
-                                                    />
-                                                    <span className="reports-report-domain">{report.domain}</span>
+                                                <span className="reports-report-domain">{report.domain}</span>
+                                                <div className="reports-round-wrapper">
+                                                    <div className="reports-title-and-image-wrapper">
+                                                        <img
+                                                            src={report.faviconurl}
+                                                            height={82}
+                                                            width={82}
+                                                            alt={report.domain + " favicon url"}
+                                                        />
+                                                    </div>
                                                 </div>
                                                 <div className="reports-report-date-time-group">
                                                     <span className="reports-report-timestamp">{(new Date(parseInt(report.time_stamp))).toLocaleDateString()}</span>
@@ -107,7 +109,7 @@ const Reports = () =>
                                             { (idx != reports.length - 1) && <>
                                                 <hr
                                                     className="reports-line"
-                                                    style={{ width: String(Math.log2(parseInt(reports[idx + 1].time_stamp) - parseInt(report.time_stamp))) + "px" }}
+                                                    style={{ width: String(Math.log2(parseInt(reports[idx + 1].time_stamp) - parseInt(report.time_stamp)) + 30) + "px" }}
                                                 />
                                             </> }
                                         </>

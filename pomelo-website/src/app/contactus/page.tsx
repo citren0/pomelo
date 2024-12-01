@@ -1,7 +1,7 @@
 
 import React from "react";
 import "./page.css";
-import { NavBar, Cookies } from "../../components";
+import { NavBar, Cookies, Footer } from "../../components";
 
 
 const ContactUs = () =>
