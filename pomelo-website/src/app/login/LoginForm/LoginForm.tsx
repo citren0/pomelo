@@ -144,7 +144,7 @@ const LoginForm = () =>
                             Login
                         </> }
                     </button>
-                    <a href="/register" className="form-secondary-button">Don't have an account?</a>
+                    <a href="/register" className="form-secondary-button">Don&apos;t have an account?</a>
                     <a href="/forgotpassword" className="form-subtle-button">Forgot your password?</a>
                 </div>
             </form>

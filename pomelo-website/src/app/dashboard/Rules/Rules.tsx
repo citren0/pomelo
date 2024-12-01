@@ -93,7 +93,7 @@ const Rules = ({rules, getRules}: Props) =>
                 
                 <div className="rules-content">
                     <div className="rules-container">
-                        { rules.map((rule, idx) =>
+                        { rules.map((rule) =>
                             {
                                 return (
                                     <>
