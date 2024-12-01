@@ -65,37 +65,37 @@ const CreateRuleForm = ({getRules}: Props) =>
                 
                 <div className="create-rule-check-flex">
                     <div className="create-rule-check-with-label">
-                        <input type="checkbox" id="sunday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, sunday: true, })} />
+                        <input type="checkbox" id="sunday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, sunday: !daysOfWeek.sunday, })} />
                         <span className="create-rule-checkbox-custom">✔</span>
                         <label htmlFor="sunday">S</label>
                     </div>
                     <div className="create-rule-check-with-label">
-                        <input type="checkbox" id="monday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, monday: true, })} />
+                        <input type="checkbox" id="monday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, monday: !daysOfWeek.monday, })} />
                         <span className="create-rule-checkbox-custom">✔</span>
                         <label htmlFor="monday">M</label>
                     </div>
                     <div className="create-rule-check-with-label">
-                        <input type="checkbox" id="tuesday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, tuesday: true, })} />
+                        <input type="checkbox" id="tuesday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, tuesday: !daysOfWeek.tuesday, })} />
                         <span className="create-rule-checkbox-custom">✔</span>
                         <label htmlFor="tuesday">T</label>
                     </div>
                     <div className="create-rule-check-with-label">
-                        <input type="checkbox" id="wednesday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, wednesday: true, })} />
+                        <input type="checkbox" id="wednesday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, wednesday: !daysOfWeek.wednesday, })} />
                         <span className="create-rule-checkbox-custom">✔</span>
                         <label htmlFor="wednesday">W</label>
                     </div>
                     <div className="create-rule-check-with-label">
-                        <input type="checkbox" id="thursday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, thursday: true, })} />
+                        <input type="checkbox" id="thursday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, thursday: !daysOfWeek.thursday, })} />
                         <span className="create-rule-checkbox-custom">✔</span>
                         <label htmlFor="thursday">T</label>
                     </div>
                     <div className="create-rule-check-with-label">
-                        <input type="checkbox" id="friday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, friday: true, })} />
+                        <input type="checkbox" id="friday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, friday: !daysOfWeek.friday, })} />
                         <span className="create-rule-checkbox-custom">✔</span>
                         <label htmlFor="friday">F</label>
                     </div>
                     <div className="create-rule-check-with-label">
-                        <input type="checkbox" id="saturday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, saturday: true, })} />
+                        <input type="checkbox" id="saturday" className="create-rule-checkbox" onClick={() => setDaysOfWeek({ ...daysOfWeek, saturday: !daysOfWeek.saturday, })} />
                         <span className="create-rule-checkbox-custom">✔</span>
                         <label htmlFor="saturday">S</label>
                     </div>
