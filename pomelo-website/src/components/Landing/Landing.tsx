@@ -10,7 +10,7 @@ const Landing = () =>
                     Save time for the things you <span className="landing-title-italic">really</span> care about.&nbsp;
                 </span>
                 <span className="landing-subtitle">
-                    Create new productivity strategies, block wasteful websites, and track your progress towards less wasted time.
+                    Create new productivity strategies, block wasteful websites, and track your progress towards&nbsp;<span className="landing-subtitle-bold">less wasted time</span>.
                 </span>
 
                 <div className="landing-images-flex">
