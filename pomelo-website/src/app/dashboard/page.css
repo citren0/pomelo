@@ -69,10 +69,11 @@
 
 .dashboard-content
 {
-    max-width: calc(100% - 80px);
+    max-width: calc(100% - 80px - 1rem);
     width: fit-content;
     background-color: #fcfcff;
     border-radius: 0 0.5rem 0.5rem 0;
+    padding: 0.5rem;
 }
 @media screen and (max-width: 800px)
 {

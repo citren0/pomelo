@@ -5,7 +5,7 @@
     padding: 0.5rem 0.75rem 0.5rem 0.75rem;
     border-radius: 0.5rem;
     outline: none;
-    border: 2px #f0f0ff solid;
+    border: 2px #e0e0ff solid;
     max-width: 100%;
 }
 .simple-text-area:focus
