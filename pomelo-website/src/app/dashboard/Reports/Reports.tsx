@@ -95,7 +95,7 @@ const Reports = () =>
                                     return (
                                         <>
                                             <div className="reports-report-wrapper">
-                                                <span className="reports-report-domain">{report.domain}</span>
+                                                <span className="reports-report-domain" title={report.domain}>{report.domain}</span>
                                                 <div className="reports-round-wrapper">
                                                     <div className="reports-title-and-image-wrapper">
                                                         <img

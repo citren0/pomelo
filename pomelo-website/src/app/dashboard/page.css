@@ -79,6 +79,6 @@
 {
     .dashboard-content
     {
-        max-width: 100%;
+        max-width: calc(100% - 1rem);
     }
 }

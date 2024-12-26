@@ -102,7 +102,7 @@ const TimeWasted = () =>
                     return {
                         total_time_spent: day.total_time_spent,
                         time_wasted: day.time_wasted,
-                        timeString: `${(new Date(day.time_stamp)).getFullYear()}-${(new Date(day.time_stamp)).getMonth()}-${(new Date(day.time_stamp)).getDate()}`
+                        timeString: `${(new Date(day.time_stamp)).getFullYear()}-${(new Date(day.time_stamp)).getMonth() + 1}-${(new Date(day.time_stamp)).getDate()}`
                     };
                 });
 
