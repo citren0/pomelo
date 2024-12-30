@@ -9,3 +9,4 @@ export { default as Modal } from "./Modal/Modal";
 export { default as Cookies } from "./Cookies/Cookies";
 export { default as Footer } from "./Footer/Footer";
 export { default as CheckToken } from "./CheckToken/CheckToken";
+export { default as SpecialOffer } from "./SpecialOffer/SpecialOffer";

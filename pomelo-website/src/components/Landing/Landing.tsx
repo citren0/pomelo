@@ -1,4 +1,5 @@
 
+import { SpecialOffer } from "../";
 import "./Landing.css";
 
 const Landing = () =>
@@ -6,6 +7,8 @@ const Landing = () =>
     return (
         <>
             <div className="landing-wrapper">
+                <SpecialOffer headline="Start the year right with Pomelo." cost="$4.99 / month" validUntil="January 30th 2025" showButton={true} />
+
                 <span className="landing-title">
                     Save time for the things you <span className="landing-title-italic">really</span> care about.&nbsp;
                 </span>
@@ -76,7 +79,10 @@ const Landing = () =>
                 </span>
                 <div className="landing-card-flex">
                     <div className="landing-card-secondary">
-                        <span className="landing-card-title-big">$10 / month</span>
+                        <span className="landing-card-title-big">
+                            <img src={"/assets/gift.png"} height={48} alt="Gift Icon" style={{ position: "relative", bottom: "5px" }} />
+                            $4.99 / month
+                        </span>
                         <hr className="hr-100" />
                         <span className="landing-card-text-big">All Inclusive Subscription:</span>
                         <ul className="landing-card-list">
