@@ -8,26 +8,26 @@ const Landing = () =>
         <>
             <div className="landing-wrapper">
                 {/* TO CHANGE SPECIAL OFFER BACK: 1) Comment out next line. 2) Change landing card at bottom of page. 3) Change create order page. 4) Comment out offer on sign up page. */}
-                <SpecialOffer headline="Start the year right with Pomelo." cost="$4.99 / month" validUntil="January 30th 2025" showButton={true} />
+                <SpecialOffer headline="Lock in $4.99/month for 50% off!" cost="$4.99 / month" validUntil="January 30th 2025" showButton={true} />
 
                 <span className="landing-title">
-                    Save time for the things you <span className="landing-title-italic">really</span> care about.&nbsp;
+                    Track time, block websites, and work with your own productivity coach towards <span className="landing-title-italic">less wasted time</span>.
                 </span>
-                <span className="landing-subtitle">
-                    Create new productivity strategies, block wasteful websites, and track your progress towards&nbsp;<span className="landing-subtitle-bold">less wasted time</span>.
-                </span>
+                {/* <span className="landing-subtitle">
+                    Save time for the things you <span className="landing-subtitle-bold">really</span> care about.
+                </span> */}
 
                 <div className="landing-images-flex">
                     <div className="landing-images-wrapper">
                         <img src="/assets/chat.png" height={673} width={800} className="landing-img" alt="A product demo showcasing the Pomelo chat functionality." />
                         <span className="landing-images-explanation">
-                            Your personal coach will recommend productivity strategies and block time-wasting websites.
+                            Your personal AI productivity coach will recommend new strategies and block time-wasters.
                         </span>
                     </div>
                     <div className="landing-images-wrapper">
                         <img src="/assets/blocked.png" height={673} width={800} className="landing-img" alt="A product demo showcasing the website blocking functionality." />
                         <span className="landing-images-explanation">
-                            Productivity rules keep you accountable by blocking websites during certain times of day.
+                            Productivity rules keep you accountable by blocking websites.
                         </span>
                     </div>
                 </div>
@@ -53,7 +53,7 @@ const Landing = () =>
                     <div className="landing-card">
                         <span className="landing-card-title">Focus on Results</span>
                         <hr className="hr-100" />
-                        <span className="landing-card-text">Keep track of your productivity journey by noting the websites you tend to waste time on.</span>
+                        <span className="landing-card-text">Monitor your productivity journey by tracking the sites you tend to waste time on.</span>
                     </div>
                 </div>
 

@@ -21,9 +21,6 @@ const RootLayout = (
 				<Script type="text/javascript" async defer src="/gtag.js" />
 			</head>
 			<body>
-				<noscript>
-					<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PP4CSB2F" height="0" width="0" style={{display: "none", visibility: "hidden", }}></iframe>
-				</noscript>
 				{children}
 			</body>
 			<CheckToken />
