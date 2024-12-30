@@ -17,6 +17,7 @@ const RootLayout = (
 		<html lang="en">
 			<head>
 				<link rel="icon" href="/assets/pomelo.png" sizes="any" />
+				<Script async src="https://www.googletagmanager.com/gtag/js?id=AW-16791297417"></Script>
 				<Script type="text/javascript" async defer src="/gtag.js" />
 			</head>
 			<body>
