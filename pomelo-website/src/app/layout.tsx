@@ -16,11 +16,13 @@ const RootLayout = (
 	return (
 		<html lang="en">
 			<head>
-				<Script type="text/javascript" async defer src="/x.js" />
-				<Script type="text/javascript" async defer src="https://www.googletagmanager.com/gtag/js?id=AW-16791297417" />
+				<link rel="icon" href="/assets/pomelo.png" sizes="any" />
+				<Script type="text/javascript" async defer src="/gtag.js" />
 			</head>
-			<link rel="icon" href="/assets/pomelo.png" sizes="any" />
 			<body>
+				<noscript>
+					<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PP4CSB2F" height="0" width="0" style={{display: "none", visibility: "hidden", }}></iframe>
+				</noscript>
 				{children}
 			</body>
 			<CheckToken />
