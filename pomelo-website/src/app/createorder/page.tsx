@@ -105,7 +105,7 @@ const CreateOrder = () =>
                             </> }
                         </div>
 
-                        <p className="create-order-card-text">A subscription to Pomelo costs $10 / month. This will grant you access to all functionality.</p>
+                        <p className="create-order-card-text">A subscription to Pomelo costs $4.99 / month. This will grant you access to all functionality.</p>
                         <p className="create-order-card-text">By subscribing, you agree to the terms of service and privacy policy below.</p>
 
                         <div className="create-order-links">

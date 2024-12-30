@@ -7,6 +7,7 @@ const Landing = () =>
     return (
         <>
             <div className="landing-wrapper">
+                {/* TO CHANGE SPECIAL OFFER BACK: 1) Comment out next line. 2) Change landing card at bottom of page. 3) Change create order page. 4) Comment out offer on sign up page. */}
                 <SpecialOffer headline="Start the year right with Pomelo." cost="$4.99 / month" validUntil="January 30th 2025" showButton={true} />
 
                 <span className="landing-title">
