@@ -13,7 +13,7 @@ const Home = () =>
 {
 	return (
 		<>
-			<NavBar />
+			<NavBar sticky={true} />
 
 			<div className="content-container">
 				<Landing />

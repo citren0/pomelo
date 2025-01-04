@@ -6,7 +6,12 @@ import Image from "next/image";
 import "./NavBar.css";
 
 
-const NavBar = () =>
+interface Props
+{
+    sticky?: boolean;
+}
+
+const NavBar = ({ sticky }: Props) =>
 {
     const [ isLoggedIn, setIsLoggedIn ] = useState(false);
 
@@ -20,7 +25,7 @@ const NavBar = () =>
 
     return (
         <>
-            <div className="nav-wrapper" style={{}}>
+            <div className="nav-wrapper" style={(sticky == true) ? { position: "fixed", top: "0.5rem", left: "0.5rem", backgroundColor: "#f5f5faf5", width: "calc(100% - 6vw - 2rem)" } : { }}>
                 <a href="/" className="a-no-dec">
                     <div className="nav-logo-wrapper">
                         <Image

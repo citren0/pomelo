@@ -127,13 +127,14 @@
     text-decoration: none;
     font-size: 20px;
     font-weight: 700;
-    border: 2px solid #00009f;
-    color: #00009f;
+    background-color: #4f3ada;
+    color: white;
     border-radius: 1rem;
+    transition: all 0.5s ease;
 }
 .nav-link-prominent:hover
 {
-    background-color: #00009f;
+    background-color: #3321a2;
     color: white;
 }
 

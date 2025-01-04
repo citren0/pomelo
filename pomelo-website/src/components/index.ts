@@ -10,3 +10,4 @@ export { default as Cookies } from "./Cookies/Cookies";
 export { default as Footer } from "./Footer/Footer";
 export { default as CheckToken } from "./CheckToken/CheckToken";
 export { default as SpecialOffer } from "./SpecialOffer/SpecialOffer";
+export { default as FAQItem } from "./FAQItem/FAQItem";

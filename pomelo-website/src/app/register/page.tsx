@@ -18,7 +18,7 @@ const Register = () =>
 			
 			<div className="content-container">
 				<div className="register-form-spacer">
-                	<SpecialOffer headline="Start the year right with Pomelo." cost="$4.99 / month" validUntil="January 30th 2025" showButton={false} />
+                	<SpecialOffer headline="Start the year right with Pomelo for $4.99/month. Cancel at any time." validUntil="January 30th 2025" showButton={false} />
 					<RegisterForm />
 				</div>
 			</div>
