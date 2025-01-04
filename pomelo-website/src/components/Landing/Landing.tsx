@@ -1,5 +1,5 @@
 
-import { FAQItem, SpecialOffer } from "../";
+import { FAQItem } from "../";
 import "./Landing.css";
 
 const Landing = () =>
@@ -107,7 +107,6 @@ const Landing = () =>
 
                 <span className="landing-card-flex-title">Frequently Asked Questions</span>
                 <div className="landing-faq-wrapper">
-
                     <FAQItem question="What is Pomelo?" answer="Pomelo is a suite of tools used to decrease wasted time on desktop browsers. You can use Pomelo to track your wasted time, chat with a personal AI-powered coach, and block websites." />
                     <FAQItem question="Do I need to be tech-savvy to use Pomelo?" answer="We work hard to make Pomelo as easy to use as possible. You just need to know how to install a web browser and access the dashboard." />
                     <FAQItem question="How hard is Pomelo to set up?" answer="Easy! Create an account, install the browser extension, and Pomelo works in the background to save you time." />
