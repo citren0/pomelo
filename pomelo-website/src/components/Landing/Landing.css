@@ -41,6 +41,18 @@
     font-weight: 800;
     color: rgb(215, 209, 224);
 }
+@media screen and (max-width: 800px)
+{
+    .landing-title
+    {
+        font-size: 45px;
+    }
+
+    .landing-title-italic
+    {
+        font-size: 45px;
+    }
+}
 
 .landing-title-italic
 {
@@ -111,7 +123,14 @@
     gap: 2rem;
     max-width: 100%;
     padding-bottom: 0.5rem;
-    align-items: flex-end;
+    align-items: center;
+}
+@media screen and (max-width: 600px)
+{
+    .landing-images-flex
+    {
+        flex-flow: column;
+    }
 }
 
 .landing-card
@@ -204,7 +223,7 @@
     flex-flow: column;
     overflow-wrap: break-word;
     width: 45%;
-    /* min-width: 20rem; */
+    min-width: 20rem;
 }
 
 .landing-images-explanation

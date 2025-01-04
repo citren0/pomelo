@@ -22,7 +22,7 @@ const FAQItem = ({question, answer}: Props) =>
                     <span className="landing-faq-bold">Q: </span>{question}
                 </span>
 
-                <div className="landing-faq-answer" style={{ maxHeight: (isOpen) ? "5rem" : "0px" }}>
+                <div className="landing-faq-answer" style={{ maxHeight: (isOpen) ? "20rem" : "0px" }}>
                     <span className="landing-faq-text">
                         <span className="landing-faq-bold">A: </span>{answer}
                     </span>
