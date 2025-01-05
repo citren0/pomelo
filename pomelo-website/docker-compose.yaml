@@ -3,6 +3,7 @@ services:
   server:
     image: node:lts
     user: 'node'
+    hostname: 'server'
     working_dir: /home/node/app/client
     environment:
       - NODE_ENV=production

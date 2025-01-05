@@ -11,6 +11,7 @@
     font-weight: 400;
     font-style: normal;
     color: #050505;
+    -webkit-text-size-adjust: none;
 }
 
 .content-container
